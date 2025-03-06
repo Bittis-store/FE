@@ -1,5 +1,4 @@
 import React, { lazy } from 'react';
-import Loader from '~/utils/Loader';
 
 // Client
 
@@ -8,5 +7,5 @@ import Loader from '~/utils/Loader';
 
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
-    return <React.Suspense fallback={<Loader />}>{children}</React.Suspense>;
+    return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;
 };

@@ -1,6 +1,5 @@
 import PublicRoutes from './PublicRoutes';
-import { PrivateRoutes } from './PrivateRoutes';
 
-const RootRoutes = [...PublicRoutes, ...PrivateRoutes];
+const RootRoutes = [...PublicRoutes];
 
 export default RootRoutes;

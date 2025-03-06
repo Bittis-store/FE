@@ -5,6 +5,9 @@
 @theme {
     --breakpoint-xl: 1330px;
     --container-7xl: 1330px;
+    --color-global: #333f48;
+    --color-hover: #da291c;
+    --color-black: #1c2434;
 }
 
 /* custom popover transparent */
