@@ -1,3 +1,4 @@
+import { PRODUCT_ENDPOINT } from '~/constants/endPoint';
 import { Params } from '~/types/Api';
 import { IAxiosResponse } from '~/types/AxiosResponse';
 import { IProduct, IProductResponse } from '~/types/Product';
@@ -11,23 +12,23 @@ export type IAllProductResponseNew = {
 };
 export const ProductServices = {
     async getProductBestSelling() {
-        const data = await instance.get<IAxiosResponse<IProduct[]>>('/products/best-selling');
+        const data = await instance.get<IAxiosResponse<IProduct[]>>(PRODUCT_ENDPOINT.SELLING);
         return data.data;
     },
     async getAllProducts(params: Params) {
-        const res = await instance.get<IAxiosResponse<IProductResponse>>('/products/all', {
+        const res = await instance.get<IAxiosResponse<IProductResponse>>(PRODUCT_ENDPOINT.ALL, {
             params,
         });
         return res.data;
     },
 
     async getRelatedProduct(id: string) {
-        const data = await instance.get<IAxiosResponse<IProduct[]>>(`/products/related/${id}`);
+        const data = await instance.get<IAxiosResponse<IProduct[]>>(`${PRODUCT_ENDPOINT.RELATED}/${id}`);
         return data.data;
     },
 
     async getDiscount() {
-        const res = await instance.get<IAxiosResponse<IProduct[]>>(`/products/discount`);
+        const res = await instance.get<IAxiosResponse<IProduct[]>>(`${PRODUCT_ENDPOINT.DISCOUNT}`);
         return res.data;
     },
 };

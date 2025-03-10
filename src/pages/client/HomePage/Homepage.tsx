@@ -1,17 +1,14 @@
+import { Link } from 'react-router-dom';
+import bannerOne from '~/assets/img/banner-phụ_2m-600x320.jpg';
+import bannerTwo from '~/assets/img/Frontpage_img-background-Sale-off.jpg';
 import Banner from '~/components/Banner';
-import CarouselDisplay, { CarouselItem } from '~/components/CarouselDisplay';
-import DefaultCard from '~/components/ProductCard/DefaultCard';
-import ShopBenefits from '~/components/ShopBenefits';
 import ShowMoreList from '~/components/ShowMoreList';
+import WrapperList from '~/components/wrapperList/WrapperList';
 import useWindowSize from '~/hooks/_common/useWindowSize';
+import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
 import { useGetProductBest } from '~/hooks/Products/Queries/useGetProductBest';
 import { useGetProductDiscount } from '~/hooks/Products/Queries/useGetProductDiscount';
 import { IProduct } from '~/types/Product';
-import bannerTwo from '~/assets/img/Frontpage_img-background-Sale-off.jpg';
-import bannerOne from '~/assets/img/banner-phụ_2m-600x320.jpg';
-import { Link } from 'react-router-dom';
-import WrapperList from '~/components/wrapperList/WrapperList';
-import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
 
 export default function Homepage() {
     const { data: productBest, isLoading: bestLoading } = useGetProductBest();
@@ -19,6 +16,8 @@ export default function Homepage() {
     const { data: allProducts, isLoading: allProductLoading } = useGetAllProducts({});
 
     const { windowWidth } = useWindowSize();
+
+    console.log(allProducts);
 
     const products: IProduct[] = [
         {
@@ -146,7 +145,9 @@ export default function Homepage() {
                     <div className=''>
                         <div className='flex justify-between gap-10'>
                             <div className='w-[50%]'>
-                                <img src={bannerOne} alt='' className='block h-[320px] w-full' />
+                                <Link to='/' className='block h-[320px]'>
+                                    <img src={bannerOne} alt='' className='block h-full w-full' />
+                                </Link>
                                 <Link
                                     to='/'
                                     className='mt-7 block text-[1.688rem] font-bold uppercase duration-300 hover:text-orange-500'
@@ -159,7 +160,9 @@ export default function Homepage() {
                                 </p>
                             </div>
                             <div className='w-[50%]'>
-                                <img src={bannerTwo} alt='' className='block h-[320px] w-full' />
+                                <Link to='/' className='block h-[320px]'>
+                                    <img src={bannerTwo} alt='' className='block h-full w-full' />
+                                </Link>
                                 <Link
                                     to='/'
                                     className='mt-7 block text-[1.688rem] font-bold uppercase duration-300 hover:text-orange-500'
@@ -178,7 +181,7 @@ export default function Homepage() {
             </div>
 
             <WrapperList isLoading={bestLoading} products={products} title='Sản phẩm nổi bật' />
-            <WrapperList isLoading={discountLoading} products={products} title='Sản phẩm tốt' />
+            <WrapperList isLoading={discountLoading} products={products} title='Sản phẩm giá tốt' />
 
             <div className='max-w-screen-default mx-4 mt-4 default:mx-auto'>
                 <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>

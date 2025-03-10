@@ -9,7 +9,5 @@ export const useGetProductDiscount = () => {
             const data = await ProductServices.getDiscount();
             return data.data;
         },
-        retry: 3,
-        retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 3000),
     });
 };
