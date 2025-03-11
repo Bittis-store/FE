@@ -11,4 +11,7 @@ export const AUTH_ENDPOINT = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
+    SENDMAIL: '/auth/sendVerify',
+    VERIFY: '/auth/verifyEmail',
+    RESETPASSWORD: '/auth/resetPassword',
 };

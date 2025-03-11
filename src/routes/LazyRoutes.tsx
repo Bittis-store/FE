@@ -4,6 +4,8 @@ import React, { lazy } from 'react';
 export const HomaPage = lazy(()=>import("~/pages/client/HomePage"));
 export const RegisterPage = lazy(()=>import("~/pages/client/Auth/Register"));
 export const LoginPage = lazy(()=>import("~/pages/client/Auth/Login"));
+export const VerifyAccountPage = lazy(()=>import("~/pages/client/Auth/Email"));
+export const ForgotPasswordPage = lazy(()=>import("~/pages/client/Auth/ForgotPassword"));
 
 // Admin
 

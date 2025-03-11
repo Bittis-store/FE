@@ -1,5 +1,5 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { HomaPage, LoginPage, RegisterPage, Suspense } from "./LazyRoutes";
+import { ForgotPasswordPage, HomaPage, LoginPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
@@ -16,6 +16,22 @@ import NotFound from "~/pages/NotFound";
                 element: (
                     <Suspense>
                         <HomaPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.VERIFY,
+                element: (
+                    <Suspense>
+                        <VerifyAccountPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.FORGOT_PASSWORD,
+                element: (
+                    <Suspense>
+                        <ForgotPasswordPage />
                     </Suspense>
                 ),
             },
