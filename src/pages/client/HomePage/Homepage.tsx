@@ -17,8 +17,6 @@ export default function Homepage() {
 
     const { windowWidth } = useWindowSize();
 
-    console.log(allProducts);
-
     const products: IProduct[] = [
         {
             _id: '1',
@@ -189,7 +187,7 @@ export default function Homepage() {
                         <ShowMoreList
                             enableButton={{
                                 enable: true,
-                                hrefClick: '/',
+                                hrefClick: '/products',
                                 limit: windowWidth < 1650 ? 6 : 8,
                             }}
                             data={products}

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { setQuery, updateGrid } from '~/store/slice/filterSlice';
 import { useTypedSelector } from '~/store/store';
-import { Params } from '~/interfaces/api';
+import { Params } from '~/types/Api';
 
 const useFilter = () => {
     const dispatch = useDispatch();

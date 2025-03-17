@@ -1,5 +1,5 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { ForgotPasswordPage, HomaPage, LoginPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
+import { ForgotPasswordPage, HomaPage, LoginPage, ProductsPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
@@ -52,6 +52,14 @@ import NotFound from "~/pages/NotFound";
                           <AuthProtected>
                                 <LoginPage />
                           </AuthProtected>
+                    </Suspense>
+                ),
+            },
+            {
+                path:  MAIN_ROUTES.PRODUCTS,
+                element: (
+                    <Suspense>
+                            <ProductsPage />
                     </Suspense>
                 ),
             },

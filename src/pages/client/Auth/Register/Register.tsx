@@ -1,4 +1,4 @@
-import SignImg from '~/assets/img/Desktop_Homepage_Banner01.jpg';
+import SignImg from '~/assets/img/male-shoes.jpg';
 import useDocumentTitle from '~/hooks/_common/useDocumentTitle';
 import { useAuthRegister } from '~/hooks/Auth/Mutation/useAuthRegister';
 import { RegisterFormData, registerSchema } from '~/validation/Auth/Auth';

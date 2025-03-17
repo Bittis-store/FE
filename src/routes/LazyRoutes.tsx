@@ -6,6 +6,7 @@ export const RegisterPage = lazy(()=>import("~/pages/client/Auth/Register"));
 export const LoginPage = lazy(()=>import("~/pages/client/Auth/Login"));
 export const VerifyAccountPage = lazy(()=>import("~/pages/client/Auth/Email"));
 export const ForgotPasswordPage = lazy(()=>import("~/pages/client/Auth/ForgotPassword"));
+export const ProductsPage = lazy(()=>import("~/pages/client/ProductPage/ProductPage"));
 
 // Admin
 

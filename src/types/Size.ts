@@ -1,8 +1,6 @@
-export interface ISize {
-    _id: string;
-    type: string;
-    value: string;
-}
+import { ICategory, ICategoryFormData } from './Category';
+
+export interface ISize extends ICategory {}
 
 export type ISizeResponse = {
     sizes: ISize[];
@@ -11,8 +9,4 @@ export type ISizeResponse = {
     totalPages: number;
 };
 
-export interface ISizeFormData {
-    name: string;
-    type: SizeType;
-}
-export type SizeType = 'freesize' | 'numericsize';
+export interface ISizeFormData extends ICategoryFormData {}

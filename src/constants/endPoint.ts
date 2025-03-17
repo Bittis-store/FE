@@ -15,3 +15,16 @@ export const AUTH_ENDPOINT = {
     VERIFY: '/auth/verifyEmail',
     RESETPASSWORD: '/auth/resetPassword',
 };
+
+export const SIZE_ENDPOINT = {
+    ALL: '/sizes/all',
+    DETAIL: '/sizes',
+    CREATE: '/sizes',
+    UPDATE: '/sizes',
+};
+export const COLOR_ENDPOINT = {
+    ALL: '/colors/all',
+    DETAIL: '/colors',
+    CREATE: '/colors',
+    UPDATE: '/colors',
+};

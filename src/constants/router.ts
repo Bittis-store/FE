@@ -3,4 +3,5 @@ export const MAIN_ROUTES = {
     VERIFY: '/verifyAccount',
     REGISTER: '/register',
     FORGOT_PASSWORD: '/forgotpassword',
+    PRODUCTS: '/products',
 };

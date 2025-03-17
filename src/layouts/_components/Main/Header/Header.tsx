@@ -10,7 +10,7 @@ export default function Header() {
                 </p>
             </div>
             <header dir='ltr' className='sticky top-0 z-[51] bg-white shadow-md'>
-                <div className='max-w-screen-default mx-4 flex items-center justify-between py-1.5 default:mx-auto'>
+                <div className='max-w-standard mx-4 flex items-center justify-between py-3 xl:mx-auto'>
                     <div className='flex items-center gap-10'>
                         <Link to={'/'}>
                             <img
@@ -31,7 +31,7 @@ export default function Header() {
                                 </li>
                                 <li>
                                     <Link
-                                        to={'/'}
+                                        to={'/products'}
                                         className={`ml-8 text-base font-bold uppercase duration-300 hover:text-orange-500`}
                                     >
                                         Sản phẩm
