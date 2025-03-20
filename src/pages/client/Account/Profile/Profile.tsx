@@ -176,7 +176,128 @@ const Profile = () => {
         form.resetFields();
     };
 
-    return <></>;
+    return (
+        <>
+            <WrapperList classic title='Thông tin của tôi' className='my-0'>
+                {/* @Content */}
+                <div className='flex items-center justify-center'>
+                    <div className='w-[80%] rounded-2xl bg-white px-6 py-4'>
+                        <Form form={form} layout='vertical' className='w-full' onFinish={onFinish}>
+                            <Form.Item<FieldType>
+                                label='Avatar'
+                                name='avatar'
+                                className='font-medium text-[#08090F]'
+                                dependencies={['thumbnail']}
+                                rules={[
+                                    {
+                                        validator: thumbnailValidator,
+                                    },
+                                ]}
+                            >
+                                <Upload
+                                    beforeUpload={() => false}
+                                    listType='picture-card'
+                                    itemRender={customItemRender}
+                                    fileList={thumbnailFile}
+                                    onPreview={(file) => handlePreview(file)}
+                                    onChange={handleChangeThumbnail}
+                                    maxCount={1}
+                                >
+                                    {thumbnailFile.length >= 1 ? null : uploadButton}
+                                </Upload>
+                            </Form.Item>
+                            {previewThumbnail && (
+                                <Image
+                                    wrapperStyle={{ display: 'none' }}
+                                    preview={{
+                                        visible: previewThumbnailOpen,
+                                        onVisibleChange: (visible) => setPreviewThumbnailOpen(visible),
+                                        afterOpenChange: (visible) => !visible && setPreviewThumbnail(''),
+                                    }}
+                                    src={previewThumbnail || StaticImages.userImageDf}
+                                />
+                            )}
+
+                            <Form.Item<FieldType> label='Họ và tên' className='mt-1' name='name'>
+                                <Input placeholder='Họ và tên' className='py-3' />
+                            </Form.Item>
+
+                            <Form.Item<FieldType> label='Số điện thoại' name='phone'>
+                                <Input placeholder='Số điện thoại' className='py-3' />
+                            </Form.Item>
+
+                            <Form.Item<FieldType> label='Email' className='mt-1' name='email'>
+                                <Input placeholder='Email' className='py-3' />
+                            </Form.Item>
+
+                            <Form.Item>
+                                <div className='flex flex-wrap justify-between gap-5 md:flex-nowrap'>
+                                    <Button
+                                        className='block w-full rounded-3xl bg-black text-center text-white transition-colors duration-300 ease-linear hover:bg-[#16bcdc]'
+                                        size='large'
+                                        htmlType='submit'
+                                        loading={isPending}
+                                    >
+                                        Cập nhật thông tin
+                                    </Button>
+
+                                    {profile && (
+                                        <Button
+                                            type='primary'
+                                            size='large'
+                                            danger
+                                            // onClick={showModal}
+                                            onClick={() => sendResetPassword({ email: profile.email! })}
+                                            className='w-full rounded-3xl'
+                                            loading={isPendingPassword}
+                                        >
+                                            Thay đổi mật khẩu
+                                        </Button>
+                                    )}
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </div>
+                <Modal
+                    open={open}
+                    onOk={handleOk}
+                    centered
+                    confirmLoading={confirmLoading}
+                    onCancel={handleCancel}
+                    footer={
+                        <Button
+                            className='mb-8 block w-full rounded-3xl border-black bg-black text-center text-white transition-colors duration-300 ease-linear hover:bg-[#16bcdc]'
+                            size='large'
+                        >
+                            Cập nhật thông tin
+                        </Button>
+                    }
+                    width={windowSize.windowWidth >= 768 ? '460px' : '90vw'}
+                >
+                    <div>
+                        <div className='text-center'>
+                            <h3 className='mt-[52px] mb-2 block text-xl font-medium'>Thay đổi mật khẩu</h3>
+                            <p className='mx-auto mb-8 w-[55%] text-sm text-gray-500'>
+                                Bạn cần tạo mật khẩu từ 6 đến 16 ký tự để bảo vệ tài khoản tốt hơn.
+                            </p>
+                        </div>
+                        <Form layout='vertical'>
+                            <Form.Item className='mt-1'>
+                                <Input.Password placeholder='Mật khẩu cũ' className='py-3' />
+                            </Form.Item>
+                            <Form.Item className='mt-1'>
+                                <Input.Password placeholder='Mật khẩu mới' className='py-3' />
+                            </Form.Item>
+                            <Form.Item className='mt-1'>
+                                <Input.Password placeholder='Nhập lại mật khẩu' className='py-3' />
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </Modal>
+            </WrapperList>
+        </>
+    );
 };
 
 export default Profile;
