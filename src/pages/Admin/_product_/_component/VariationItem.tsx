@@ -1,17 +1,6 @@
 import { MinusCircleOutlined } from '@ant-design/icons';
-import {
-    Form,
-    Input,
-    InputNumber,
-    Select,
-    Upload,
-    UploadFile,
-    UploadProps,
-} from 'antd';
-import {
-    variationsStockValidator,
-    variationsThumbnailValidator,
-} from '@/validation/Products/validators';
+import { Form, Input, InputNumber, Select, Upload, UploadFile, UploadProps } from 'antd';
+import { variationsStockValidator, variationsThumbnailValidator } from '@/validation/Products/validators';
 import { ISize } from '@/types/Size';
 import { IColor } from '@/types/Color';
 import CustomItemRenderVariant from '@/pages/Admin/_product_/_component/CustomItemRenderVariant';
@@ -45,9 +34,9 @@ const VariationItem = ({
     removeVariation,
 }: IVariationsItem) => {
     return (
-        <div className="flex items-end gap-3">
+        <div className='flex items-end gap-3'>
             <Form.Item
-                className="capitalize"
+                className='capitalize'
                 {...restField}
                 name={[fieldName, 'thumbnail']}
                 dependencies={['thumbnail']}
@@ -60,21 +49,19 @@ const VariationItem = ({
                 <Upload
                     itemRender={CustomItemRenderVariant}
                     beforeUpload={() => false}
-                    listType="picture"
+                    listType='picture'
                     fileList={variantFile[index]}
                     onChange={handleChangeThumbnail(index)}
                     maxCount={1}
                 >
-                    {variantFile[index]?.length >= 1 ? null : (
-                        <UploadButtonVariant />
-                    )}
+                    {variantFile[index]?.length >= 1 ? null : <UploadButtonVariant />}
                 </Upload>
             </Form.Item>
             <Form.Item
-                className="w-full capitalize"
+                className='w-full capitalize'
                 {...restField}
                 name={[fieldName, 'size']}
-                label="Kích cỡ"
+                label='Kích cỡ'
                 rules={[
                     {
                         required: true,
@@ -82,7 +69,7 @@ const VariationItem = ({
                     },
                 ]}
             >
-                <Select placeholder="Chọn kích cỡ">
+                <Select placeholder='Chọn kích cỡ'>
                     {sizes.map((value) => (
                         <Select.Option value={value._id} key={value._id}>
                             {value.name}
@@ -91,10 +78,10 @@ const VariationItem = ({
                 </Select>
             </Form.Item>
             <Form.Item
-                className="w-full capitalize"
+                className='w-full capitalize'
                 {...restField}
                 name={[fieldName, 'color']}
-                label="Màu sắc"
+                label='Màu sắc'
                 rules={[
                     {
                         required: true,
@@ -102,14 +89,11 @@ const VariationItem = ({
                     },
                 ]}
             >
-                <Select placeholder="Chọn màu sắc!">
+                <Select placeholder='Chọn màu sắc!'>
                     {colors.map((value, index) => (
                         <Select.Option value={value._id} key={index}>
-                            <div className="flex justify-between items-center">
-                                <div
-                                    style={{ background: value.hex }}
-                                    className="h-2 w-2 border-2 border-black"
-                                ></div>
+                            <div className='flex items-center justify-between'>
+                                <div style={{ background: value.hex }} className='h-2 w-2 border-2 border-black'></div>
                                 <p>{value.name}</p>
                             </div>
                         </Select.Option>
@@ -117,25 +101,21 @@ const VariationItem = ({
                 </Select>
             </Form.Item>
             <Form.Item
-                className="w-full capitalize"
+                className='w-full capitalize'
                 {...restField}
                 name={[fieldName, 'stock']}
-                label="Kho hàng"
+                label='Kho hàng'
                 rules={[variationsStockValidator()]}
             >
-                <InputNumber
-                    min={1}
-                    placeholder="Nhập số lượng sản phẩm..."
-                    className="w-full"
-                />
+                <InputNumber min={1} placeholder='Nhập số lượng sản phẩm...' className='w-full' />
             </Form.Item>
-            <div className="h-14 w-14">
+            <div className='h-14 w-14'>
                 <MinusCircleOutlined
                     onClick={() => {
                         handleRemoveThumbnail(index);
                         removeVariation(fieldName);
                     }}
-                    className="translate-y-[20%] text-lg"
+                    className='translate-y-[20%] text-lg'
                 />
             </div>
         </div>
