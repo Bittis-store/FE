@@ -9,7 +9,7 @@ export const ForgotPasswordPage = lazy(()=>import("~/pages/client/Auth/ForgotPas
 export const ProductsPage = lazy(()=>import("~/pages/client/ProductPage/ProductPage"));
 
 // Admin
-
+export const DashboardPage = lazy(() => import('../pages/Admin/_dashboard_'));
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;
