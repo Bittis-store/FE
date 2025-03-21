@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { useToast } from '~/context/ToastProvider';
 import AuthService from '~/services/auth.service';
+import showMessage from '~/utils/ShowMessage';
 
 const useSendResetPassword = () => {
-    const toast = useToast();
     return useMutation({
         mutationKey: ['SEND_RESET_PASSWORD'],
         mutationFn: (body: { email: string }) => AuthService.sendMailResetPassword(body),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSuccess: (data: any) => {
-            toast(data.data.message, 'success');
+            showMessage(data.data.message, 'success', 5000);
         },
     });
 };

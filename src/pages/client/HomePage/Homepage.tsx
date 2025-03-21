@@ -3,7 +3,7 @@ import bannerOne from '~/assets/img/banner-phụ_2m-600x320.jpg';
 import bannerTwo from '~/assets/img/Frontpage_img-background-Sale-off.jpg';
 import Banner from '~/components/Banner';
 import ShowMoreList from '~/components/ShowMoreList';
-import WrapperList from '~/components/wrapperList/WrapperList';
+import WrapperList from '~/components/_common/wrapperList/WrapperList';
 import useWindowSize from '~/hooks/_common/useWindowSize';
 import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
 import { useGetProductBest } from '~/hooks/Products/Queries/useGetProductBest';

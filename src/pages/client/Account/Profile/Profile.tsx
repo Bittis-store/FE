@@ -1,19 +1,18 @@
-// import StaticImages from '@/assets';
-// import WrapperList from '@/components/_common/WrapperList';
-// import useWindowSize from '@/hooks/_common/useWindowSize';
-// import { DeleteOutlined, EyeOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-// import { Button, ConfigProvider, Form, FormProps, Image, Input, Modal, Upload, UploadFile, UploadProps } from 'antd';
-// import { useEffect, useState } from 'react';
-// // import { useMutationUpdateProfle } from '@/hooks/profile/Mutations/useUpdateProfile';
-// import useGetProfile from '@/hooks/profile/Queries/useGetProfile';
-// import { ACCEPT_FILE_TYPE, FileType, getBase64, MAX_SIZE } from '@/pages/Admin/_product_/Helper/_helper_';
-// import convertApiResponseToFileList from '@/pages/Admin/_product_/Helper/convertImageUrlToFileList';
-// import { IProductFiles, IThumbnailAntd } from '@/types/Product';
-// import { errorMessage } from '@/validation/Products/Product';
-// import useSendResetPassword from '@/hooks/Auth/Mutation/useSendResetPassword';
-// import { useMutationUpdateProfle } from '@/hooks/profile/Mutations/useUpdateProfile';
-// import useChangePassword from '@/hooks/users/Mutations/useChangePassword';
-// import { ErrorMessage } from '@/validation/Message';
+import StaticImages from '~/assets';
+import WrapperList from '~/components/_common/wrapperList/WrapperList';
+import useWindowSize from '~/hooks/_common/useWindowSize';
+import { DeleteOutlined, EyeOutlined, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, ConfigProvider, Form, FormProps, Image, Input, Modal, Upload, UploadFile, UploadProps } from 'antd';
+import { useEffect, useState } from 'react';
+import useGetProfile from '~/hooks/profile/Queries/useGetProfile';
+import { ACCEPT_FILE_TYPE, FileType, getBase64, MAX_SIZE } from '~/pages/Admin/_product_/Helper/_helper_';
+import convertApiResponseToFileList from '~/pages/Admin/_product_/Helper/convertImageUrlToFileList';
+import { IProductFiles, IThumbnailAntd } from '~/types/Product';
+import { errorMessage } from '~/validation/Products/Product';
+import useSendResetPassword from '~/hooks/Auth/Mutation/useSendResetPassword';
+import { useMutationUpdateProfle } from '~/hooks/profile/Mutations/useUpdateProfile';
+import useChangePassword from '~/hooks/users/Mutations/useChangePassword';
+import { ErrorMessage } from '~/validation/Message';
 
 type ChangePassword = {
     password: string;

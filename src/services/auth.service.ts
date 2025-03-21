@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios';
 import { AUTH_ENDPOINT } from '~/constants/endPoint';
 import { IAxiosResponse } from '~/types/AxiosResponse';
 import { ILoginResponse } from '~/types/user';
 import instance from '~/utils/api/axiosIntance';
 import { LoginFormData, RegisterFormData } from '~/validation/Auth/Auth';
+import { AxiosResponse } from 'axios';
 
 const AuthServices = {
     async login(body: LoginFormData) {
