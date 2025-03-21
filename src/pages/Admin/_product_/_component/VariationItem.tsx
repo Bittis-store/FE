@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import { MinusCircleOutlined } from '@ant-design/icons';
 import { Form, Input, InputNumber, Select, Upload, UploadFile, UploadProps } from 'antd';
-import { variationsStockValidator, variationsThumbnailValidator } from '@/validation/Products/validators';
-import { ISize } from '@/types/Size';
-import { IColor } from '@/types/Color';
-import CustomItemRenderVariant from '@/pages/Admin/_product_/_component/CustomItemRenderVariant';
-import UploadButtonVariant from '@/pages/Admin/_product_/_component/UploadButtonVariant';
+import { variationsStockValidator, variationsThumbnailValidator } from '~/validation/Products/validators';
+import { ISize } from '~/types/Size';
+import { IColor } from '~/types/Color';
+import CustomItemRenderVariant from '~/pages/Admin/_product_/_component/CustomItemRenderVariant';
+import UploadButtonVariant from '~/pages/Admin/_product_/_component/UploadButtonVariant';
 
 type IVariationsItem = {
     fieldName: number;
