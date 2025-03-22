@@ -4,6 +4,7 @@ export const MAIN_ROUTES = {
     REGISTER: '/register',
     FORGOT_PASSWORD: '/forgotpassword',
     PRODUCTS: '/products',
+    MY_ORDERS: '/my-orders',
 };
 export const ADMIN_ROUTES = {
     DASHBOARD: '/admin',
