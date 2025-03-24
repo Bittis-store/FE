@@ -7,4 +7,9 @@ export const QUERY_KEY = {
     ORDERS: 'orders',
     CART: 'CART',
     CHECKOUT: 'checkout',
+    WISHLIST: {
+        LIST: 'wishlist',
+        ADD: 'add',
+        REMOVE: 'remove',
+    },
 };
