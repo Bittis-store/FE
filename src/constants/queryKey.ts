@@ -14,5 +14,4 @@ export const QUERY_KEY = {
         REMOVE: 'remove',
     },
     RELATED_PRODUCTS: 'RELATED_PRODUCT',
-
 };
