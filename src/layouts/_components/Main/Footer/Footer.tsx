@@ -30,7 +30,7 @@ export default function Footer() {
                                 <p className='text-sm'>Fax: +84 123 456 734</p>
                             </li>
                             <li>
-                                <p className='text-sm'>Email: bitishunter@gmail.com</p>
+                                <p className='text-sm'>Email: bitistore25@gmail.com</p>
                             </li>
                         </ul>
                     </div>

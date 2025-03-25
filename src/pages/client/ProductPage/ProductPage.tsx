@@ -13,6 +13,7 @@ import { CiGrid2H, CiGrid31, CiGrid41 } from 'react-icons/ci';
 import { useDispatch } from 'react-redux';
 import useWindowSize from '~/hooks/_common/useWindowSize';
 import { useEffect } from 'react';
+import clsx from 'clsx';
 
 const ProductPage = () => {
     const limit = 10;
@@ -169,13 +170,14 @@ const ProductPage = () => {
             limit: String(limit),
         });
     };
-    console.log(grid);
 
     useEffect(() => {
-        if (grid) {
+        if (grid !== '') {
             updateGridUI('');
         }
     }, [windowWidth]);
+
+    console.log(grid);
 
     return (
         <div className='2xl:max-w-screen-default mx-4 w-full default:mx-auto lg:max-w-[1200px]'>
@@ -222,8 +224,22 @@ const ProductPage = () => {
                             </div>
                             {windowWidth > 1000 && (
                                 <div className='flex items-center gap-2'>
-                                    <CiGrid2H size={24} className='cursor-pointer' onClick={() => updateGridUI('2')} />
-                                    <CiGrid41 size={24} className='cursor-pointer' onClick={() => updateGridUI('4')} />
+                                    <CiGrid2H
+                                        size={24}
+                                        className='cursor-pointer'
+                                        onClick={() => {
+                                            updateGridUI('2');
+                                            console.log('2');
+                                        }}
+                                    />
+                                    <CiGrid41
+                                        size={24}
+                                        className='cursor-pointer'
+                                        onClick={() => {
+                                            updateGridUI('4');
+                                            console.log('4');
+                                        }}
+                                    />
                                 </div>
                             )}
                         </div>
@@ -235,7 +251,11 @@ const ProductPage = () => {
                     )}
                     <div className='my-4'>
                         <div
-                            className={`grid ${grid ? `grid-cols-${grid}` : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'} gap-4`}
+                            className={clsx('grid gap-4', {
+                                'grid-cols-2': grid === '2',
+                                'grid-cols-4': grid === '4',
+                                'grid-cols-2 md:grid-cols-3 lg:grid-cols-4': !grid,
+                            })}
                         >
                             {productsData?.map((item) => <ProductCard item={item} key={item._id} />)}
                         </div>

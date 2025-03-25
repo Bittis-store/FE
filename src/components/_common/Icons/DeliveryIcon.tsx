@@ -1,4 +1,4 @@
-const DeliveryIcon = ({ className, color = '#da291c' }: { className?: string; color?: string }) => {
+const DeliveryIcon = ({ className, color = 'oklch(0.705 0.213 47.604)' }: { className?: string; color?: string }) => {
     return (
         <svg id='outline' viewBox='0 0 48 48' className={className} xmlns='http://www.w3.org/2000/svg'>
             <path

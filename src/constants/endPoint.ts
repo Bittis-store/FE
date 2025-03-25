@@ -6,14 +6,14 @@ export const PRODUCT_ENDPOINT = {
     ALL_ADMIN: '/products/portal/all',
     LATEST: '/products/latest',
     DEALS: '/products/deals',
-    REVIEWS: '/products/reviews',
-    REVIEWS_DETAIL: '/products/reviews',
     RELATED: '/products/related',
     CREATE: '/products',
     DELETE: '/products',
     UPDATE: '/products',
     UPDATE_VARIATIONS: '/products/variation/',
     CREATE_VARIATIONS: '/products/variation/',
+    DISCOUNT: 'products/discount',
+    SELLING: 'products/best-selling',
     FILTER: '/products/filter',
     HIDE: '/products/hide', // @productId
     SHOW: '/products/show', // @productId

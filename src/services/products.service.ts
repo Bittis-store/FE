@@ -31,4 +31,8 @@ export const ProductServices = {
         const res = await instance.get<IAxiosResponse<IProduct[]>>(`${PRODUCT_ENDPOINT.DISCOUNT}`);
         return res.data;
     },
+    async getDetailProduct(id: string) {
+        const res = await instance.get<IAxiosResponse<IProduct>>(`${PRODUCT_ENDPOINT.PRODUCT}/${id}`);
+        return res.data;
+    },
 };

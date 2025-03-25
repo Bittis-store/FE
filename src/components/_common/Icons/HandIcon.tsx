@@ -1,4 +1,4 @@
-const HandIcon = ({ className, color = '#da291c' }: { className?: string; color?: string }) => {
+const HandIcon = ({ className, color = 'oklch(0.705 0.213 47.604)' }: { className?: string; color?: string }) => {
     return (
         <svg
             className={className}

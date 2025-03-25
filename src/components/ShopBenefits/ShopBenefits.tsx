@@ -4,7 +4,7 @@ export default function ShopBenefits() {
     return (
         <div className='text-global flex justify-between'>
             <div className='flex items-center justify-center gap-3 text-center'>
-                <DeliveryIcon className='h-8 duration-75 hover:animate-pulse' />
+                <DeliveryIcon   className='h-8 duration-75 hover:animate-pulse' />
                 <div className='hidden text-start lg:inline-block'>
                     <h4 className='text-base font-semibold'>Vận chuyển miễn phí</h4>
                     <p className='mt-1 text-sm'>Cho tất cả các đơn thanh toán online</p>

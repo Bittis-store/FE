@@ -4,6 +4,7 @@ import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
 import NotFound from "~/pages/NotFound";
+import ProductDetailsPage from "~/pages/client/ProductDetailsPage/Productdetails";
 
 
  const PublicRoutes = [
@@ -60,6 +61,14 @@ import NotFound from "~/pages/NotFound";
                 element: (
                     <Suspense>
                             <ProductsPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path:  `${MAIN_ROUTES.PRODUCTS}/:id`,
+                element: (
+                    <Suspense>
+                            <ProductDetailsPage />
                     </Suspense>
                 ),
             },

@@ -9,7 +9,7 @@ export default function DefaultCard({ item }: { item: IProduct }) {
     return (
         <div className='group mb-2 cursor-pointer'>
             <div className='relative w-full'>
-                <Link to={`/`}>
+                <Link to={`/products/${item._id}`}>
                     <img className='w-full' src={item.variants[0].image} alt={item.name} />
                 </Link>
 

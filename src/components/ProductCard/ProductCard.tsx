@@ -14,7 +14,7 @@ function ProductCard({ item }: { item: IProduct }) {
 
     const originalPrice = item.discount ? item.price / (1 - item.discount / 100) : item.price;
     return (
-        <div className='group cursor-pointer'>
+        <div className='group w-full cursor-pointer'>
             <div className='relative'>
                 <Link to={`/products/${item?._id}`}>
                     <img className='w-full object-cover' src={item.variants?.[0]?.image} alt='' />
