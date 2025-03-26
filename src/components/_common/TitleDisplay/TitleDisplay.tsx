@@ -1,46 +1,58 @@
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import clsx from 'clsx';
 import { ReactNode, useState } from 'react';
+import { cn } from '~/utils/TailwindMerge';
 
-const TitleDisplay = ({
-    option,
-    title,
-    border,
-    onClick,
-}: {
+interface TitleDisplayProps {
     title: string;
     onClick?: () => void;
     border?: boolean;
     option?: ReactNode;
-}) => {
+    className?: string;
+}
+
+const TitleDisplay: React.FC<TitleDisplayProps> = ({ option, title, border, onClick, className }) => {
     const [status, setStatus] = useState<boolean>(false);
+
     const handleClick = () => {
         if (onClick) {
             onClick();
             setStatus(!status);
         }
     };
+
     return (
         <div
             onClick={handleClick}
-            className={clsx(
-                { ['border-b-[1.5px] border-[#da291c]']: border },
-                'mb-5 flex items-center justify-between',
+            className={cn(
+                'flex items-center justify-between py-3 transition-all duration-300 ease-in-out',
+                {
+                    'border-b-2 border-teal-500': border, // Thay màu đỏ #da291c bằng teal-500 cho hiện đại
+                    'cursor-pointer rounded-lg px-2 hover:bg-gray-50': onClick, // Hiệu ứng hover khi có onClick
+                },
+                className
             )}
         >
-            <div className="inline-block border-b-[1.5px] border-[#da291c] py-[4px] text-start md:border-b-[2.3px]">
-                <span className="flex items-center gap-3">
-                    {!status && !!onClick && <MinusOutlined />}
-                    {status && <PlusOutlined />}
-                    <h1
-                        className="text-start text-[16px] font-medium capitalize text-global
-                     md:text-[18px]"
-                    >
-                        {title}
-                    </h1>
-                </span>
+            <div className='flex items-center gap-3'>
+                {onClick && (
+                    <span className='text-teal-600 transition-transform duration-200'>
+                        {status ? <PlusOutlined className='text-lg' /> : <MinusOutlined className='text-lg' />}
+                    </span>
+                )}
+                <h1
+                    className={cn(
+                        'text-lg font-semibold tracking-tight text-gray-800 capitalize md:text-xl',
+                        'transition-colors duration-200 hover:text-teal-600'
+                    )}
+                >
+                    {title}
+                </h1>
             </div>
-            <div className="flex items-center">{!!option && option}</div>
+
+            {option && (
+                <div className='flex transform items-center transition-transform duration-200 hover:scale-105'>
+                    {option}
+                </div>
+            )}
         </div>
     );
 };

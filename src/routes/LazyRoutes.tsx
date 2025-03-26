@@ -10,7 +10,14 @@ export const ProductsPage = lazy(()=>import("~/pages/client/ProductPage/ProductP
 
 // Admin
 export const DashboardPage = lazy(() => import('../pages/Admin/_dashboard_'));
-
+// @Category
+export const CategoryList = lazy(() => import('~/pages/Admin/_category_'));
+export const CreateCategory = lazy(
+    () => import('~/pages/Admin/_category_/CreateCategory'),
+);
+export const UpdateCategory = lazy(
+    () => import('~/pages/Admin/_category_/UpdateCategory'),
+);
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;
 };

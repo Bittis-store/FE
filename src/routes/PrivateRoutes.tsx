@@ -1,8 +1,11 @@
 import { ADMIN_ROUTES } from '~/constants/router';
 import AdminLayout from '~/layouts/AdminLayout';
 import {
+    CategoryList,
+    CreateCategory,
     DashboardPage,
     Suspense,
+    UpdateCategory,
 } from './LazyRoutes';
 
 export const PrivateRoutes = [
@@ -21,6 +24,36 @@ export const PrivateRoutes = [
                         <DashboardPage />
                     </Suspense>
                 ),
+            },
+            // @Category
+            {
+                path: ADMIN_ROUTES.CATEGORIES,
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <CategoryList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ADMIN_ROUTES.CATEGORIES_CREATE,
+                        element: (
+                            <Suspense>
+                                <CreateCategory />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: `${ADMIN_ROUTES.CATEGORIES_EDIT}/:id`,
+                        element: (
+                            <Suspense>
+                                <UpdateCategory />
+                            </Suspense>
+                        ),
+                    },
+                ],
             },
         ],
     },

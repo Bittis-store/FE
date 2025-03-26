@@ -1,29 +1,63 @@
-import CarouselDisplay, { CarouselItem } from '~/components/CarouselDisplay';
-import DefaultCard from '~/components/ProductCard/DefaultCard';
-import { IProduct } from '~/types/Product';
+import { ReactNode } from 'react';
+import { cn } from '~/utils/TailwindMerge';
+import TitleDisplay from '../TitleDisplay';
 
-type Props = {
-    isLoading: boolean;
-    products: IProduct[];
+interface IWrapperListProps {
+    children: ReactNode;
+    hasData?: boolean;
     title: string;
-};
+    option?: ReactNode;
+    className?: string;
+    outline?: boolean;
+    classic?: boolean;
+    box?: boolean;
+    lineButtonBox?: boolean;
+    handleClick?: () => void;
+}
 
-const WrapperList = ({ isLoading, products, title }: Props) => {
+const WrapperList: React.FC<IWrapperListProps> = ({
+    children,
+    hasData = true,
+    title,
+    className,
+    handleClick,
+    outline,
+    lineButtonBox,
+    classic,
+    box,
+    option,
+}) => {
     return (
-        <div className='max-w-screen-default mx-4 my-4 default:mx-auto'>
-            <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
-                <h3 className='text-global text-xl font-bold'>{title}</h3>
-                <CarouselDisplay className='mt-4'>
-                    {!isLoading &&
-                        products?.map((item, index: number) => {
-                            return (
-                                <CarouselItem key={index}>
-                                    <DefaultCard item={item} />
-                                </CarouselItem>
-                            );
-                        })}
-                </CarouselDisplay>
+        <div
+            className={cn(
+                'rounded-2xl bg-white shadow-lg transition-all duration-300 ease-in-out',
+                {
+                    'border border-gray-200 hover:shadow-xl': outline,
+                    'my-10': classic,
+                    'border-b-2 border-gray-200 pb-4': lineButtonBox,
+                    'p-6': box,
+                },
+                className
+            )}
+        >
+            <div
+                className={cn('flex items-center justify-between px-6 py-4', {
+                    'border-b border-gray-200': !lineButtonBox,
+                })}
+            >
+                <TitleDisplay
+                    onClick={handleClick}
+                    title={title}
+                    className='text-xl font-semibold tracking-tight text-gray-800 transition-colors duration-200 hover:text-teal-600'
+                />
+                <div className='flex items-center gap-3'>
+                    {option && (
+                        <div className='transform transition-transform duration-200 hover:scale-105'>{option}</div>
+                    )}
+                </div>
             </div>
+
+            <div className={cn('p-6', { 'opacity-50': !hasData })}>{children}</div>
         </div>
     );
 };
