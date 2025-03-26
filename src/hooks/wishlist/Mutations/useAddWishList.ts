@@ -11,7 +11,6 @@ const useMutationAddWishList = () => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.WISHLIST.LIST],
             });
-            // showMessage('Product successfully added to wishlist!', 'success');
         },
     });
 };

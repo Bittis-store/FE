@@ -11,11 +11,12 @@ import { useGetProductDiscount } from '~/hooks/Products/Queries/useGetProductDis
 import { IProduct } from '~/types/Product';
 
 export default function Homepage() {
-    const { data: productBest, isLoading: bestLoading } = useGetProductBest();
-    const { data: productDiscount, isLoading: discountLoading } = useGetProductDiscount();
+    // const { data: productBest, isLoading: bestLoading } = useGetProductBest();
+    // const { data: productDiscount, isLoading: discountLoading } = useGetProductDiscount();
     const { data: allProducts, isLoading: allProductLoading } = useGetAllProducts({});
 
     const { windowWidth } = useWindowSize();
+
 
     const products: IProduct[] = [
         {
@@ -178,19 +179,19 @@ export default function Homepage() {
                 </div>
             </div>
 
-            <WrapperList isLoading={bestLoading} products={products} title='Sản phẩm nổi bật' />
-            <WrapperList isLoading={discountLoading} products={products} title='Sản phẩm giá tốt' />
+            {/* <WrapperList isLoading={bestLoading} products={products} title='Sản phẩm nổi bật' /> */}
+            {/* <WrapperList isLoading={discountLoading} products={products} title='Sản phẩm giá tốt' /> */}
 
             <div className='max-w-screen-default mx-4 mt-4 default:mx-auto'>
                 <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
-                    {!allProductLoading && products && (
+                    {!allProductLoading && allProducts && (
                         <ShowMoreList
                             enableButton={{
                                 enable: true,
                                 hrefClick: '/products',
                                 limit: windowWidth < 1650 ? 6 : 8,
                             }}
-                            data={products}
+                            data={allProducts.products}
                         />
                     )}
                 </div>

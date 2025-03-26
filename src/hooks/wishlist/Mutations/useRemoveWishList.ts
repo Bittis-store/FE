@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
-import { QUERY_KEY } from '@/constants/queryKey';
-import wishlistService from '@/services/wishlist.service';
-import { RootState } from '@/store/store';
+import { QUERY_KEY } from '~/constants/queryKey';
+import wishlistService from '~/services/wishlist.service';
+import { RootState } from '~/store/store';
 
 export const useMutationRemoveWishList = () => {
     const queryClient = useQueryClient();

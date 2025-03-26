@@ -1,9 +1,17 @@
 import { HeartFilled } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import useFilter from '~/hooks/common/useFilter';
+import { RootState } from '~/store/store';
 import { IProduct } from '~/types/Product';
 import { Currency } from '~/utils/FormatCurreny';
+import DrawerAddCart from '../DrawerAddCart';
 
 export default function DefaultCard({ item }: { item: IProduct }) {
+    const navigate = useNavigate();
+    const { query } = useFilter();
+    const user = useSelector((state: RootState) => state.auth.user);
+
     const originalPrice = item.discount ? item.price / (1 - item.discount / 100) : item.price;
 
     return (
@@ -14,9 +22,12 @@ export default function DefaultCard({ item }: { item: IProduct }) {
                 </Link>
 
                 <div className='absolute bottom-0 flex w-full items-center justify-between px-2 py-1 opacity-0 duration-300 group-hover:opacity-100'>
-                    <div className='text-global hover:bg-primary flex h-[32px] w-full items-center justify-center rounded-md bg-white px-2 text-sm font-medium shadow-md duration-300 hover:!text-white'>
+                    <DrawerAddCart
+                        item={item}
+                        classNameBtn='text-global hover:bg-hover px-10 duration-300 hover:text-white bg-white shadow-md flex justify-center w-full h-[32px] flex items-center justify-center rounded-md text-sm font-medium'
+                    >
                         Thêm vào giỏ hàng
-                    </div>
+                    </DrawerAddCart>
 
                     <button className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300'>
                         <HeartFilled />
@@ -24,7 +35,7 @@ export default function DefaultCard({ item }: { item: IProduct }) {
                 </div>
             </div>
 
-            <Link to={`/`} className='text-sm text-black'>
+            <Link to={`/products/${item._id}`} className='text-sm text-black'>
                 <h3 className='mt-4 w-[90%] overflow-hidden font-semibold text-ellipsis whitespace-nowrap text-black'>
                     {item.name}
                 </h3>

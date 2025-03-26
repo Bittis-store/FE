@@ -5,6 +5,11 @@ export const MAIN_ROUTES = {
     FORGOT_PASSWORD: '/forgotpassword',
     PRODUCTS: '/products',
     MY_ORDERS: '/my-orders',
+    PROFILE: '/account',
+    WISH_LIST: '/wishlist',
+    CART: '/cart',
+    SHIPPING: '/shipping',
+    CHECKOUT: '/checkout',
 };
 export const ADMIN_ROUTES = {
     DASHBOARD: '/admin',

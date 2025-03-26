@@ -1,27 +1,18 @@
 import { QUERY_KEY } from '~/constants/queryKey';
 import { cartService } from '~/services/cart.service';
-import { setOpen } from '~/store/slice/cartSlice';
 import { useTypedSelector } from '~/store/store';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
-import { useToast } from '~/context/ToastProvider';
 
-export const useMutationAddToCart = () => {
-    const cartDispatch = useDispatch();
+export const useUpdateQuantity = () => {
     const queryClient = useQueryClient();
     const user = useTypedSelector((state) => state.auth.user);
-    const toast = useToast();
     return useMutation({
-        mutationKey: ['ADD_TO_CART'],
-        mutationFn: (payload: any) => cartService.addToCart(payload),
+        mutationKey: ['UPDATE_QUANTITY'],
+        mutationFn: (payload) => cartService.updateQuantity(payload),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.CART, user?._id],
             });
-            cartDispatch(setOpen());
-        },
-        onError: (error: any) => {
-            toast('error', error.response.data.message);
         },
     });
 };
