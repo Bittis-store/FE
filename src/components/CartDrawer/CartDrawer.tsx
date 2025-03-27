@@ -139,7 +139,7 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
                                                 description={
                                                     <>
                                                         <Link
-                                                            className='text-global hover:text-hover text-base font-medium'
+                                                            className='text-global! hover:text-hover! text-base font-medium'
                                                             to={`${MAIN_ROUTES.PRODUCTS}/${product?.productId}`}
                                                         >
                                                             {product?.name}
@@ -161,10 +161,6 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
                                                                         <span
                                                                             className={clsx(
                                                                                 'text-base leading-5 font-semibold text-[#222]'
-                                                                                // {
-                                                                                //     'text-red-600':
-                                                                                //         product.productId.discountPercentage > 0,
-                                                                                // }
                                                                             )}
                                                                         >
                                                                             {Currency(product.price)}
@@ -266,7 +262,7 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
                                 <p className='text-global'>
                                     Hoặc{' '}
                                     <button
-                                        className='hover:text-global ml-1 font-medium text-orange-500 duration-300'
+                                        className='hover:text-global cursor-pointer ml-1 font-medium text-orange-500 duration-300'
                                         onClick={onClose}
                                     >
                                         Tiếp tục mua hàng
@@ -284,7 +280,7 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
                         </p>
                         <button
                             onClick={onClose}
-                            className='mt-12 h-[48px] rounded-md border-[1px] border-[#da291c] px-12 font-bold text-[#da291c]'
+                            className='mt-12 h-[48px] cursor-pointer rounded-md border-[1px] border-[#da291c] px-12 font-bold text-[#da291c]'
                         >
                             Tiếp tục mua hàng
                         </button>

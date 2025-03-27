@@ -215,7 +215,7 @@ export default function DrawerAddCart({ children, classNameBtn, item }: IPropsDr
                         {hasAvailableStock ? (
                             <>
                                 <div className='my-2'>
-                                    <div>
+                                    <div className='mb-1'>
                                         <span className='text-global'>Kích cỡ</span>:{' '}
                                         <span className='text-global font-semibold'>{selectedSize?.size?.name}</span>
                                     </div>
@@ -242,7 +242,7 @@ export default function DrawerAddCart({ children, classNameBtn, item }: IPropsDr
                                 </div>
 
                                 <div className='my-2'>
-                                    <div>
+                                    <div className='mb-1'>
                                         <span className='text-global'>Màu sắc</span>:{' '}
                                         <span className='text-global font-semibold'>{selectedColor?.color.name}</span>
                                     </div>
@@ -297,9 +297,7 @@ export default function DrawerAddCart({ children, classNameBtn, item }: IPropsDr
                                     min={1}
                                     max={selectedColor?.stock}
                                     value={valueQuantity}
-                                    className='flex h-[38px] w-[48px] items-center'
                                     controls={false}
-                                    style={{ paddingLeft: '30%' }}
                                     onChange={onChangeInputQuantity}
                                     onPressEnter={(e: any) => {
                                         if (selectedColor && e.target.value > selectedColor.stock) {
@@ -325,7 +323,7 @@ export default function DrawerAddCart({ children, classNameBtn, item }: IPropsDr
                             <button
                                 disabled={isPending}
                                 onClick={handleAddToCart}
-                                className='text-global hover:border-hover hover:text-hover border-global border-opacity-55 flex h-[38px] w-[320px] items-center justify-center rounded-md border-[1px] bg-white font-medium shadow-md duration-300'
+                                className='text-global hover:border-hover cursor-pointer hover:text-hover border-global border-opacity-55 flex h-[38px] w-[320px] items-center justify-center rounded-md border-[1px] bg-white font-medium shadow-md duration-300'
                             >
                                 {isPending ? <Spin size='small'></Spin> : 'Thêm vào giỏ hàng'}
                             </button>

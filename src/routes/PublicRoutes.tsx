@@ -1,10 +1,9 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { ForgotPasswordPage, HomaPage, LoginPage, ProductsPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
+import { CartDetailPage, ForgotPasswordPage, HomaPage, LoginPage, ProductsDetailPage, ProductsPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
 import NotFound from "~/pages/NotFound";
-import ProductDetailsPage from "~/pages/client/ProductDetailsPage/Productdetails";
 
 
  const PublicRoutes = [
@@ -68,7 +67,15 @@ import ProductDetailsPage from "~/pages/client/ProductDetailsPage/Productdetails
                 path:  `${MAIN_ROUTES.PRODUCTS}/:id`,
                 element: (
                     <Suspense>
-                            <ProductDetailsPage />
+                            <ProductsDetailPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path:  `${MAIN_ROUTES.CART}`,
+                element: (
+                    <Suspense>
+                            <CartDetailPage />
                     </Suspense>
                 ),
             },

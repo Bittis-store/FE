@@ -435,7 +435,6 @@ const ProductDetailsPage = () => {
                                                         onChange={onChangeInputQuantity}
                                                         min={1}
                                                         max={selectedColor.stock}
-                                                        style={{ paddingLeft: '33%' }}
                                                         value={valueQuantity}
                                                         controls={false}
                                                         onPressEnter={(e: any) => {

@@ -229,15 +229,13 @@ const ProductPage = () => {
                                         className='cursor-pointer'
                                         onClick={() => {
                                             updateGridUI('2');
-                                            console.log('2');
                                         }}
                                     />
                                     <CiGrid41
                                         size={24}
                                         className='cursor-pointer'
                                         onClick={() => {
-                                            updateGridUI('4');
-                                            console.log('4');
+                                            updateGridUI('5');
                                         }}
                                     />
                                 </div>
@@ -253,7 +251,7 @@ const ProductPage = () => {
                         <div
                             className={clsx('grid gap-4', {
                                 'grid-cols-2': grid === '2',
-                                'grid-cols-4': grid === '4',
+                                'grid-cols-5': grid === '5',
                                 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4': !grid,
                             })}
                         >
@@ -263,13 +261,15 @@ const ProductPage = () => {
                         {products && products?.length === 0 && <Empty />}
                         {isProductLoading && <Skeleton />}
                         {products && products?.length > 0 && (
-                            <Pagination
-                                className='item-center my-4 flex justify-center'
-                                current={Number(query.page) || 1}
-                                pageSize={limit}
-                                total={totalDocs}
-                                onChange={onPageChange}
-                            />
+                            <div className='mt-10'>
+                                <Pagination
+                                    className='item-center flex justify-center'
+                                    current={Number(query.page) || 1}
+                                    pageSize={limit}
+                                    total={totalDocs}
+                                    onChange={onPageChange}
+                                />
+                            </div>
                         )}
                     </div>
                 </div>

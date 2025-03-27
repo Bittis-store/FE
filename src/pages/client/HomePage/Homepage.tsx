@@ -9,6 +9,8 @@ import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
 import { useGetProductBest } from '~/hooks/Products/Queries/useGetProductBest';
 import { useGetProductDiscount } from '~/hooks/Products/Queries/useGetProductDiscount';
 import { IProduct } from '~/types/Product';
+import CarouselDisplay, { CarouselItem } from '~/components/CarouselDisplay';
+import DefaultCard from '~/components/ProductCard/DefaultCard';
 
 export default function Homepage() {
     // const { data: productBest, isLoading: bestLoading } = useGetProductBest();
@@ -16,7 +18,6 @@ export default function Homepage() {
     const { data: allProducts, isLoading: allProductLoading } = useGetAllProducts({});
 
     const { windowWidth } = useWindowSize();
-
 
     const products: IProduct[] = [
         {
@@ -179,23 +180,38 @@ export default function Homepage() {
                 </div>
             </div>
 
-            {/* <WrapperList isLoading={bestLoading} products={products} title='Sản phẩm nổi bật' /> */}
-            {/* <WrapperList isLoading={discountLoading} products={products} title='Sản phẩm giá tốt' /> */}
-
-            <div className='max-w-screen-default mx-4 mt-4 default:mx-auto'>
-                <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
-                    {!allProductLoading && allProducts && (
-                        <ShowMoreList
-                            enableButton={{
-                                enable: true,
-                                hrefClick: '/products',
-                                limit: windowWidth < 1650 ? 6 : 8,
-                            }}
-                            data={allProducts.products}
-                        />
-                    )}
+            <WrapperList title='Sản phẩm nổi bật'>
+                <div className='max-w-screen-default mx-4 my-4 default:mx-auto'>
+                    <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
+                        <CarouselDisplay className='mt-4'>
+                            {products?.map((item, index: number) => {
+                                return (
+                                    <CarouselItem key={index}>
+                                        <DefaultCard item={item} />
+                                    </CarouselItem>
+                                );
+                            })}
+                        </CarouselDisplay>
+                    </div>
                 </div>
-            </div>
+            </WrapperList>
+
+            <WrapperList title='Tất cả sản phẩm'>
+                <div className='max-w-screen-default mx-4 mt-4 default:mx-auto'>
+                    <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
+                        {!allProductLoading && allProducts && (
+                            <ShowMoreList
+                                enableButton={{
+                                    enable: true,
+                                    hrefClick: '/products',
+                                    limit: windowWidth < 1650 ? 6 : 8,
+                                }}
+                                data={allProducts.products}
+                            />
+                        )}
+                    </div>
+                </div>
+            </WrapperList>
         </>
     );
 }

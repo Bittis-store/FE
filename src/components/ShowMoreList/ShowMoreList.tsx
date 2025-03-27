@@ -18,7 +18,6 @@ export default function ShowMoreList({
 }: IPropsShowmoreList) {
     return (
         <div>
-            <h3 className='text-global text-xl font-bold'>Tất cả sản phẩm</h3>
             <div className='mt-4 grid grid-cols-1 gap-8 default:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5'>
                 {enableButton.enable &&
                     data.slice(0, enableButton.limit).map((item, index) => <DefaultCard key={index} item={item} />)}
