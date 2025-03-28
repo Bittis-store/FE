@@ -18,9 +18,8 @@ export default function Homepage() {
 
     const { windowWidth } = useWindowSize();
 
-
     return (
-        <>
+        <div className='flex flex-col gap-3.5'>
             <Banner />
             <div className='mt-2 py-6 pb-10'>
                 <div className='max-w-screen-default mx-7'>
@@ -109,6 +108,6 @@ export default function Homepage() {
                     </div>
                 </div>
             </WrapperList>
-        </>
+        </div>
     );
 }
