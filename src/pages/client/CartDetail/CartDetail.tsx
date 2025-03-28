@@ -30,7 +30,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '~/context/ToastProvider';
 
 export default function CartDetail() {
-    useDocumentTitle('ADSTORE - Chi tiết giỏ hàng');
+    useDocumentTitle('BITTIS-STORE - Chi tiết giỏ hàng');
     const { data: products, isLoading } = useGetMyCart();
     const {
         mutate: removeAllItems,
@@ -86,7 +86,6 @@ export default function CartDetail() {
     const productIdArray = products?.items.map((item) => item._id);
     const productsIdRef = useRef(productIdArray);
     useEffect(() => {
-        
         // eslint-disable-next-line @typescript-eslint/no-shadow
         const productIdArray = products?.items.map((item) => item._id);
         if (
@@ -322,7 +321,7 @@ export default function CartDetail() {
                     okText='Đồng ý'
                     cancelText='Hủy'
                 >
-                    <Button loading={isPending} type='text' className=' text-indigo-600 hover:text-indigo-500'>
+                    <Button loading={isPending} type='text' className='text-indigo-600 hover:text-indigo-500'>
                         <DeleteOutlined />
                     </Button>
                 </Popconfirm>

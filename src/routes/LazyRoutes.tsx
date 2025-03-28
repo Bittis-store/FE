@@ -42,6 +42,12 @@ export const ShippingPage = lazy(
 export const CheckoutPage = lazy(
     () => import('~/pages/client/Checkout/CheckOut'),
 );
+export const OrderSuccessPage = lazy(
+    () => import('~/pages/client/Checkout/OrderSuccess'),
+);
+export const OrderErrorPage = lazy(
+    () => import('~/pages/client/Checkout/OrderError'),
+);
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;

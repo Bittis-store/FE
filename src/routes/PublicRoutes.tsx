@@ -1,5 +1,5 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, ProductsDetailPage, ProductsPage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
+import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, OrderErrorPage, OrderSuccessPage, ProductsDetailPage, ProductsPage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
@@ -95,6 +95,22 @@ import NotFound from "~/pages/NotFound";
             element: (
                 <Suspense>
                     <CheckoutPage />
+                </Suspense>
+            ),
+        },
+        {
+            path: MAIN_ROUTES.SUCCESS_ORDER,
+            element: (
+                <Suspense>
+                    <OrderSuccessPage />
+                </Suspense>
+            ),
+        },
+        {
+            path: MAIN_ROUTES.ERROR_ORDER,
+            element: (
+                <Suspense>
+                    <OrderErrorPage />
                 </Suspense>
             ),
         },

@@ -13,7 +13,7 @@ export default function OrderSuccess() {
         return null;
     }
     return (
-        <Watermark content={['ADSTORE', 'Thank you!']}>
+        <Watermark content={['BITTIS-STORE', 'Thank you!']}>
             <div className='h-[100vh]' />
             <Result
                 status='success'
@@ -21,15 +21,15 @@ export default function OrderSuccess() {
                 subTitle='Bạn sẽ nhận được thông báo xác nhận qua email của chúng tôi.'
                 className='bg-gray-3 bg-opacity-65 fixed top-[50%] left-[50%] z-99999 -translate-x-[50%] -translate-y-[50%] rounded-md border border-transparent p-10'
                 extra={[
-                    <Button
-                        onClick={() => {
-                            navigate(MAIN_ROUTES.MY_ORDERS, { replace: true });
-                        }}
-                        type='primary'
-                        key='home'
-                    >
-                        Kiểm tra trạng thái
-                    </Button>,
+                    // <Button
+                    //     onClick={() => {
+                    //         navigate(MAIN_ROUTES.MY_ORDERS, { replace: true });
+                    //     }}
+                    //     type='primary'
+                    //     key='home'
+                    // >
+                    //     Kiểm tra trạng thái
+                    // </Button>,
                     <Button
                         key='my-order'
                         onClick={() => {
