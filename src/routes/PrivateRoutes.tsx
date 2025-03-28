@@ -4,12 +4,16 @@ import {
     CategoryList,
     CreateCategory,
     CreateProduct,
+    CreateSize,
     DashboardPage,
     ProductList,
+    SizeList,
     Suspense,
     UpdateCategory,
     UpdateProduct,
+    UpdateSize,
 } from './LazyRoutes';
+import { Outlet } from 'react-router-dom';
 
 export const PrivateRoutes = [
     {
@@ -53,6 +57,49 @@ export const PrivateRoutes = [
                         element: (
                             <Suspense>
                                 <UpdateCategory />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            // @Size
+            {
+                path: ADMIN_ROUTES.SIZES,
+                element: (
+                    <Suspense>
+                        <Outlet />
+                    </Suspense>
+                ),
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <SizeList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <SizeList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <CreateSize />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: (
+                            <Suspense>
+                                <UpdateSize />
                             </Suspense>
                         ),
                     },

@@ -21,6 +21,10 @@ export const CreateCategory = lazy(
 export const UpdateCategory = lazy(
     () => import('~/pages/Admin/_category_/UpdateCategory'),
 );
+// @Size
+export const SizeList = lazy(() => import('~/pages/Admin/_size_/'));
+export const CreateSize = lazy(() => import('~/pages/Admin/_size_/CreateSize'));
+export const UpdateSize = lazy(() => import('~/pages/Admin/_size_/UpdateSize'));
 
 // @Product
 export const ProductList = lazy(() => import('~/pages/Admin/_product_'));
