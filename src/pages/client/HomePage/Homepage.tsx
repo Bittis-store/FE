@@ -5,9 +5,7 @@ import Banner from '~/components/Banner';
 import ShowMoreList from '~/components/ShowMoreList';
 import WrapperList from '~/components/_common/wrapperList/WrapperList';
 import useWindowSize from '~/hooks/_common/useWindowSize';
-import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
-import { useGetProductBest } from '~/hooks/Products/Queries/useGetProductBest';
-import { useGetProductDiscount } from '~/hooks/Products/Queries/useGetProductDiscount';
+import useGetProducts from '~/hooks/Products/Queries/useGetProducts';
 import { IProduct } from '~/types/Product';
 import CarouselDisplay, { CarouselItem } from '~/components/CarouselDisplay';
 import DefaultCard from '~/components/ProductCard/DefaultCard';
@@ -15,7 +13,7 @@ import DefaultCard from '~/components/ProductCard/DefaultCard';
 export default function Homepage() {
     // const { data: productBest, isLoading: bestLoading } = useGetProductBest();
     // const { data: productDiscount, isLoading: discountLoading } = useGetProductDiscount();
-    const { data: allProducts, isLoading: allProductLoading } = useGetAllProducts({});
+    const { data: allProducts, isLoading: allProductLoading } = useGetProducts({});
 
     const { windowWidth } = useWindowSize();
 
@@ -206,7 +204,7 @@ export default function Homepage() {
                                     hrefClick: '/products',
                                     limit: windowWidth < 1650 ? 6 : 8,
                                 }}
-                                data={allProducts.products}
+                                data={allProducts.data.products}
                             />
                         )}
                     </div>

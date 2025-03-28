@@ -2,15 +2,14 @@ import FilterSidebar from '~/components/FilterSidebar/FilterSidebar';
 import ProductCard from '~/components/ProductCard/ProductCard';
 import SortPopup from '~/components/SortPopup/SortPopup';
 import useFilter from '~/hooks/common/useFilter';
-import { useGetAllProducts } from '~/hooks/Products/Queries/useGetAllProducts';
+import useGetProducts from '~/hooks/Products/Queries/useGetProducts';
 ('~/hooks/Products/Queries/useGetAllProducts');
 import { DownOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Dropdown, Empty, Pagination, RadioChangeEvent, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import banner from '~/assets/img/Desktop_Homepage_Banner01.jpg';
 import { IProduct } from '~/types/Product';
-import { CiGrid2H, CiGrid31, CiGrid41 } from 'react-icons/ci';
-import { useDispatch } from 'react-redux';
+import { CiGrid2H, CiGrid41 } from 'react-icons/ci';
 import useWindowSize from '~/hooks/_common/useWindowSize';
 import { useEffect } from 'react';
 import clsx from 'clsx';
@@ -18,14 +17,13 @@ import clsx from 'clsx';
 const ProductPage = () => {
     const limit = 10;
     const { query, updateQueryParam, reset, grid, updateGridUI } = useFilter();
-    const dispatch = useDispatch();
     const { windowWidth } = useWindowSize();
     const queryKeys = Object.keys(query);
     let isResetFilter = false;
-    const { data: productResponse, isLoading: isProductLoading } = useGetAllProducts(query);
-    const products = productResponse?.products;
+    const { data: productResponse, isLoading: isProductLoading } = useGetProducts(query);
+    const products = productResponse?.data.products;
     const totalProducts = products?.length;
-    const totalDocs = productResponse?.totalDocs;
+    const totalDocs = productResponse?.data.totalDocs;
 
     const productsData: IProduct[] = [
         {
@@ -175,6 +173,7 @@ const ProductPage = () => {
         if (grid !== '') {
             updateGridUI('');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [windowWidth]);
 
     console.log(grid);

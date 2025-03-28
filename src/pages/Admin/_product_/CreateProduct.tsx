@@ -2,7 +2,7 @@ import { PlusOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Button, Form, Input, InputNumber, Select, UploadFile, UploadProps } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { Link } from 'react-router-dom';
-import { nameValidator, variationsValidator } from '~/validation/Products/validators';
+import { variationsValidator } from '~/validation/Products/validators';
 import WrapperCard from './_component/WrapperCard';
 import { ADMIN_ROUTES } from '~/constants/router';
 import WrapperPageAdmin from '~/pages/Admin/_common/WrapperPageAdmin';

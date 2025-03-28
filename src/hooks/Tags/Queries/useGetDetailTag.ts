@@ -1,5 +1,5 @@
-import { QUERY_KEY } from '@/constants/queryKey';
-import tagService from '@/services/tag.service';
+import { QUERY_KEY } from '~/constants/queryKey';
+import tagService from '~/services/tag.service';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetDetailTag = (id: string) => {

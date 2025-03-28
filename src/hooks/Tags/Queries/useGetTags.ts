@@ -1,6 +1,6 @@
-import { QUERY_KEY } from '@/constants/queryKey';
-import tagService from '@/services/tag.service';
-import { Params } from '@/types/Api';
+import { QUERY_KEY } from '~/constants/queryKey';
+import tagService from '~/services/tag.service';
+import { Params } from '~/types/Api';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetTags = (params: Params) => {
