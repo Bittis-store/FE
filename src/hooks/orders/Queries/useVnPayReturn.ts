@@ -1,5 +1,5 @@
-import { QUERY_KEY } from '@/constants/queryKey';
-import orderService from '@/services/order.service';
+import { QUERY_KEY } from '~/constants/queryKey';
+import orderService from '~/services/order.service';
 import { useQuery } from '@tanstack/react-query';
 
 const UseVNPayReturn = (params: URLSearchParams) => {

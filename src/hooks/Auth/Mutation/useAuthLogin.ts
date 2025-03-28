@@ -3,7 +3,7 @@ import { doLogin } from '~/store/slice/authSlice';
 import { useAppDispatch } from '~/store/store';
 import { LoginFormData } from '~/validation/Auth/Auth';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '~/context/ToastProvider';
 
 export const useAuthLogin = () => {

@@ -1,5 +1,5 @@
 import { Form, Input, Select } from 'antd';
-import { IAttributesValue } from '@/types/Attributes';
+import { IAttributesValue } from '~/types/Attributes';
 
 const AttributesItem = ({
     attribute,

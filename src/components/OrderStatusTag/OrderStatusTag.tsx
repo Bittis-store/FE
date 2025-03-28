@@ -6,7 +6,7 @@ import {
     MinusCircleOutlined,
 } from '@ant-design/icons';
 import { Tag } from 'antd';
-import { OrderStatus } from '@/constants/enum';
+import { OrderStatus } from '~/constants/enum';
 
 const OrderStatusTag = ({ status }: { status: OrderStatus }) => {
     switch (status) {

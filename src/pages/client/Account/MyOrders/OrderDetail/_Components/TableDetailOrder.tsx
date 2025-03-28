@@ -3,8 +3,8 @@ import { TableProps } from 'antd/lib';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MAIN_ROUTES } from '~/constants/router';
-// import { useGetVariantDetail } from '@/hooks/products/Queries/useGetVariantDetail';
-// import RateBtn from '@/pages/Clients/Account/MyOrders/Components/RateBtn';
+// import { useGetVariantDetail } from '~/hooks/products/Queries/useGetVariantDetail';
+// import RateBtn from '~/pages/Clients/Account/MyOrders/Components/RateBtn';
 import { setReviewData } from '~/store/slice/rateProductSlice';
 import { Currency } from '~/utils';
 

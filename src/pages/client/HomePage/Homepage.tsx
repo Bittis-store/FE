@@ -140,13 +140,13 @@ export default function Homepage() {
     return (
         <>
             <Banner />
-            <div className='mt-2 border-b-[1px] border-[#c0c0c0] py-6 pb-10'>
-                <div className='max-w-screen-default mx-7 default:mx-auto'>
+            <div className='mt-2 py-6 pb-10'>
+                <div className='max-w-screen-default mx-7'>
                     <div className=''>
                         <div className='flex justify-between gap-10'>
                             <div className='w-[50%]'>
                                 <Link to='/' className='block h-[320px]'>
-                                    <img src={bannerOne} alt='' className='block h-full w-full' />
+                                    <img src={bannerOne} alt='' className='block h-full w-full object-cover' />
                                 </Link>
                                 <Link
                                     to='/'
@@ -161,7 +161,7 @@ export default function Homepage() {
                             </div>
                             <div className='w-[50%]'>
                                 <Link to='/' className='block h-[320px]'>
-                                    <img src={bannerTwo} alt='' className='block h-full w-full' />
+                                    <img src={bannerTwo} alt='' className='block h-full w-full object-cover' />
                                 </Link>
                                 <Link
                                     to='/'
@@ -181,8 +181,8 @@ export default function Homepage() {
             </div>
 
             <WrapperList title='Sản phẩm nổi bật'>
-                <div className='max-w-screen-default mx-4 my-4 default:mx-auto'>
-                    <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
+                <div className='max-w-screen-default mx-4 my-4'>
+                    <div className='2xl:max-w-screen-default mt-4 w-full'>
                         <CarouselDisplay className='mt-4'>
                             {products?.map((item, index: number) => {
                                 return (
@@ -196,9 +196,9 @@ export default function Homepage() {
                 </div>
             </WrapperList>
 
-            <WrapperList title='Tất cả sản phẩm'>
-                <div className='max-w-screen-default mx-4 mt-4 default:mx-auto'>
-                    <div className='2xl:max-w-screen-default mt-4 w-full default:mx-auto lg:max-w-[1200px]'>
+            <WrapperList title='Tất cả sản phẩm' className='mt-4'>
+                <div className='max-w-screen-default mx-4 mt-4'>
+                    <div className='2xl:max-w-screen-default mt-4 w-full'>
                         {!allProductLoading && allProducts && (
                             <ShowMoreList
                                 enableButton={{

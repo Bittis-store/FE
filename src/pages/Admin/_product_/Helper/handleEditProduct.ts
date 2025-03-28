@@ -1,4 +1,4 @@
-import { IProductForm } from '@/types/Product';
+import { IProductForm } from '~/types/Product';
 import { v4 as uuidv4 } from "uuid";
 
 

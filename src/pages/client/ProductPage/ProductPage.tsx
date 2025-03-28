@@ -180,7 +180,7 @@ const ProductPage = () => {
     console.log(grid);
 
     return (
-        <div className='2xl:max-w-screen-default mx-4 w-full default:mx-auto lg:max-w-[1200px]'>
+        <div className='2xl:max-w-screen-default mx-4 w-full default:mx-auto'>
             <div className='flex gap-4'>
                 <div className='mt-6 basis-1/4'>
                     <FilterSidebar />

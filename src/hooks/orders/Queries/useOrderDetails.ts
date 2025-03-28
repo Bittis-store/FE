@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/queryKey';
-import instance from '@/utils/api/axiosIntance';
+import { QUERY_KEY } from '~/constants/queryKey';
+import instance from '~/utils/api/axiosIntance';
 
 const useOrderDetails = (id: string) => {
     /* eslint-disable */

@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 type IPropsDrawerAddCart = {
     children: React.ReactNode;
     classNameBtn?: string;
@@ -323,7 +323,7 @@ export default function DrawerAddCart({ children, classNameBtn, item }: IPropsDr
                             <button
                                 disabled={isPending}
                                 onClick={handleAddToCart}
-                                className='text-global hover:border-hover cursor-pointer hover:text-hover border-global border-opacity-55 flex h-[38px] w-[320px] items-center justify-center rounded-md border-[1px] bg-white font-medium shadow-md duration-300'
+                                className='text-global hover:border-hover hover:text-hover border-global border-opacity-55 flex h-[38px] w-[320px] cursor-pointer items-center justify-center rounded-md border-[1px] bg-white font-medium shadow-md duration-300'
                             >
                                 {isPending ? <Spin size='small'></Spin> : 'Thêm vào giỏ hàng'}
                             </button>

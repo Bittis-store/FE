@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '@/constants/queryKey';
-import { Params } from '@/types/Api';
-import instance from '@/utils/api/axiosIntance';
+import { QUERY_KEY } from '~/constants/queryKey';
+import { Params } from '~/types/Api';
+import instance from '~/utils/api/axiosIntance';
 
 const useGetAllOrders = (params: Params) => {
     return useQuery({

@@ -3,9 +3,12 @@ import AdminLayout from '~/layouts/AdminLayout';
 import {
     CategoryList,
     CreateCategory,
+    CreateProduct,
     DashboardPage,
+    ProductList,
     Suspense,
     UpdateCategory,
+    UpdateProduct,
 } from './LazyRoutes';
 
 export const PrivateRoutes = [
@@ -50,6 +53,36 @@ export const PrivateRoutes = [
                         element: (
                             <Suspense>
                                 <UpdateCategory />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+            // @Product
+            {
+                path: ADMIN_ROUTES.PRODUCTS,
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <ProductList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: ADMIN_ROUTES.PRODUCTS_CREATE,
+                        element: (
+                            <Suspense>
+                                <CreateProduct />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: `${ADMIN_ROUTES.PRODUCTS_EDIT}/:id`,
+                        element: (
+                            <Suspense>
+                                <UpdateProduct />
                             </Suspense>
                         ),
                     },

@@ -1,7 +1,7 @@
 import AuthServices from '~/services/auth.service';
 import { RegisterFormData } from '~/validation/Auth/Auth';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '~/context/ToastProvider';
 
 export const useAuthRegister = () => {

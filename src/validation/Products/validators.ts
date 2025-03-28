@@ -1,9 +1,9 @@
-import { IProductFiles, IProductVariation } from '@/types/Product';
+import { IProductFiles, IProductVariation } from '~/types/Product';
 import { errorMessage } from './Product';
 import {
     ACCEPT_FILE_TYPE,
     MAX_SIZE,
-} from '@/pages/Admin/_product_/Helper/_helper_';
+} from '~/pages/Admin/_product_/Helper/_helper_';
 
 /* eslint-disable */
 export const imagesValidator = async (_: any, images: IProductFiles) => {
@@ -77,7 +77,7 @@ export const variationsValidator = async (
         return await errorMessage('Hãy thêm ít nhất 1 biến thể cho sản phẩm!');
     }
 
-    
+
     const variationEmpty = variants.some(
         (variation) => variation === undefined,
     );
