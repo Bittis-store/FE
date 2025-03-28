@@ -1,5 +1,5 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { CartDetailPage, ForgotPasswordPage, HomaPage, LoginPage, ProductsDetailPage, ProductsPage, RegisterPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
+import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, ProductsDetailPage, ProductsPage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
@@ -71,20 +71,39 @@ import NotFound from "~/pages/NotFound";
                     </Suspense>
                 ),
             },
-            {
-                path:  `${MAIN_ROUTES.CART}`,
-                element: (
-                    <Suspense>
-                            <CartDetailPage />
-                    </Suspense>
-                ),
-            },
+           // @CheckOut
+           {
+            path: MAIN_ROUTES.CART,
+            element: (
+                <Suspense>
+                    <AuthProtected>
+                        <CartDetailPage />
+                    </AuthProtected>
+                </Suspense>
+            ),
+        },
+        {
+            path: MAIN_ROUTES.SHIPPING,
+            element: (
+                <Suspense>
+                    <ShippingPage />
+                </Suspense>
+            ),
+        },
+        {
+            path: MAIN_ROUTES.CHECKOUT,
+            element: (
+                <Suspense>
+                    <CheckoutPage />
+                </Suspense>
+            ),
+        },
         ],
-       
+
     },
     { path: '/404', element: <NotFound /> },
     { path: '*', element: <Navigate to={'/404'} /> },
-    
+
 ];
 
 export default PublicRoutes;

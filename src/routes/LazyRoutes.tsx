@@ -35,6 +35,14 @@ export const UpdateColor = lazy(
     () => import('~/pages/Admin/_color_/UpdateColor'),
 );
 
+// @shipping
+export const ShippingPage = lazy(
+    () => import('~/pages/client/Checkout/Shipping'),
+);
+export const CheckoutPage = lazy(
+    () => import('~/pages/client/Checkout/CheckOut'),
+);
+
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;
 };
