@@ -146,7 +146,7 @@ export const ProductsListColumns = ({
                             Cập nhật
                         </Link>
                     </Tooltip>
-                    {record.isActive && (
+                    {/* {record.isActive && (
                         <Tooltip title='Ẩn sản phẩm này'>
                             <Popconfirm
                                 placement='leftBottom'
@@ -177,7 +177,7 @@ export const ProductsListColumns = ({
                                 </p>
                             </Popconfirm>
                         </Tooltip>
-                    )}
+                    )} */}
                 </Space>
             ),
         },

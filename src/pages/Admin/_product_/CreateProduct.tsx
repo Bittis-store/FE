@@ -245,7 +245,7 @@ const CreateProduct = () => {
                 </div>
                 <Form.Item>
                     <div className='border-opacity-5 sticky right-0 bottom-0 my-2 flex justify-end rounded-md border-t-2 border-black bg-white p-4'>
-                        <Button
+                        {/* <Button
                             type='default'
                             htmlType='submit'
                             className='mr-3 px-5'
@@ -255,7 +255,7 @@ const CreateProduct = () => {
                             size='large'
                         >
                             Lưu và ẩn
-                        </Button>
+                        </Button> */}
                         <Button
                             type='primary'
                             htmlType='submit'
@@ -266,7 +266,7 @@ const CreateProduct = () => {
                             size='large'
                             onClick={handleSaveAndShow}
                         >
-                            Lưu và hiển thị
+                            Lưu
                         </Button>
                     </div>
                 </Form.Item>

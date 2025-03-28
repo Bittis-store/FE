@@ -79,7 +79,7 @@ export const PrivateRoutes = [
                         ),
                     },
                     {
-                        path: `${ADMIN_ROUTES.PRODUCTS_EDIT}/:id`,
+                        path: `${ADMIN_ROUTES.PRODUCTS_EDIT}/:id/edit`,
                         element: (
                             <Suspense>
                                 <UpdateProduct />

@@ -27,7 +27,7 @@ export const ADMIN_ROUTES = {
     PRODUCTS: '/admin/products',
     PRODUCTS_LIST: '/admin/products/list',
     PRODUCTS_CREATE: '/admin/products/create',
-    PRODUCTS_EDIT: '/admin/products/edit', // @id
+    PRODUCTS_EDIT: '/admin/products', // @id
 
     USERS: '/admin/users',
     USERS_CREATE: '/admin/users/create',
