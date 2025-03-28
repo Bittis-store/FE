@@ -11,6 +11,21 @@ export const ProductsDetailPage = lazy(()=>import("~/pages/client/ProductDetails
 export const CartDetailPage = lazy(()=>import("~/pages/client/CartDetail/CartDetail"));
 
 
+// @shipping
+export const ShippingPage = lazy(
+    () => import('~/pages/client/Checkout/Shipping'),
+);
+export const CheckoutPage = lazy(
+    () => import('~/pages/client/Checkout/CheckOut'),
+);
+export const OrderSuccessPage = lazy(
+    () => import('~/pages/client/Checkout/OrderSuccess'),
+);
+export const OrderErrorPage = lazy(
+    () => import('~/pages/client/Checkout/OrderError'),
+);
+
+
 // Admin
 export const DashboardPage = lazy(() => import('~/pages/Admin/_dashboard_'));
 // @Category
@@ -35,19 +50,13 @@ export const UpdateColor = lazy(
     () => import('~/pages/Admin/_color_/UpdateColor'),
 );
 
-// @shipping
-export const ShippingPage = lazy(
-    () => import('~/pages/client/Checkout/Shipping'),
+
+// @order admin
+export const ManageOrders = lazy(
+    () => import('~/pages/Admin/_order_/ManageOrder'),
 );
-export const CheckoutPage = lazy(
-    () => import('~/pages/client/Checkout/CheckOut'),
-);
-export const OrderSuccessPage = lazy(
-    () => import('~/pages/client/Checkout/OrderSuccess'),
-);
-export const OrderErrorPage = lazy(
-    () => import('~/pages/client/Checkout/OrderError'),
-);
+
+
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;

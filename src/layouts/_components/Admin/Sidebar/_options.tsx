@@ -25,7 +25,11 @@ export const menuGroups: IMenuItem[] = [
         label: 'Thống kê',
         route: ADMIN_ROUTES.DASHBOARD,
     },
-
+    {
+        icon: <ShoppingCartOutlined />,
+        label: 'Quản lý đơn hàng',
+        route: ADMIN_ROUTES.ORDERS,
+    },
     {
         icon: <AppstoreOutlined />,
         label: 'Quản lý sản phẩm',

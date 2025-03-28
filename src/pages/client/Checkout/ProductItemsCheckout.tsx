@@ -196,7 +196,7 @@ const ProductItemsCheckout: React.FC = () => {
                                 onChange={onChangePaymentMethod}
                             >
                                 <Radio value={0}>Thanh toán khi nhận hàng</Radio>
-                                <Radio value={1}>Thanh toán online qua VNPay</Radio>
+                                {/* <Radio value={1}>Thanh toán online qua VNPay</Radio> */}
                             </Radio.Group>
                         </div>
                     </div>

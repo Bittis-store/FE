@@ -7,6 +7,7 @@ import {
     CreateColor,
     CreateProduct,
     DashboardPage,
+    ManageOrders,
     ProductList,
     Suspense,
     UpdateCategory,
@@ -134,6 +135,15 @@ export const PrivateRoutes = [
                         ),
                     },
                 ],
+            },
+            // @order
+            {
+                path: ADMIN_ROUTES.ORDERS,
+                element: (
+                    <Suspense>
+                        <ManageOrders />
+                    </Suspense>
+                ),
             },
         ],
     },
