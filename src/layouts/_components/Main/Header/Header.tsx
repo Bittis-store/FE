@@ -17,7 +17,7 @@ export default function Header() {
                                 to={'/'}
                                 className='text-[4rem] font-extrabold uppercase duration-300 hover:text-orange-500'
                             >
-                                BITIS
+                                BITTIS
                             </Link>
                             <div>
                                 <ul className='flex'>

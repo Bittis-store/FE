@@ -12,6 +12,7 @@ import DefaultCard from '~/components/ProductCard/DefaultCard';
 import { useGetDetailProduct } from '~/hooks/Products/Queries/useGetDetailProduct';
 import { useTypedSelector } from '~/store/store';
 import { useMutationAddToCart } from '~/hooks/cart/Mutations/useAddCart';
+import { useGetRelatedProduct } from '~/hooks/Products/Queries/useGetRelatedProduct';
 
 interface TransformedVariant {
     size: {
@@ -38,118 +39,8 @@ const ProductDetailsPage = () => {
     // Mount State khi trang được khởi tạo để set mặc định variant đầu tiên
     const navigate = useNavigate();
     const isAuth = useTypedSelector((state) => state.auth.authenticate);
-
-    const relatedProducts: IProduct[] = [
-        {
-            _id: '2',
-            name: 'Áo Polo nam cao cấp',
-            isActive: true,
-            category: { name: 'Áo Polo', _id: 'cate-2' },
-            discount: 15,
-            price: 300000,
-            variants: [
-                {
-                    _id: 'var-8',
-                    color: { _id: 'color-8', hex: '#ff5733', name: 'Cam đậm' },
-                    size: { _id: 'size-1', name: 'M' },
-                    stock: 20,
-                    image: 'https://picsum.photos/300/400?random=8',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=8',
-                },
-                {
-                    _id: 'var-9',
-                    color: { _id: 'color-9', hex: '#c70039', name: 'Đỏ đô' },
-                    size: { _id: 'size-2', name: 'L' },
-                    stock: 15,
-                    image: 'https://picsum.photos/300/400?random=9',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=9',
-                },
-            ],
-            description: 'Áo Polo nam chất liệu cao cấp, thoải mái, phù hợp đi làm hoặc dạo phố.',
-            sold: 50,
-            tags: ['polo', 'thời trang', 'nam'],
-            createdAt: '2024-03-02T10:00:00Z',
-            updatedAt: '2024-03-06T14:00:00Z',
-        },
-        {
-            _id: '3',
-            name: 'Áo sơ mi trắng công sở',
-            isActive: true,
-            category: { name: 'Áo sơ mi', _id: 'cate-3' },
-            discount: 20,
-            price: 350000,
-            variants: [
-                {
-                    _id: 'var-10',
-                    color: { _id: 'color-10', hex: '#ffffff', name: 'Trắng' },
-                    size: { _id: 'size-3', name: 'XL' },
-                    stock: 30,
-                    image: 'https://picsum.photos/300/400?random=10',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=10',
-                },
-                {
-                    _id: 'var-11',
-                    color: { _id: 'color-11', hex: '#000000', name: 'Đen' },
-                    size: { _id: 'size-1', name: 'M' },
-                    stock: 25,
-                    image: 'https://picsum.photos/300/400?random=11',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=11',
-                },
-            ],
-            description: 'Áo sơ mi công sở sang trọng, dễ phối đồ, thích hợp cho môi trường làm việc.',
-            sold: 40,
-            tags: ['sơ mi', 'công sở', 'nam'],
-            createdAt: '2024-03-03T12:00:00Z',
-            updatedAt: '2024-03-07T16:00:00Z',
-        },
-        {
-            _id: '4',
-            name: 'Quần jean nam dáng slimfit',
-            isActive: true,
-            category: { name: 'Quần jean', _id: 'cate-4' },
-            discount: 10,
-            price: 450000,
-            variants: [
-                {
-                    _id: 'var-12',
-                    color: { _id: 'color-12', hex: '#1e90ff', name: 'Xanh dương' },
-                    size: { _id: 'size-4', name: 'S' },
-                    stock: 20,
-                    image: 'https://picsum.photos/300/400?random=12',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=12',
-                },
-            ],
-            description: 'Quần jean nam dáng slimfit trẻ trung, năng động, dễ dàng phối đồ.',
-            sold: 35,
-            tags: ['jean', 'thời trang', 'nam'],
-            createdAt: '2024-03-04T14:00:00Z',
-            updatedAt: '2024-03-08T10:00:00Z',
-        },
-        {
-            _id: '5',
-            name: 'Áo Hoodie nỉ bông ấm áp',
-            isActive: true,
-            category: { name: 'Áo Hoodie', _id: 'cate-5' },
-            discount: 25,
-            price: 500000,
-            variants: [
-                {
-                    _id: 'var-13',
-                    color: { _id: 'color-13', hex: '#808080', name: 'Xám' },
-                    size: { _id: 'size-5', name: 'M' },
-                    stock: 30,
-                    image: 'https://picsum.photos/300/400?random=13',
-                    imageUrlRef: 'https://picsum.photos/600/800?random=13',
-                },
-            ],
-            description: 'Áo Hoodie chất liệu nỉ bông ấm áp, phù hợp cho mùa đông lạnh giá.',
-            sold: 20,
-            tags: ['hoodie', 'ấm áp', 'nam'],
-            createdAt: '2024-03-05T16:00:00Z',
-            updatedAt: '2024-03-09T12:00:00Z',
-        },
-    ];
-
+    const { data: relatedProduct } = useGetRelatedProduct(id ? id : '');
+    
     const handleChooseSize = (item: any) => {
         setValueQuantity(1);
         // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -545,8 +436,8 @@ const ProductDetailsPage = () => {
                     {/* RELATED PRODUCTS */}
                     <div className='text-global mt-5 text-xl font-bold'>Gợi ý mua cùng</div>
                     <CarouselDisplay className='mt-4'>
-                        {relatedProducts &&
-                            relatedProducts.map((item, index: number) => {
+                        {relatedProduct &&
+                            relatedProduct.map((item, index: number) => {
                                 return (
                                     <CarouselItem key={index}>
                                         <DefaultCard item={item} />

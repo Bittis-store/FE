@@ -25,11 +25,7 @@ export const menuGroups: IMenuItem[] = [
         label: 'Thống kê',
         route: ADMIN_ROUTES.DASHBOARD,
     },
-    {
-        icon: <ShoppingCartOutlined />,
-        label: 'Quản lý đơn hàng',
-        route: ADMIN_ROUTES.ORDERS,
-    },
+
     {
         icon: <AppstoreOutlined />,
         label: 'Quản lý sản phẩm',
@@ -38,11 +34,11 @@ export const menuGroups: IMenuItem[] = [
             { label: 'Tạo mới sản phẩm', route: ADMIN_ROUTES.PRODUCTS_CREATE },
         ],
     },
-    {
-        icon: <UserOutlined />,
-        label: 'Quản lý người dùng',
-        children: [{ label: 'Tất cả người dùng', route: ADMIN_ROUTES.USERS }],
-    },
+    // {
+    //     icon: <UserOutlined />,
+    //     label: 'Quản lý người dùng',
+    //     children: [{ label: 'Tất cả người dùng', route: ADMIN_ROUTES.USERS }],
+    // },
     {
         icon: <FolderOutlined />,
         label: 'Quản lý danh mục',
@@ -56,8 +52,8 @@ export const menuGroups: IMenuItem[] = [
         label: 'Quản lý thuộc tính',
         children: [
             { label: 'Màu sắc', route: ADMIN_ROUTES.COLORS },
-            { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
-            { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
+            // { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
+            // { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
         ],
     },
 ];
