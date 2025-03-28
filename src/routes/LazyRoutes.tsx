@@ -26,6 +26,14 @@ export const UpdateCategory = lazy(
 export const ProductList = lazy(() => import('~/pages/Admin/_product_'));
 export const CreateProduct = lazy(() => import('~/pages/Admin/_product_/CreateProduct'));
 export const UpdateProduct = lazy(() => import('~/pages/Admin/_product_/UpdateProduct'));
+// @Color
+export const ColorList = lazy(() => import('~/pages/Admin/_color_'));
+export const CreateColor = lazy(
+    () => import('~/pages/Admin/_color_/CreateColor'),
+);
+export const UpdateColor = lazy(
+    () => import('~/pages/Admin/_color_/UpdateColor'),
+);
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;

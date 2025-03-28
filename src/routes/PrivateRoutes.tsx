@@ -2,14 +2,18 @@ import { ADMIN_ROUTES } from '~/constants/router';
 import AdminLayout from '~/layouts/AdminLayout';
 import {
     CategoryList,
+    ColorList,
     CreateCategory,
+    CreateColor,
     CreateProduct,
     DashboardPage,
     ProductList,
     Suspense,
     UpdateCategory,
+    UpdateColor,
     UpdateProduct,
 } from './LazyRoutes';
+import { Outlet } from 'react-router-dom';
 
 export const PrivateRoutes = [
     {
@@ -83,6 +87,49 @@ export const PrivateRoutes = [
                         element: (
                             <Suspense>
                                 <UpdateProduct />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+             // @Color
+             {
+                path: ADMIN_ROUTES.COLORS,
+                element: (
+                    <Suspense>
+                        <Outlet />
+                    </Suspense>
+                ),
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <ColorList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <ColorList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <CreateColor />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: (
+                            <Suspense>
+                                <UpdateColor />
                             </Suspense>
                         ),
                     },
