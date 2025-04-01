@@ -143,10 +143,9 @@ const OrderTable = ({ ordersList, totalDocs }: Props) => {
             title: 'Thao tác',
             render: (text, record) => {
                 return (
-                    // <Link to={`/admin/orders/${record.code}/detail`}>
-                    //     <Button type='primary'>Xem chi tiết</Button>
-                    // </Link>
-                    <></>
+                    <Link to={`/admin/orders/${record.code}/detail`}>
+                        <Button type='primary'>Xem chi tiết</Button>
+                    </Link>
                 );
             },
         },

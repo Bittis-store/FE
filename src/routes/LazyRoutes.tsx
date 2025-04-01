@@ -55,6 +55,9 @@ export const UpdateColor = lazy(
 export const ManageOrders = lazy(
     () => import('~/pages/Admin/_order_/ManageOrder'),
 );
+export const OrdersDetails = lazy(
+    () => import('~/pages/Admin/_order_/OrderDetails'),
+);
 
 
 

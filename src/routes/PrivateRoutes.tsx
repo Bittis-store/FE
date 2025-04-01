@@ -8,6 +8,7 @@ import {
     CreateProduct,
     DashboardPage,
     ManageOrders,
+    OrdersDetails,
     ProductList,
     Suspense,
     UpdateCategory,
@@ -142,6 +143,15 @@ export const PrivateRoutes = [
                 element: (
                     <Suspense>
                         <ManageOrders />
+                    </Suspense>
+                ),
+            },
+            // @Order-detail
+            {
+                path: `${ADMIN_ROUTES.ORDERS}/:id/detail`,
+                element: (
+                    <Suspense>
+                        <OrdersDetails />
                     </Suspense>
                 ),
             },
