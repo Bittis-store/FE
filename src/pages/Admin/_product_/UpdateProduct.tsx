@@ -13,11 +13,11 @@ import useGetColors from '~/hooks/Colors/Queries/useGetColors';
 import useGetSizes from '~/hooks/Sizes/Queries/useGetSizes';
 import { useEffect, useState } from 'react';
 import { FormProps } from 'antd/lib';
-import { useGetDetailProduct } from '~/hooks/Products/Queries/useGetDetailProduct';
 import convertApiResponseToFileList from '~/pages/Admin/_product_/Helper/convertImageUrlToFileList';
 import useUpdateProduct from '~/hooks/Products/Mutations/useUpdateProduct';
 import { handleEditProduct } from '~/pages/Admin/_product_/Helper/handleEditProduct';
 import showMessage from '~/utils/ShowMessage';
+import { useGetDetailProductForAdmin } from '~/hooks/Products/Queries/useGetDetailProductForAdmin';
 
 const UpdateProduct = () => {
     const [form] = Form.useForm<any>();
@@ -29,7 +29,7 @@ const UpdateProduct = () => {
     const { data: sizes } = useGetSizes({ limit: '100000' });
     const { data: colors } = useGetColors({ limit: '100000' });
     const { mutate: updateProduct, isPending } = useUpdateProduct();
-    const { data: targetProduct } = useGetDetailProduct(id as string);
+    const { data: targetProduct } = useGetDetailProductForAdmin(id as string);
     const onFinish: FormProps<any>['onFinish'] = (values) => {
         console.log(values, 'values');
         handleEditProduct(values, id as string, updateProduct);

@@ -25,6 +25,10 @@ export const ProductServices = {
         const data = await instance.get<IAxiosResponse<IProduct>>(`/products/${id}`);
         return data.data;
     },
+    async getDetailProductForAdmin(id: string) {
+        const data = await instance.get<IAxiosResponse<IProduct>>(`/products/admin/${id}`);
+        return data.data;
+    },
     async getRelatedProduct(id: string) {
         const data = await instance.get<IAxiosResponse<IProduct[]>>(`/products/related/${id}`);
         return data.data;
