@@ -1,32 +1,19 @@
 import SignImg from '~/assets/img/male-shoes.jpg';
 import useDocumentTitle from '~/hooks/_common/useDocumentTitle';
 import { useAuthRegister } from '~/hooks/Auth/Mutation/useAuthRegister';
-import { RegisterFormData, registerSchema } from '~/validation/Auth/Auth';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, Input, Spin } from 'antd';
-import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
     useDocumentTitle('BITIS - Đăng ký');
-    const {
-        control,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        resolver: zodResolver(registerSchema),
-        defaultValues: {
-            name: '',
-            phone: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        },
-    });
+    const [form] = Form.useForm();
     const { mutate, isPending } = useAuthRegister();
-    const onSubmit = (data: RegisterFormData) => {
+
+    const onFinish = (values: any) => {
+        const { confirmPassword, ...data } = values;
         mutate(data);
     };
+
     return (
         <div className='md:max-w-standard mx-auto mt-12 w-full xl:max-w-7xl'>
             <div className='flex justify-between'>
@@ -36,83 +23,74 @@ const Register = () => {
                 <div className='flex basis-[40%] flex-col items-center justify-center gap-10'>
                     <h1 className='font-inter text-4xl font-medium'>Đăng ký</h1>
                     <p>Chào mừng bạn đến với BITIS</p>
-                    <Form onFinish={handleSubmit(onSubmit)} className='flex w-full flex-col' layout='vertical'>
+                    <Form form={form} onFinish={onFinish} className='flex w-full flex-col' layout='vertical'>
                         <Form.Item
+                            name='name'
                             label='Tên người dùng'
-                            validateStatus={errors.name ? 'error' : ''}
-                            help={errors.name?.message}
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập tên người dùng!' },
+                                { min: 2, message: 'Tên phải có ít nhất 2 ký tự!' },
+                            ]}
                         >
-                            <Controller
-                                name='name'
-                                control={control}
-                                render={({ field }) => (
-                                    <Input {...field} className='h-[48px]' placeholder='Nhập tên người dùng' />
-                                )}
-                            />
+                            <Input className='h-[48px]' placeholder='Nhập tên người dùng' />
                         </Form.Item>
                         <Form.Item
+                            name='phone'
                             label='Số điện thoại'
-                            validateStatus={errors.phone ? 'error' : ''}
-                            help={errors.phone?.message}
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập số điện thoại!' },
+                                { pattern: /^[0-9]+$/, message: 'Số điện thoại chỉ được chứa số!' },
+                            ]}
                         >
-                            <Controller
-                                name='phone'
-                                control={control}
-                                render={({ field }) => (
-                                    <Input {...field} className='h-[48px]' placeholder='Nhập số điện thoại' />
-                                )}
-                            />
+                            <Input className='h-[48px]' placeholder='Nhập số điện thoại' />
                         </Form.Item>
                         <Form.Item
+                            name='email'
                             label='Email'
-                            validateStatus={errors.email ? 'error' : ''}
-                            help={errors.email?.message}
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập email!' },
+                                { type: 'email', message: 'Email không đúng định dạng!' },
+                            ]}
                         >
-                            <Controller
-                                name='email'
-                                control={control}
-                                render={({ field }) => (
-                                    <Input {...field} className='h-[48px]' placeholder='Địa chỉ email' />
-                                )}
-                            />
+                            <Input className='h-[48px]' placeholder='Địa chỉ email' />
                         </Form.Item>
                         <Form.Item
+                            name='password'
                             label='Mật khẩu'
-                            validateStatus={errors.password ? 'error' : ''}
-                            help={errors.password?.message}
+                            rules={[
+                                { required: true, message: 'Vui lòng nhập mật khẩu!' },
+                                { min: 6, message: 'Mật khẩu phải có ít nhất 6 ký tự!' },
+                            ]}
                         >
-                            <Controller
-                                name='password'
-                                control={control}
-                                render={({ field }) => (
-                                    <Input.Password {...field} className='h-[48px]' placeholder='Mật khẩu' />
-                                )}
-                            />
+                            <Input.Password className='h-[48px]' placeholder='Mật khẩu' />
                         </Form.Item>
                         <Form.Item
+                            name='confirmPassword'
                             label='Xác nhận mật khẩu'
-                            validateStatus={errors.confirmPassword ? 'error' : ''}
-                            help={errors.confirmPassword?.message}
+                            dependencies={['password']}
+                            rules={[
+                                { required: true, message: 'Vui lòng xác nhận mật khẩu!' },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (!value || getFieldValue('password') === value) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(new Error('Mật khẩu xác nhận không khớp!'));
+                                    },
+                                }),
+                            ]}
                         >
-                            <Controller
-                                name='confirmPassword'
-                                control={control}
-                                render={({ field }) => (
-                                    <Input.Password
-                                        {...field}
-                                        className='h-[48px]'
-                                        placeholder='Xác nhận lại mật khẩu'
-                                    />
-                                )}
-                            />
+                            <Input.Password className='h-[48px]' placeholder='Xác nhận lại mật khẩu' />
                         </Form.Item>
-                        <button
-                            disabled={isPending}
-                            type='submit'
-                            className='bg-global hover:bg-primary h-[48px] w-full cursor-pointer rounded-md font-medium text-white duration-300'
-                        >
-                            {isPending ? <Spin className='text-hover' /> : 'Đăng ký'}
-                        </button>
+                        <Form.Item>
+                            <button
+                                disabled={isPending}
+                                type='submit'
+                                className='bg-global hover:bg-primary h-[48px] w-full cursor-pointer rounded-md font-medium text-white duration-300'
+                            >
+                                {isPending ? <Spin className='text-hover' /> : 'Đăng ký'}
+                            </button>
+                        </Form.Item>
                     </Form>
 
                     <p className='mx-auto text-gray-600'>
