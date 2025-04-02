@@ -9,7 +9,6 @@ import useCalculateFee from '~/hooks/shipping/useCalculateFee';
 import { setShippingFee } from '~/store/slice/orderSlice';
 import ProductItemsCheckout from './ProductItemsCheckout';
 import ReceiverCheckoutInfo from './ReceiverCheckoutInfo';
-import { useCart } from '~/hooks/_common/useCart';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
 
 const { Content } = Layout;
@@ -39,6 +38,7 @@ const Checkout: React.FC = () => {
                 dispatch(setShippingFee(35000));
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shippingFee]);
 
     return (

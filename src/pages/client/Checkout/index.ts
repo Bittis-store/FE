@@ -1,2 +1,2 @@
-import Shipping from './Shipping'
+import Shipping from './Shipping';
 export { Shipping };

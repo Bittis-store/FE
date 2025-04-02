@@ -35,6 +35,7 @@ const ShippingAddress = () => {
             description,
             ...receiverInfo,
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

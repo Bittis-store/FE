@@ -4,7 +4,7 @@ import { useMutationRemoveItem } from '~/hooks/cart/Mutations/useRemoveOne';
 import { useUpdateQuantity } from '~/hooks/cart/Mutations/useUpdateQuantity';
 import { Currency } from '~/utils/FormatCurreny';
 import { CloseOutlined, DeleteOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, Drawer, Image, InputNumber, List, message, Popconfirm, PopconfirmProps } from 'antd';
+import { Button, ConfigProvider, Drawer, Image, InputNumber, List, Popconfirm, PopconfirmProps } from 'antd';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { debounce } from 'lodash';
@@ -18,7 +18,6 @@ type PropsType = {
 };
 const CartDrawer = ({ data, isFetching, children }: PropsType) => {
     const { cart, handleOpenCart, onClose } = useCart();
-    const [isOpenConfirm, setIsOpenConfirm] = useState<boolean>(false);
     const { handleRemoveCart, isPending } = useMutationRemoveItem();
     const { mutate: updateQuantity } = useUpdateQuantity();
     const [quantityProduct, setQuantityProduct] = useState<{ quantity: number; id: string }[]>([]);
@@ -53,7 +52,7 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
         }, 500),
         []
     );
-    /* eslint-disable */
+
     useEffect(() => {
         if (pendingUpdates) {
             debouncedUpdate({
@@ -262,7 +261,7 @@ const CartDrawer = ({ data, isFetching, children }: PropsType) => {
                                 <p className='text-global'>
                                     Hoặc{' '}
                                     <button
-                                        className='hover:text-global cursor-pointer ml-1 font-medium text-orange-500 duration-300'
+                                        className='hover:text-global ml-1 cursor-pointer font-medium text-orange-500 duration-300'
                                         onClick={onClose}
                                     >
                                         Tiếp tục mua hàng

@@ -1,7 +1,6 @@
 import { QUERY_KEY } from '~/constants/queryKey';
 import { useGetService } from '~/hooks/shipping/useGetService';
 import { setShippingAddress } from '~/store/slice/orderSlice';
-import { Currency } from '~/utils/FormatCurreny';
 import { useQueryClient } from '@tanstack/react-query';
 import { Form, Radio, Space, Typography } from 'antd';
 import { Fragment, useEffect } from 'react';

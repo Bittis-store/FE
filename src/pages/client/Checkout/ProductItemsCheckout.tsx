@@ -136,6 +136,7 @@ const ProductItemsCheckout: React.FC = () => {
                 showMessage('Có sự thay đổi về sản phẩm vui lòng kiểm tra lại giỏ hàng', 'info', 3000);
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
     return (
         <div className='flex h-full flex-col'>

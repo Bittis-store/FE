@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import WrapperList from '~/components/_common/wrapperList/WrapperList';
-// import VariantPickerDrawer from '~/components/VariantDrawer/VariantPickerDrawer';
 import { MAIN_ROUTES } from '~/constants/router';
 import useDocumentTitle from '~/hooks/_common/useDocumentTitle';
 import useFilter from '~/hooks/_common/useFilter';

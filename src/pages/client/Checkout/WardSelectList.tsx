@@ -19,6 +19,7 @@ const WardSelectList = ({ districtId }: { districtId: number }) => {
         queryClient.invalidateQueries({
             queryKey: [QUERY_KEY.GET_WARD, districtId],
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [districtId]);
 
     return (

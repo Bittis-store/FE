@@ -1,18 +1,16 @@
 import FilterSidebar from '~/components/FilterSidebar/FilterSidebar';
 import ProductCard from '~/components/ProductCard/ProductCard';
-import SortPopup from '~/components/SortPopup/SortPopup';
 import useFilter from '~/hooks/common/useFilter';
 import useGetProducts from '~/hooks/Products/Queries/useGetProducts';
-('~/hooks/Products/Queries/useGetAllProducts');
 import { DownOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button, Dropdown, Empty, Pagination, RadioChangeEvent, Skeleton } from 'antd';
 import { Link } from 'react-router-dom';
 import banner from '~/assets/img/Desktop_Homepage_Banner01.jpg';
-import { IProduct } from '~/types/Product';
 import { CiGrid2H, CiGrid41 } from 'react-icons/ci';
 import useWindowSize from '~/hooks/_common/useWindowSize';
 import { useEffect } from 'react';
 import clsx from 'clsx';
+import SortPopupComponent from '~/components/SortPopup/SortPopup';
 
 const ProductPage = () => {
     const limit = 10;
@@ -24,8 +22,6 @@ const ProductPage = () => {
     const products = productResponse?.data.products;
     const totalProducts = products?.length;
     const totalDocs = productResponse?.data.totalDocs;
-
-   
 
     // check if query key is have one
     if (
@@ -96,7 +92,9 @@ const ProductPage = () => {
                                 <Dropdown
                                     placement='bottomLeft'
                                     trigger={['click']}
-                                    dropdownRender={() => <SortPopup value={query?.sort} onChange={onChange} />}
+                                    dropdownRender={() => (
+                                        <SortPopupComponent value={query?.sort} onChange={onChange} />
+                                    )}
                                 >
                                     <div className='flex cursor-pointer items-center gap-2'>
                                         <UnorderedListOutlined style={{ fontSize: 20 }} />

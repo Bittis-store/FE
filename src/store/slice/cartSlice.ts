@@ -27,9 +27,7 @@ const cartSlice = createSlice({
             state.items = filteredItems;
         },
         updateItemsCart: (state, payload: PayloadAction<ICartItemsResponse>) => {
-            const findIndex = state.items.findIndex(
-                (item) => item._id === payload.payload._id
-            );
+            const findIndex = state.items.findIndex((item) => item._id === payload.payload._id);
             state.items[findIndex] = payload.payload;
         },
         addItems: (state, payload: PayloadAction<ICartItemsResponse>) => {

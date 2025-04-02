@@ -10,13 +10,11 @@ const orderService = {
         return instance.get<IAxiosResponse<IOrderResponse>>(`${ORDER_ENDPOINT.MY_ORDERS}`, { params });
     },
 
-    /* eslint-disable */
     getAllOrders(params?: any) {
         return instance.get<IAxiosResponse<IOrderResponse>>(`${ORDER_ENDPOINT.GET_ALL_ORDERS}`, {
             params,
         });
     },
-    /* eslint-enable */
 
     cancelOrderByUser(body: { orderId?: string; reason?: string }) {
         return instance.patch<void, { orderId: string; reason?: string }>(`${ORDER_ENDPOINT.CANCEL_ORDER}`, body);
@@ -71,11 +69,10 @@ const orderService = {
             `/checkout${ORDER_ENDPOINT.VNPAY_RETURN}?${params}`
         );
     },
-    /* eslint-disable */
+
     // vnpayReturnStatusOrder(params: URLSearchParams) {
     //     return instance.get<{ code: string; message: string; data?: any }>(`${ORDER_ENDPOINT.VNPAY_RETURN}?${params}`);
     // },
-    /* eslint-enable */
 };
 
 export default orderService;

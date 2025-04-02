@@ -2,7 +2,6 @@ import { Breadcrumb, Button, Collapse, ConfigProvider, Divider, Flex, Image, Inp
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ShopBenefits from '~/components/ShopBenefits';
-import { IProduct } from '~/types/Product';
 import { Currency } from '~/utils/FormatCurreny';
 import showMessage from '~/utils/ShowMessage';
 import SizeGuideModal from './SizeGuideModal';
@@ -40,7 +39,7 @@ const ProductDetailsPage = () => {
     const navigate = useNavigate();
     const isAuth = useTypedSelector((state) => state.auth.authenticate);
     const { data: relatedProduct } = useGetRelatedProduct(id ? id : '');
-    
+
     const handleChooseSize = (item: any) => {
         setValueQuantity(1);
         // eslint-disable-next-line @typescript-eslint/no-shadow

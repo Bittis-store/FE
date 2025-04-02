@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UserOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 import { Form, Input, Switch, Card, Typography, Divider } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import { useTypedSelector } from '~/store/store';
 import useGetProfile from '~/hooks/profile/Queries/useGetProfile';
 
 const { Title, Text } = Typography;
