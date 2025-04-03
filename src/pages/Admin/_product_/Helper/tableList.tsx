@@ -43,7 +43,7 @@ export const ProductsListColumns = ({
                             <p className='text-[10px]'>ID: {record._id}</p>
                         </div>
                     </div>
-                    <div className='border-graydark border-opacity-10 ms-7 mt-1 border-s-4 p-5'>
+                    <div className='ms-7 mt-1 p-5'>
                         {record.variants.map((item, index) => (
                             <div className='my-4 flex items-center gap-2' key={index}>
                                 <div>
