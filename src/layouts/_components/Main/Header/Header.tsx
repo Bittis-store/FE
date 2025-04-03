@@ -10,7 +10,7 @@ export default function Header() {
                 </p>
             </div>
             <div className='sticky top-0 z-[51] bg-white'>
-                <div className='max-w-layout layout:mx-auto mx-6'>
+                <div className='max-w-layout layout:mx-auto mx-4'>
                     <header>
                         <div className='flex w-full items-center justify-between'>
                             <div className='flex items-center gap-10'>
