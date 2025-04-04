@@ -1,10 +1,10 @@
-import userImageDf from './images/anhdd.png';
-import logo from './images/logo.png';
-import frameUser from './images/frameUser.png';
+import userImageDf from './img/anhdd.png';
+// import logo from './img/logo.png';
+import frameUser from './img/frameUser.png';
 
 const StaticImages = {
     userImageDf,
-    logo,
+    // logo,
     frameUser,
 };
 

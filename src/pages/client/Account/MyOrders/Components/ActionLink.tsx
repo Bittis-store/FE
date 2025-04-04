@@ -1,10 +1,10 @@
 import { MinusCircleOutlined } from '@ant-design/icons';
-import { TinyColor } from '@ctrl/tinycolor';
 import { Button, ConfigProvider, Tag } from 'antd';
 import { OrderStatus } from '~/constants/enum';
 import useFinishOrderClient from '~/hooks/orders/Mutations/useFinishOrderClient';
 import showMessage from '~/utils/ShowMessage';
 import PopupFormCancelOrder from './PopupFormCancelOrder';
+import { TinyColor } from '@ctrl/tinycolor';
 
 const colorsArr = ['#fc6076', '#ff9a44', '#ef9d43', '#e75516'];
 const getHoverColors = (colors: string[]) => colors.map((color) => new TinyColor(color).lighten(5).toString());

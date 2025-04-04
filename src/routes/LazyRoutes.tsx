@@ -3,6 +3,7 @@ import React, { lazy } from 'react';
 // Client
 export const HomaPage = lazy(()=>import("~/pages/client/HomePage"));
 
+
 // Auth
 export const RegisterPage = lazy(()=>import("~/pages/client/Auth/Register"));
 export const LoginPage = lazy(()=>import("~/pages/client/Auth/Login"));
@@ -20,6 +21,14 @@ export const CheckoutPage = lazy(() => import('~/pages/client/Checkout/CheckOut'
 export const OrderSuccessPage = lazy(() => import('~/pages/client/Checkout/OrderSuccess'));
 export const OrderErrorPage = lazy(() => import('~/pages/client/Checkout/OrderError'));
 
+// @ Account 
+export const ProfilePage = lazy(() => import('~/pages/client/Account/Profile'));
+export const MyOrdersPage = lazy(
+    () => import('~/pages/client/Account/MyOrders'),
+);
+export const MyOrderDetailsPage = lazy(
+    () => import('~/pages/client/Account/MyOrders/OrderDetail/OrderDetailPage'),
+);
 // Admin
 export const DashboardPage = lazy(() => import('~/pages/Admin/_dashboard_'));
 
