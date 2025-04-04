@@ -1,9 +1,10 @@
 import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, OrderErrorPage, OrderSuccessPage, ProductsDetailPage, ProductsPage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
+import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, MyOrderDetailsPage, MyOrdersPage, OrderErrorPage, OrderSuccessPage, ProductsDetailPage, ProductsPage, ProfilePage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
 import { MAIN_ROUTES } from "~/constants/router";
 import AuthProtected from "~/layouts/Protected/AuthProtected";
 import { Navigate } from "react-router-dom";
 import NotFound from "~/pages/NotFound";
+import AccountLayout from "~/layouts/AccountLayout";
 
 
  const PublicRoutes = [
@@ -70,6 +71,30 @@ import NotFound from "~/pages/NotFound";
                             <ProductsDetailPage />
                     </Suspense>
                 ),
+            },
+            // @Account
+            {
+                element: (
+                    <Suspense>
+                        <AuthProtected>
+                            <AccountLayout />
+                        </AuthProtected>
+                    </Suspense>
+                ),
+                children: [
+                    {
+                        path: `${MAIN_ROUTES.PROFILE}`,
+                        element: <ProfilePage />,
+                    },
+                    {
+                        path: `${MAIN_ROUTES.MY_ORDERS}`,
+                        element: <MyOrdersPage />,
+                    },
+                    {
+                        path: `${MAIN_ROUTES.MY_ORDERS_DETAIL}`,
+                        element: <MyOrderDetailsPage />,
+                    },
+                ],
             },
            // @CheckOut
            {
