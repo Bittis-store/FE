@@ -19,6 +19,9 @@ import { IProductForm } from '~/types/Product';
 import showMessage from '~/utils/ShowMessage';
 import { variationsValidator } from '~/validation/Products/validators';
 
+interface CreateProductHandler {
+    (values: IProductForm): void;
+}
 const CreateProduct = () => {
     const [form] = Form.useForm<IProductForm>();
     const [isActive, setIsActive] = useState<boolean>(false);
@@ -31,41 +34,45 @@ const CreateProduct = () => {
     const { mutate: createPro, isPending } = useCreateProduct();
 
     const categoryOptions = useMemo(
-        () => categories?.data?.categories?.map(item => ({
-            label: item.name,
-            value: item._id,
-        })) || [],
+        () =>
+            categories?.data?.categories?.map((item: any) => ({
+                label: item.name,
+                value: item._id,
+            })) || [],
         [categories]
     );
 
     const tagOptions = useMemo(
-        () => tags?.data?.tags?.map(tag => ({
-            label: tag.name,
-            value: tag._id,
-        })) || [],
+        () =>
+            tags?.data?.tags?.map((tag: any) => ({
+                label: tag.name,
+                value: tag._id,
+            })) || [],
         [tags]
     );
 
-    const handleChangeAttributeThumbnail = useCallback((index: number): UploadProps['onChange'] =>
-        ({ fileList: newFileList }) => {
-            setAttributesFile(prev => {
+    const handleChangeAttributeThumbnail = useCallback((index: number): UploadProps['onChange'] => {
+        return ({ fileList: newFileList }) => {
+            setAttributesFile((prev) => {
                 const newAttributesFile = [...prev];
                 newAttributesFile[index] = newFileList;
                 return newAttributesFile;
             });
-        },
-    []);
+        };
+    }, []);
 
     const handleRemoveAttributeThumbnail = useCallback((index: number) => {
-        setAttributesFile(prev => {
+        setAttributesFile((prev) => {
             const newAttributesFile = [...prev];
             newAttributesFile.splice(index, 1);
             return newAttributesFile;
         });
     }, []);
 
-    const onFinish = useCallback(
-        (values: IProductForm): void => handleCreateProduct(values, createPro),
+    const onFinish: FormProps<IProductForm>['onFinish'] = useCallback(
+        (values: IProductForm): void => {
+            handleCreateProduct(values, createPro);
+        },
         [createPro]
     );
 
@@ -87,11 +94,6 @@ const CreateProduct = () => {
         }
     }, []);
 
-    const formItemProps = useMemo(() => ({
-        required: true,
-        className: 'font-medium text-[#08090F]'
-    }), []);
-
     return (
         <WrapperPageAdmin
             title='Thêm mới sản phẩm'
@@ -102,7 +104,7 @@ const CreateProduct = () => {
             }
         >
             <Form layout='vertical' form={form} onFinish={onFinish}>
-                <div className='grid grid-cols-1 gap-4'></div>
+                <div className='grid grid-cols-1 gap-4'>
                     <WrapperCard title='Thông tin cơ bản'>
                         <Form.Item name='isActive' className='hidden' hidden>
                             <Input type='hidden' />
@@ -110,7 +112,8 @@ const CreateProduct = () => {
                         <Form.Item<any>
                             label='Tên sản phẩm'
                             name='name'
-                            {...formItemProps}
+                            required
+                            className='font-medium text-[#08090F]'
                             rules={[
                                 { required: true, message: 'Vui lòng nhập tên sản phẩm!' },
                                 { min: 3, message: 'Tên sản phẩm phải có ít nhất 3 ký tự!' },
@@ -159,7 +162,8 @@ const CreateProduct = () => {
                         <Form.Item<any>
                             label='Danh mục'
                             name='category'
-                            {...formItemProps}
+                            required
+                            className='font-medium text-[#08090F]'
                             rules={[{ required: true, message: 'Vui lòng chọn danh mục cho sản phẩm' }]}
                         >
                             <Select
@@ -172,7 +176,8 @@ const CreateProduct = () => {
                         <Form.Item<any>
                             label='Thẻ phân loại'
                             name='tags'
-                            {...formItemProps}
+                            required
+                            className='font-medium text-[#08090F]'
                             rules={[{ required: true, message: 'Vui lòng chọn thẻ phân loại cho sản phẩm' }]}
                         >
                             <Select
@@ -193,18 +198,18 @@ const CreateProduct = () => {
                             <TextArea placeholder='Nhập mô tả sản phẩm...' rows={4} className='w-full' />
                         </Form.Item>
                     </WrapperCard>
-                    <WrapperCard title='Thông tin bán hàng'></WrapperCard>
+                    <WrapperCard title='Thông tin bán hàng'>
                         <Form.List name='variants' rules={[{ validator: variationsValidator }]}>
                             {(fields, { add, remove }, { errors }) => (
                                 <>
                                     {fields.map(({ key, name, ...restField }, index) => (
                                         <VariationItem
                                             key={key}
-                                            colors={colors?.data?.colors || []}
+                                            colors={colors?.data.colors || []}
                                             handleChangeThumbnail={handleChangeAttributeThumbnail}
                                             variantFile={attributesFile}
                                             handleRemoveThumbnail={handleRemoveAttributeThumbnail}
-                                            sizes={sizes?.data?.sizes || []}
+                                            sizes={sizes?.data.sizes || []}
                                             index={index}
                                             fieldName={name}
                                             restField={restField}
