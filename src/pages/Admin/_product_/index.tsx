@@ -4,6 +4,7 @@ import useTable from '~/hooks/_common/useTable';
 import useGetCategories from '~/hooks/categories/Queries/useGetCategories';
 import useHideProduct from '~/hooks/Products/Mutations/useHideProduct';
 import useShowProduct from '~/hooks/Products/Mutations/useShowProduct';
+import useGetProducts from '~/hooks/Products/Queries/useGetProducts';
 import useGetProductsForAdmin from '~/hooks/Products/Queries/useGetProductsForAdmin';
 import useGetTags from '~/hooks/Tags/Queries/useGetTags';
 import WrapperPageAdmin from '~/pages/Admin/_common/WrapperPageAdmin';
@@ -13,57 +14,36 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
-import { useMemo } from 'react';
 
 const ListAll = () => {
     const { onSelectPaginateChange, query, onFilter, getColumnSearchProps, getFilteredValue } = useTable<IProduct>();
-    const currentPage = Number(query.page || 1);
 
+    const currentPage = Number(query.page || 1);
     const { data: allProducts } = useGetProductsForAdmin(query);
     const { mutate: mutateHideProduct } = useHideProduct();
     const { mutate: mutateShowProduct } = useShowProduct();
     const { data: categories } = useGetCategories({ limit: '100000' });
     const { data: tags } = useGetTags({ limit: '100000' });
 
-    const tagsFilter = useMemo(
-        () =>
-            tags?.data.tags.map((tag) => ({
-                text: tag.name,
-                value: tag._id,
-            })) || [],
-        [tags]
-    );
+    const tagsFilter = tags?.data.tags.map((tag) => ({
+        text: tag.name,
+        value: tag._id,
+    }));
+    const categoriesFilter =
+        categories?.data.categories.map((cate) => ({
+            text: cate.name,
+            value: cate._id,
+        })) || [];
 
-    const categoriesFilter = useMemo(
-        () =>
-            categories?.data.categories.map((cate) => ({
-                text: cate.name,
-                value: cate._id,
-            })) || [],
-        [categories]
-    );
-
-    const columns = useMemo(
-        () =>
-            ProductsListColumns({
-                categoriesFilter,
-                tagsFilter,
-                query,
-                getColumnSearchProps,
-                getFilteredValue,
-                mutateHideProduct,
-                mutateShowProduct,
-            }) as ColumnsType<IProduct>,
-        [
-            categoriesFilter,
-            tagsFilter,
-            query,
-            getColumnSearchProps,
-            getFilteredValue,
-            mutateHideProduct,
-            mutateShowProduct,
-        ]
-    );
+    const columns = ProductsListColumns({
+        categoriesFilter,
+        tagsFilter,
+        query,
+        getColumnSearchProps,
+        getFilteredValue,
+        mutateHideProduct,
+        mutateShowProduct,
+    }) as ColumnsType<IProduct>;
 
     return (
         <WrapperPageAdmin
