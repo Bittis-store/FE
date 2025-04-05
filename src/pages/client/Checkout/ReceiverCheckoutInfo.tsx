@@ -7,7 +7,7 @@ import { RootState } from '~/store/store';
 const { Title, Text } = Typography;
 
 const ReceiverCheckoutInfo: React.FC = () => {
-    const { receiverInfo, shippingAddress, shippingFee, tax, description } = useSelector(
+    const { receiverInfo, paymentMethod, shippingAddress, shippingFee, tax, description } = useSelector(
         (state: RootState) => state.order
     );
 
@@ -85,6 +85,12 @@ const ReceiverCheckoutInfo: React.FC = () => {
                 bordered
                 column={{ xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 }}
             >
+                <Descriptions.Item label='Phương thức thanh toán'>
+                    <Tag color='red'>
+                        {paymentMethod === 'COD' && 'Thanh toán khi nhận hàng'}
+                        {paymentMethod === 'ONLINE' && 'Thánh toán qua VNPAY'}
+                    </Tag>
+                </Descriptions.Item>
                 <Descriptions.Item label='Cước phí vận chuyển'>
                     <Tag color='blue'>
                         <DollarOutlined /> {formatCurrency(shippingFee)}

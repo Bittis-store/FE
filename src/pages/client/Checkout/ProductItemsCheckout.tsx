@@ -1,40 +1,35 @@
-import React, { useEffect, useState } from 'react';
 import {
     Button,
     Card,
-    List,
-    Typography,
-    Divider,
-    Tag,
-    Image,
-    Space,
     Checkbox,
     CheckboxProps,
-    Tooltip,
+    Divider,
+    Image,
+    List,
     Row,
-    Col,
-    Radio,
+    Space,
+    Tag,
+    Tooltip,
+    Typography,
 } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState, useTypedSelector } from '~/store/store';
-import { useCreateOrder } from '~/hooks/orders/Mutations/useCreateOrder';
-import showMessage from '~/utils/ShowMessage';
 import PolicyModal from '~/components/PolicyModal';
-import { RadioChangeEvent } from 'antd/lib';
-import { useVnPayOrder } from '~/hooks/orders/Mutations/useVnPayOrder';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
+import { useCreateOrder } from '~/hooks/orders/Mutations/useCreateOrder';
+import { useVnPayOrder } from '~/hooks/orders/Mutations/useVnPayOrder';
+import { RootState, useTypedSelector } from '~/store/store';
+import showMessage from '~/utils/ShowMessage';
 
 const { Text, Title } = Typography;
 
-const ProductItemsCheckout: React.FC = () => {
+const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { data: cartUser, refetch } = useGetMyCart();
-
+    const paymentMethod = useTypedSelector((state) => state.order.paymentMethod);
     const cartItems = useTypedSelector((state) => state.cartReducer.items);
     const [policyAgreed, setPolicyAgreed] = useState<boolean>(false);
-    const [paymentMethod, setPaymentMethod] = useState<number>(0);
     const createOrderVnPay = useVnPayOrder();
     const { description, receiverInfo, shippingAddress, tax, shippingFee } = useSelector(
         (state: RootState) => state.order
@@ -57,7 +52,7 @@ const ProductItemsCheckout: React.FC = () => {
     });
 
     const handleCheckout = () => {
-        if (paymentMethod === 0) {
+        if (paymentMethod === 'COD') {
             createOrder.mutate(
                 {
                     items: cartItems as [],
@@ -87,7 +82,7 @@ const ProductItemsCheckout: React.FC = () => {
                     },
                 }
             );
-        } else if (paymentMethod === 1) {
+        } else if (paymentMethod === 'ONLINE') {
             createOrderVnPay.mutate({
                 userId: userId,
                 items: cartItems as [],
@@ -121,9 +116,6 @@ const ProductItemsCheckout: React.FC = () => {
 
     const onChange: CheckboxProps['onChange'] = (e) => {
         setPolicyAgreed(e.target.checked);
-    };
-    const onChangePaymentMethod = (e: RadioChangeEvent) => {
-        setPaymentMethod(e.target.value);
     };
     const { data } = useGetMyCart();
     useEffect(() => {
@@ -178,16 +170,31 @@ const ProductItemsCheckout: React.FC = () => {
                 <Divider />
 
                 <Space direction='vertical' className='w-full'>
-                    <div className='flex justify-between'>
-                        <Text>Tạm tính:</Text>
-                        <Text>{formatCurrency(subTotal)}</Text>
-                    </div>
+                    {hiddenBtn ? (
+                        <Row justify='space-between' align='middle'>
+                            <h3 className='text-2xl font-semibold'>Tạm tính:</h3>
+                            <h3 className='text-2xl font-semibold text-red-500'>{formatCurrency(subTotal)}</h3>
+                        </Row>
+                    ) : (
+                        <div className='flex justify-between'>
+                            <Text>Tạm tính:</Text>
+                            <Text>{formatCurrency(subTotal)}</Text>
+                        </div>
+                    )}
+                    {!hiddenBtn && (
+                        <>
+                            <div className='flex justify-between'>
+                                <Text>Phí vận chuyển:</Text>
+                                <Text>{formatCurrency(shippingFee)}</Text>
+                            </div>
 
-                    <div className='flex justify-between'>
-                        <Text>Phí vận chuyển:</Text>
-                        <Text>{formatCurrency(shippingFee)}</Text>
-                    </div>
-
+                            <Row justify='space-between' align='middle'>
+                                <h3 className='text-2xl font-semibold'>Tổng cộng:</h3>
+                                <h3 className='text-2xl font-semibold text-red-500'>{formatCurrency(totalPrice)}</h3>
+                            </Row>
+                        </>
+                    )}
+                    {/* 
                     <div className='mt-2'>
                         <h3 className='text-lg font-semibold'>Phương thức thanh toán</h3>
                         <div className='mt-2'>
@@ -197,41 +204,41 @@ const ProductItemsCheckout: React.FC = () => {
                                 onChange={onChangePaymentMethod}
                             >
                                 <Radio value={0}>Thanh toán khi nhận hàng</Radio>
-                                {/* <Radio value={1}>Thanh toán online qua VNPay</Radio> */}
+                                <Radio value={1}>Thanh toán online qua VNPay</Radio>
                             </Radio.Group>
                         </div>
-                    </div>
-                    <Row justify='space-between' align='middle'>
-                        <h3 className='text-2xl font-semibold'>Tổng cộng:</h3>
-                        <h3 className='text-2xl font-semibold text-red-500'>{formatCurrency(totalPrice)}</h3>
-                    </Row>
+                    </div> */}
                 </Space>
 
-                <Checkbox onChange={onChange} defaultChecked={false} className='mt-4 cursor-default'>
-                    Tôi đồng ý với <PolicyModal />
-                </Checkbox>
-                <Card className='mt-4 border-blue-200 bg-blue-50'>
-                    <Tooltip
-                        title={
-                            policyAgreed
-                                ? ''
-                                : 'Bạn cần đồng ý với điều khoản và chính sách của chúng tôi để tiếp tục đặt hàng'
-                        }
-                        color='blue'
-                    >
-                        <Button
-                            type='primary'
-                            loading={createOrder.isPending}
-                            size='large'
-                            block
-                            onClick={handleCheckout}
-                            className='h-12 text-lg font-semibold'
-                            disabled={!policyAgreed || createOrderVnPay.isSuccess}
-                        >
-                            Đặt hàng
-                        </Button>
-                    </Tooltip>
-                </Card>
+                {!hiddenBtn && (
+                    <>
+                        <Checkbox onChange={onChange} defaultChecked={false} className='mt-4 cursor-default'>
+                            Tôi đồng ý với <PolicyModal />
+                        </Checkbox>
+                        <Card className='mt-4 border-blue-200 bg-blue-50'>
+                            <Tooltip
+                                title={
+                                    policyAgreed
+                                        ? ''
+                                        : 'Bạn cần đồng ý với điều khoản và chính sách của chúng tôi để tiếp tục đặt hàng'
+                                }
+                                color='blue'
+                            >
+                                <Button
+                                    type='primary'
+                                    loading={createOrder.isPending}
+                                    size='large'
+                                    block
+                                    onClick={handleCheckout}
+                                    className='h-12 text-lg font-semibold'
+                                    disabled={!policyAgreed || createOrderVnPay.isSuccess}
+                                >
+                                    Đặt hàng
+                                </Button>
+                            </Tooltip>
+                        </Card>
+                    </>
+                )}
             </div>
         </div>
     );

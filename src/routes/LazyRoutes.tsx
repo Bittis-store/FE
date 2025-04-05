@@ -17,6 +17,7 @@ export const CartDetailPage = lazy(()=>import("~/pages/client/CartDetail/CartDet
 
 // Checkout
 export const ShippingPage = lazy(() => import('~/pages/client/Checkout/Shipping'));
+export const PaymentMethodPage = lazy(() => import('~/pages/client/Checkout/PaymentMethod'));
 export const CheckoutPage = lazy(() => import('~/pages/client/Checkout/CheckOut'));
 export const OrderSuccessPage = lazy(() => import('~/pages/client/Checkout/OrderSuccess'));
 export const OrderErrorPage = lazy(() => import('~/pages/client/Checkout/OrderError'));

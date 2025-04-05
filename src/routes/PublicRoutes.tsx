@@ -1,17 +1,34 @@
-import MainLayout from "~/layouts/MainLayout/MainLayout";
-import { CartDetailPage, CheckoutPage, ForgotPasswordPage, HomaPage, LoginPage, MyOrderDetailsPage, MyOrdersPage, OrderErrorPage, OrderSuccessPage, ProductsDetailPage, ProductsPage, ProfilePage, RegisterPage, ShippingPage, Suspense, VerifyAccountPage } from "./LazyRoutes";
-import { MAIN_ROUTES } from "~/constants/router";
-import AuthProtected from "~/layouts/Protected/AuthProtected";
-import { Navigate } from "react-router-dom";
-import NotFound from "~/pages/NotFound";
-import AccountLayout from "~/layouts/AccountLayout";
+import MainLayout from '~/layouts/MainLayout/MainLayout';
+import {
+    CartDetailPage,
+    CheckoutPage,
+    ForgotPasswordPage,
+    HomaPage,
+    LoginPage,
+    MyOrderDetailsPage,
+    MyOrdersPage,
+    OrderErrorPage,
+    OrderSuccessPage,
+    PaymentMethodPage,
+    ProductsDetailPage,
+    ProductsPage,
+    ProfilePage,
+    RegisterPage,
+    ShippingPage,
+    Suspense,
+    VerifyAccountPage,
+} from './LazyRoutes';
+import { MAIN_ROUTES } from '~/constants/router';
+import AuthProtected from '~/layouts/Protected/AuthProtected';
+import { Navigate } from 'react-router-dom';
+import NotFound from '~/pages/NotFound';
+import AccountLayout from '~/layouts/AccountLayout';
 
-
- const PublicRoutes = [
+const PublicRoutes = [
     {
-        path:"/",
-        element:<MainLayout/>,
-        children:[
+        path: '/',
+        element: <MainLayout />,
+        children: [
             {
                 path: '',
                 element: (
@@ -47,28 +64,28 @@ import AccountLayout from "~/layouts/AccountLayout";
                 ),
             },
             {
-                path:  MAIN_ROUTES.LOGIN,
+                path: MAIN_ROUTES.LOGIN,
                 element: (
                     <Suspense>
-                          <AuthProtected>
-                                <LoginPage />
-                          </AuthProtected>
+                        <AuthProtected>
+                            <LoginPage />
+                        </AuthProtected>
                     </Suspense>
                 ),
             },
             {
-                path:  MAIN_ROUTES.PRODUCTS,
+                path: MAIN_ROUTES.PRODUCTS,
                 element: (
                     <Suspense>
-                            <ProductsPage />
+                        <ProductsPage />
                     </Suspense>
                 ),
             },
             {
-                path:  `${MAIN_ROUTES.PRODUCTS}/:id`,
+                path: `${MAIN_ROUTES.PRODUCTS}/:id`,
                 element: (
                     <Suspense>
-                            <ProductsDetailPage />
+                        <ProductsDetailPage />
                     </Suspense>
                 ),
             },
@@ -96,55 +113,61 @@ import AccountLayout from "~/layouts/AccountLayout";
                     },
                 ],
             },
-           // @CheckOut
-           {
-            path: MAIN_ROUTES.CART,
-            element: (
-                <Suspense>
-                    <AuthProtected>
-                        <CartDetailPage />
-                    </AuthProtected>
-                </Suspense>
-            ),
-        },
-        {
-            path: MAIN_ROUTES.SHIPPING,
-            element: (
-                <Suspense>
-                    <ShippingPage />
-                </Suspense>
-            ),
-        },
-        {
-            path: MAIN_ROUTES.CHECKOUT,
-            element: (
-                <Suspense>
-                    <CheckoutPage />
-                </Suspense>
-            ),
-        },
-        {
-            path: MAIN_ROUTES.SUCCESS_ORDER,
-            element: (
-                <Suspense>
-                    <OrderSuccessPage />
-                </Suspense>
-            ),
-        },
-        {
-            path: MAIN_ROUTES.ERROR_ORDER,
-            element: (
-                <Suspense>
-                    <OrderErrorPage />
-                </Suspense>
-            ),
-        },
+            // @CheckOut
+            {
+                path: MAIN_ROUTES.CART,
+                element: (
+                    <Suspense>
+                        <AuthProtected>
+                            <CartDetailPage />
+                        </AuthProtected>
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.SHIPPING,
+                element: (
+                    <Suspense>
+                        <ShippingPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.PAYMENT,
+                element: (
+                    <Suspense>
+                        <PaymentMethodPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.CHECKOUT,
+                element: (
+                    <Suspense>
+                        <CheckoutPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.SUCCESS_ORDER,
+                element: (
+                    <Suspense>
+                        <OrderSuccessPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: MAIN_ROUTES.ERROR_ORDER,
+                element: (
+                    <Suspense>
+                        <OrderErrorPage />
+                    </Suspense>
+                ),
+            },
         ],
-
     },
     { path: '/404', element: <NotFound /> },
     { path: '*', element: <Navigate to={'/404'} /> },
-
 ];
 
 export default PublicRoutes;
