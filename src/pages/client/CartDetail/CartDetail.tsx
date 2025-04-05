@@ -333,7 +333,7 @@ export default function CartDetail() {
         <>
             <div className='max-w-screen-default mx-4 my-16 bg-white py-8 default:mx-auto'>
                 <h1 className='my-4 text-3xl font-medium text-black'>Giỏ hàng</h1>
-                <div className='grid grid-cols-1 gap-8 lg:grid-cols-[2.4fr,1fr]'>
+                <div className='grid grid-cols-1 gap-8 lg:grid-cols-[2.4fr_1fr]'>
                     <Form>
                         <div>
                             <Table

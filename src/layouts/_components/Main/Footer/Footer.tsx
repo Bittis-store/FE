@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
     return (
         <footer className='mx-auto mt-18 w-[80vw] border-t-[1px] border-[#C0C0C0] py-5'>
-            <div className='max-w-screen-default mx-4 default:mx-auto'>
+            <div className='max-w-layout layout:mx-auto mx-4'>
                 <div className='flex justify-between'>
                     <div className='w-1/4 default:w-1/5'>
                         <h3 className='text-global text-sm font-bold uppercase'>Công ty cổ phần Bitis Hủnter</h3>

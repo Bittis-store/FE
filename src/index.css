@@ -9,6 +9,8 @@
     --color-global: #333f48;
     --color-hover: oklch(0.705 0.213 47.604);
     --color-black: #1c2434;
+    --container-layout: 1580px;
+    --breakpoint-layout: 1580px;
 }
 
 /* custom popover transparent */
