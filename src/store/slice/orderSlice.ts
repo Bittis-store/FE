@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type InitialState = {
     receiverInfo: {
@@ -24,6 +24,7 @@ type InitialState = {
         address: string;
     };
     shippingFee: number;
+    paymentMethod: 'COD' | 'ONLINE';
     tax: number;
     description: string;
 };
@@ -51,6 +52,7 @@ const initialState: InitialState = {
         ward: '',
         address: '',
     },
+    paymentMethod: 'COD',
     shippingFee: 0,
     tax: 0,
     description: '',
@@ -81,10 +83,13 @@ export const shippingSlice = createSlice({
             state.receiverInfo = { ...initialState.receiverInfo };
             state.shippingAddress = { ...initialState.shippingAddress };
         },
+        setPaymentMethood: (state, action: PayloadAction<'COD' | 'ONLINE'>) => {
+            state.paymentMethod = action.payload;
+        },
     },
 });
 
-export const { setReceiver, setShippingAddress, setDescription, setShippingFee, clearCheckoutInfo } =
+export const { setReceiver, setPaymentMethood, setShippingAddress, setDescription, setShippingFee, clearCheckoutInfo } =
     shippingSlice.actions;
 
 export default shippingSlice.reducer;

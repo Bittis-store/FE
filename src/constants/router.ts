@@ -3,6 +3,7 @@ export const MAIN_ROUTES = {
     PRODUCTS: '/products',
     WISH_LIST: '/wishlist',
     SHIPPING: '/shipping',
+    PAYMENT: '/payment',
     CHECKOUT: '/checkout',
     CONTACT: '/contact',
     PROFILE: '/account',
