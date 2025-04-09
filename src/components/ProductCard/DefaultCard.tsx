@@ -18,7 +18,7 @@ export default function DefaultCard({ item }: { item: IProduct }) {
         <div className='group mb-2 cursor-pointer'>
             <div className='relative w-full'>
                 <Link to={`/products/${item._id}`}>
-                    <img className='w-full' src={item.variants[0].image} alt={item.name} />
+                    <img className='w-full' src={item.variants[0]?.image} alt={item.name} />
                 </Link>
 
                 <div className='absolute bottom-0 flex w-full items-center justify-between px-2 py-1 opacity-0 duration-300 group-hover:opacity-100'>

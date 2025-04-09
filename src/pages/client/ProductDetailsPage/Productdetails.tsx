@@ -108,8 +108,7 @@ const ProductDetailsPage = () => {
     const uniqueImage = [];
 
     for (let i = 0; i < url.length; i++) {
-        // '_____'
-        const key = url[i].split('=')[1];
+        const key = url[i].split('_____')[1];
         if (!map[key]) {
             map[key] = 1;
             uniqueImage.push(url[i]);
