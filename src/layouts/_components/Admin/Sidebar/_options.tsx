@@ -56,7 +56,7 @@ export const menuGroups: IMenuItem[] = [
         label: 'Quản lý thuộc tính',
         children: [
             { label: 'Màu sắc', route: ADMIN_ROUTES.COLORS },
-            // { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
+            { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
             { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
         ],
     },
