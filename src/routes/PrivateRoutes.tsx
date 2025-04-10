@@ -7,16 +7,19 @@ import {
     CreateColor,
     CreateProduct,
     CreateSize,
+    CreateTag,
     DashboardPage,
     ManageOrders,
     OrdersDetails,
     ProductList,
     SizeList,
     Suspense,
+    TagList,
     UpdateCategory,
     UpdateColor,
     UpdateProduct,
     UpdateSize,
+    UpdateTag,
 } from './LazyRoutes';
 import { Outlet } from 'react-router-dom';
 
@@ -178,6 +181,49 @@ export const PrivateRoutes = [
                         element: (
                             <Suspense>
                                 <UpdateColor />
+                            </Suspense>
+                        ),
+                    },
+                ],
+            },
+             // @Tag
+             {
+                path: ADMIN_ROUTES.TAGS,
+                element: (
+                    <Suspense>
+                        <Outlet />
+                    </Suspense>
+                ),
+                children: [
+                    {
+                        index: true,
+                        element: (
+                            <Suspense>
+                                <TagList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'list',
+                        element: (
+                            <Suspense>
+                                <TagList />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'create',
+                        element: (
+                            <Suspense>
+                                <CreateTag />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: (
+                            <Suspense>
+                                <UpdateTag />
                             </Suspense>
                         ),
                     },

@@ -57,7 +57,7 @@ export const menuGroups: IMenuItem[] = [
         children: [
             { label: 'Màu sắc', route: ADMIN_ROUTES.COLORS },
             // { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
-            // { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
+            { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
         ],
     },
 ];

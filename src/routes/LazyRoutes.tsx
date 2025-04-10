@@ -54,6 +54,11 @@ export const ColorList = lazy(() => import('~/pages/Admin/_color_'));
 export const CreateColor = lazy(() => import('~/pages/Admin/_color_/CreateColor'));
 export const UpdateColor = lazy(() => import('~/pages/Admin/_color_/UpdateColor'));
 
+// Tag
+export const TagList = lazy(() => import('~/pages/Admin/_tag_/'));
+export const CreateTag = lazy(() => import('~/pages/Admin/_tag_/CreateTag'));
+export const UpdateTag = lazy(() => import('~/pages/Admin/_tag_/UpdateTag'));
+
 // Order admin
 export const ManageOrders = lazy(() => import('~/pages/Admin/_order_/ManageOrder'));
 export const OrdersDetails = lazy(() => import('~/pages/Admin/_order_/OrderDetails'));

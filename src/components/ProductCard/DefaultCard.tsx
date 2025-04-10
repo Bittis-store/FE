@@ -65,7 +65,9 @@ export default function DefaultCard({ item }: { item: IProduct }) {
                         {isPending || pendingRemove ? (
                             <Spin />
                         ) : wishListIds?.includes(item._id) ? (
-                            <HeartFilled className='text-red-500' />
+                            <span className='text-red-500 hover:text-white'>
+                                <HeartFilled />
+                            </span>
                         ) : (
                             <HeartFilled />
                         )}

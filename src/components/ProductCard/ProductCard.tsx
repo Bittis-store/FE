@@ -1,16 +1,45 @@
 import { HeartFilled } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { debounce } from 'lodash';
 import { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { MAIN_ROUTES } from '~/constants/router';
 import useFilter from '~/hooks/common/useFilter';
+import useMutationAddWishList from '~/hooks/wishlist/Mutations/useAddWishList';
+import { useMutationRemoveWishList } from '~/hooks/wishlist/Mutations/useRemoveWishList';
+import useGetAllWishlist from '~/hooks/wishlist/Queries/useGetAllWishlist';
 import { RootState } from '~/store/store';
 import { IProduct } from '~/types/Product';
 import { Currency } from '~/utils/FormatCurreny';
+import showMessage from '~/utils/ShowMessage';
 
 function ProductCard({ item }: { item: IProduct }) {
     const navigate = useNavigate();
     const { query } = useFilter();
     const user = useSelector((state: RootState) => state.auth.user);
+
+    const { data: allWishList } = useGetAllWishlist(query);
+
+    const { mutate: addWishlist, isPending } = useMutationAddWishList();
+
+    const wishListIds = allWishList?.data?.wishList?.map((anItem) => anItem._id);
+
+    const { handleRemoveWishList, isPending: pendingRemove } = useMutationRemoveWishList();
+
+    const debouncedRemove = debounce((id: string) => handleRemoveWishList(id), 500);
+
+    const handleAddWishlist = () => {
+        if (user) {
+            if (wishListIds?.includes(item._id as string)) {
+                debouncedRemove(item._id);
+            }
+            addWishlist({ productId: item._id as string });
+        } else {
+            navigate(MAIN_ROUTES.LOGIN);
+            showMessage('Bạn cần đăng nhập trước khi thêm vào yêu thích', 'warning');
+        }
+    };
 
     const originalPrice = item.discount ? item.price / (1 - item.discount / 100) : item.price;
     return (
@@ -23,8 +52,19 @@ function ProductCard({ item }: { item: IProduct }) {
                     <div className='text-primary hover:bg-primary flex h-[32px] w-full items-center justify-center rounded-md bg-white px-2 font-medium shadow-md duration-300 hover:text-white lg:text-sm'>
                         <span className='py-2 text-xs xl:text-sm'> Thêm vào giỏ hàng</span>
                     </div>
-                    <button className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300'>
-                        <HeartFilled />
+                    <button
+                        onClick={() => handleAddWishlist()}
+                        className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300 hover:text-red-500'
+                    >
+                        {isPending || pendingRemove ? (
+                            <Spin />
+                        ) : wishListIds?.includes(item._id) ? (
+                            <span className='text-red-500 hover:text-white'>
+                                <HeartFilled />
+                            </span>
+                        ) : (
+                            <HeartFilled />
+                        )}
                     </button>
                 </div>
             </div>
