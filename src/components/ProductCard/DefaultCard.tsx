@@ -6,11 +6,40 @@ import { RootState } from '~/store/store';
 import { IProduct } from '~/types/Product';
 import { Currency } from '~/utils/FormatCurreny';
 import DrawerAddCart from '../DrawerAddCart';
+import useMutationAddWishList from '~/hooks/wishlist/Mutations/useAddWishList';
+import useGetAllWishlist from '~/hooks/wishlist/Queries/useGetAllWishlist';
+import { MAIN_ROUTES } from '~/constants/router';
+import showMessage from '~/utils/ShowMessage';
+import { useMutationRemoveWishList } from '~/hooks/wishlist/Mutations/useRemoveWishList';
+import { debounce } from 'lodash';
+import { Spin } from 'antd';
 
 export default function DefaultCard({ item }: { item: IProduct }) {
     const navigate = useNavigate();
     const { query } = useFilter();
     const user = useSelector((state: RootState) => state.auth.user);
+
+    const { data: allWishList } = useGetAllWishlist(query);
+
+    const { mutate: addWishlist, isPending } = useMutationAddWishList();
+
+    const wishListIds = allWishList?.data?.wishList?.map((anItem) => anItem._id);
+
+    const { handleRemoveWishList, isPending: pendingRemove } = useMutationRemoveWishList();
+
+    const debouncedRemove = debounce((id: string) => handleRemoveWishList(id), 500);
+
+    const handleAddWishlist = () => {
+        if (user) {
+            if (wishListIds?.includes(item._id as string)) {
+                debouncedRemove(item._id);
+            }
+            addWishlist({ productId: item._id as string });
+        } else {
+            navigate(MAIN_ROUTES.LOGIN);
+            showMessage('Bạn cần đăng nhập trước khi thêm vào yêu thích', 'warning');
+        }
+    };
 
     const originalPrice = item.discount ? item.price / (1 - item.discount / 100) : item.price;
 
@@ -29,8 +58,17 @@ export default function DefaultCard({ item }: { item: IProduct }) {
                         Thêm vào giỏ hàng
                     </DrawerAddCart>
 
-                    <button className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300'>
-                        <HeartFilled />
+                    <button
+                        onClick={() => handleAddWishlist()}
+                        className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300 hover:text-red-500'
+                    >
+                        {isPending || pendingRemove ? (
+                            <Spin />
+                        ) : wishListIds?.includes(item._id) ? (
+                            <HeartFilled className='text-red-500' />
+                        ) : (
+                            <HeartFilled />
+                        )}
                     </button>
                 </div>
             </div>

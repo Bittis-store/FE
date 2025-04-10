@@ -30,6 +30,8 @@ export const MyOrdersPage = lazy(
 export const MyOrderDetailsPage = lazy(
     () => import('~/pages/client/Account/MyOrders/OrderDetail/OrderDetailPage'),
 );
+export const WishlistPage = lazy(() => import('~/pages/client/WishList'));
+
 // Admin
 export const DashboardPage = lazy(() => import('~/pages/Admin/_dashboard_'));
 // @Size

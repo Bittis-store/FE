@@ -17,6 +17,7 @@ import {
     ShippingPage,
     Suspense,
     VerifyAccountPage,
+    WishlistPage,
 } from './LazyRoutes';
 import { MAIN_ROUTES } from '~/constants/router';
 import AuthProtected from '~/layouts/Protected/AuthProtected';
@@ -86,6 +87,17 @@ const PublicRoutes = [
                 element: (
                     <Suspense>
                         <ProductsDetailPage />
+                    </Suspense>
+                ),
+            },
+            // @Wishlist
+            {
+                path: MAIN_ROUTES.WISH_LIST,
+                element: (
+                    <Suspense>
+                        <AuthProtected>
+                            <WishlistPage />
+                        </AuthProtected>
                     </Suspense>
                 ),
             },
