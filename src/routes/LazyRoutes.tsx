@@ -32,6 +32,10 @@ export const MyOrderDetailsPage = lazy(
 );
 // Admin
 export const DashboardPage = lazy(() => import('~/pages/Admin/_dashboard_'));
+// @Size
+export const SizeList = lazy(() => import('~/pages/Admin/_size_/'));
+export const CreateSize = lazy(() => import('~/pages/Admin/_size_/CreateSize'));
+export const UpdateSize = lazy(() => import('~/pages/Admin/_size_/UpdateSize'));
 
 // Category
 export const CategoryList = lazy(() => import('~/pages/Admin/_category_'));
