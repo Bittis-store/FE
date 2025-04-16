@@ -1,49 +1,37 @@
 import { Button, Flex, Table, Tooltip } from 'antd';
 import { TableProps } from 'antd/lib';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { MAIN_ROUTES } from '~/constants/router';
+import { Link } from 'react-router-dom';
 // import { useGetVariantDetail } from '~/hooks/products/Queries/useGetVariantDetail';
 // import RateBtn from '~/pages/Clients/Account/MyOrders/Components/RateBtn';
-import { setReviewData } from '~/store/slice/rateProductSlice';
 import { Currency } from '~/utils';
+import RateBtn from '../../Components/RateBtn';
 
 interface DataType {
-    key: number;
+    key: string | number;
     image: string;
     name: string;
-    color: string;
-    size: string;
+    color: string[] | string;
+    size: string[] | string;
     price: number;
     quantity: number;
     productId: string;
     total?: number;
     isReviewed: boolean;
-    variant: {
-        variantAttributes: { name: string; key: string; value: string }[];
-    };
 }
 
 interface Props {
     orderItems: DataType[];
     status: string;
+    showModal: (productId: string) => void;
 }
 
-const TableDetailOrder = ({ orderItems, status }: Props) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { id } = useParams();
-    const handleRateProduct = (productId: string, orderId: string) => {
-        dispatch(setReviewData({ orderId, isOpen: false }));
-        navigate(`${MAIN_ROUTES.PRODUCTS}/${productId}`);
-    };
-
+const TableDetailOrder = ({ orderItems, status, showModal }: Props) => {
     const columns: TableProps<DataType>['columns'] = [
         {
             title: 'No.',
             dataIndex: 'key',
             key: 'key',
-            render: (key) => <p>{key + 1}</p>,
+            render: (_, __, index) => <p>{index + 1}</p>,
         },
         {
             title: 'Ảnh Sản Phẩm',
@@ -73,13 +61,15 @@ const TableDetailOrder = ({ orderItems, status }: Props) => {
             title: 'Màu',
             dataIndex: 'color',
             key: 'color',
-            render: (color) => <p>{color}</p>,
+            render: (color) => <p>{color.join(', ')}</p>,
+            minWidth: 100,
         },
         {
             title: 'Kích cỡ',
             dataIndex: 'size',
             key: 'size',
-            render: (size) => <p>{size}</p>,
+            render: (size) => <p>{size.join(', ')}</p>,
+            minWidth: 100,
         },
         {
             title: 'Giá Tiền',
@@ -105,16 +95,11 @@ const TableDetailOrder = ({ orderItems, status }: Props) => {
                       title: 'Đánh giá',
                       key: 'action',
                       render: (_: number, record: DataType) => {
-                          console.log(record);
                           return (
                               <>
-                                  {/* {!record.isReviewed && (
-                                      <RateBtn
-                                          handleRate={handleRateProduct}
-                                          productId={record.productId}
-                                          orderId={id!}
-                                      />
-                                  )} */}
+                                  {!record.isReviewed && (
+                                      <RateBtn openReviewModal={showModal} productId={record.productId} />
+                                  )}
                                   {record.isReviewed && (
                                       <Button type='default' disabled>
                                           Đã đánh giá
@@ -128,20 +113,49 @@ const TableDetailOrder = ({ orderItems, status }: Props) => {
             : []),
     ];
 
-    const data: DataType[] = orderItems.map((item, index) => ({
-        key: index,
-        image: item.image,
-        name: item.name,
-        color: item.color,
-        size: item.size,
-        price: item.price,
-        quantity: item.quantity,
-        productId: item.productId,
-        isReviewed: item.isReviewed,
-        variant: item.variant,
-    }));
+    const data = orderItems.reduce((prev: DataType[], curr, index) => {
+        if (prev.some((item: DataType) => item.productId === curr.productId)) {
+            const mergeVariant = prev.map((variant) => {
+                if (variant.productId === curr.productId) {
+                    return {
+                        key: curr.productId,
+                        image: curr.image,
+                        name: curr.name,
+                        color: [...prev.map((pevVariant) => pevVariant.color), curr.color],
+                        size: [...prev.map((pevVariant) => pevVariant.color), curr.color],
+                        price: curr.price,
+                        quantity: curr.quantity,
+                        productId: curr.productId,
+                        isReviewed: curr.isReviewed,
+                    };
+                }
 
-    return <Table className='mt-5 w-full' columns={columns} dataSource={data} pagination={false} />;
+                return variant;
+            });
+
+            return mergeVariant as DataType[];
+        }
+        return [
+            ...prev,
+            {
+                key: curr.productId,
+                image: curr.image,
+                name: curr.name,
+                color: curr.color,
+                size: curr.size,
+                price: curr.price,
+                quantity: curr.quantity,
+                productId: curr.productId,
+                isReviewed: curr.isReviewed,
+            },
+        ];
+    }, []);
+
+    return (
+        <>
+            <Table className='mt-5 w-full' rowKey='productId' columns={columns} dataSource={data} pagination={false} />
+        </>
+    );
 };
 
 export default TableDetailOrder;

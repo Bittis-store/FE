@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES } from '~/constants/router';
+import { ADMIN_ROUTES, MAIN_ROUTES } from '~/constants/router';
 import AdminLayout from '~/layouts/AdminLayout';
 import {
     CategoryList,
@@ -12,6 +12,7 @@ import {
     ManageOrders,
     OrdersDetails,
     ProductList,
+    ReviewsList,
     SizeList,
     Suspense,
     TagList,
@@ -244,6 +245,15 @@ export const PrivateRoutes = [
                 element: (
                     <Suspense>
                         <OrdersDetails />
+                    </Suspense>
+                ),
+            },
+             // @ Review
+            {
+                path: ADMIN_ROUTES.REVIEW,
+                element: (
+                    <Suspense>
+                        <ReviewsList />
                     </Suspense>
                 ),
             },

@@ -4,6 +4,7 @@ import {
     ControlOutlined,
     FolderOutlined,
     ShoppingCartOutlined,
+    StarFilled,
     UserOutlined,
 } from '@ant-design/icons';
 import { ADMIN_ROUTES } from '~/constants/router';
@@ -59,5 +60,10 @@ export const menuGroups: IMenuItem[] = [
             { label: 'Kích cỡ', route: ADMIN_ROUTES.SIZES },
             { label: 'Thẻ phân loại', route: ADMIN_ROUTES.TAGS },
         ],
+    },
+    {
+        icon: <StarFilled />,
+        label: 'Quản lý đánh giá',
+        children: [{ label: 'Tất cả đánh giá', route: ADMIN_ROUTES.REVIEWS }],
     },
 ];

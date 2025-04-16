@@ -11,10 +11,15 @@ import ServicesDetail from '~/pages/client/Account/MyOrders/OrderDetail/_Compone
 import TableDetailOrder from '~/pages/client/Account/MyOrders/OrderDetail/_Components/TableDetailOrder';
 import { IOrderItem } from '~/types/Order';
 import { formatDate } from '~/utils/formatDate';
+import ReviewModal from './_Components/ReviewModal';
+import { useState } from 'react';
 
 const OrderDetailPage = () => {
     const { id } = useParams();
     const { data, isLoading } = useOrderDetails(id!);
+    const [productId, setProductId] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const orderStatus = data?.orderStatus;
 
@@ -32,6 +37,19 @@ const OrderDetailPage = () => {
     const orderItems = data?.items || [];
     const getTotalQuantity = (items: IOrderItem[]): number => {
         return items.reduce((total, item) => total + item.quantity, 0);
+    };
+
+    const showModal = (productIdParams: string) => {
+        setIsModalOpen(true);
+        setProductId(productIdParams);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -77,9 +95,16 @@ const OrderDetailPage = () => {
                         description={data.description}
                     />
                     <ServicesDetail services={serviceInfo} totalQuantity={getTotalQuantity(orderItems)} />
-                    <TableDetailOrder orderItems={orderItems} status={orderStatus} />
+                    <TableDetailOrder orderItems={orderItems} status={orderStatus} showModal={showModal} />
                 </WrapperList>
             )}
+            <ReviewModal
+                isModalOpen={isModalOpen}
+                orderId={id as string}
+                productId={productId}
+                handleCancel={handleCancel}
+                handleOk={handleOk}
+            />
         </>
     );
 };

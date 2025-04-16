@@ -6,8 +6,6 @@ export const PRODUCT_ENDPOINT = {
     ALL_ADMIN: '/products/portal/all',
     LATEST: '/products/latest',
     DEALS: '/products/deals',
-    REVIEWS: '/products/reviews',
-    REVIEWS_DETAIL: '/products/reviews',
     RELATED: '/products/related',
     CREATE: '/products',
     DELETE: '/products',
@@ -78,7 +76,6 @@ export const ORDER_ENDPOINT = {
     DELIVERED_ORDER: '/orders/delivered',
     FINISH_ORDER: '/orders/done',
     CREATE_ORDER: '/orders/create',
-    DISABLED_REVIEW: '/orders/disabled-review',
 };
 
 
@@ -101,15 +98,13 @@ export const USER_ENDPOINT = {
     UPDATE_ADMIN: '/users',
     DETAIL: '/users',
 };
-export const REVIEW_ENDPOINT = {
-    GETOFPRODUCT: '/reviews',
-    GET_DETAIL: '/reviews',
-    GET_ALL: '/reviews/all',
-    CREATE: '/reviews',
-    STARS_REVIEW: '/reviews/stars-review',
-    DELETE_REVIEW: '/reviews/',
-    CHECK_PURCHASED: '/reviews/purchased',
-    UPDATE_ISREVIEWED: '/reviews/',
+export const REVIEWS_ENDPOINT = {
+    ALL_REVIEWS_PRODUCT: 'review/all',
+    ALL_REVIEWS_PRODUCT_ADMIN: 'review/all',
+    ALL_REVIEWS_STARS: 'review/rating',
+    CREATE_REVIEW: 'review/create',
+    HIDDEN_REVIEW: 'review/hidden',
+    ACTIVE_REVIEW: 'review/active',
 };
 export const LOCATION_ENDPOINT = {
     ROOT: '/locations',

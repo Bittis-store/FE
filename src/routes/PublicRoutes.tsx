@@ -14,6 +14,7 @@ import {
     ProductsPage,
     ProfilePage,
     RegisterPage,
+    ReviewsList,
     ShippingPage,
     Suspense,
     VerifyAccountPage,

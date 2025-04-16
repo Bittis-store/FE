@@ -12,3 +12,10 @@ export type Params = {
 };
 
 export type IPagination = { page: number; limit: number };
+
+export interface PaginateResponse<T> {
+    data: T;
+    page: number;
+    totalDocs: number;
+    totalPages: number;
+}

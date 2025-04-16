@@ -13,7 +13,6 @@ export const QUERY_KEY = {
     MENU: 'categories-menu',
     LATEST: 'latest',
     DEALS: 'deals',
-    REVIEWS: 'review',
     REPORT_REVIEWS: 'report-review',
     RELATED: 'related',
     POPULARCATEGORIES: 'poularCategories',
@@ -45,4 +44,8 @@ export const QUERY_KEY = {
         ADD: 'add',
         REMOVE: 'remove',
     },
+    GET_ALL_REVIEWS_PRODUCT: 'reviews',
+    GET_ALL_REVIEWS_STARS: 'reviewsRating',
+    GET_ALL_REVIEWS_PRODUCT_ADMIN: 'adminReviews',
+    HIDDEN_REVIEW: 'adminReviews',
 };

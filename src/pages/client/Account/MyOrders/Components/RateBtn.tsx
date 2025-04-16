@@ -2,16 +2,15 @@ import { TinyColor } from '@ctrl/tinycolor';
 import { Button, ConfigProvider } from 'antd';
 
 type RateBtnProps = {
-    handleRate: (productId: string, orderId: string) => void;
+    openReviewModal: (productId: string) => void;
     productId: string;
-    orderId: string;
 };
 
 const colorsArr = ['#fc6076', '#ff9a44', '#ef9d43', '#e75516'];
 const getHoverColors = (colors: string[]) => colors.map((color) => new TinyColor(color).lighten(5).toString());
 const getActiveColors = (colors: string[]) => colors.map((color) => new TinyColor(color).darken(5).toString());
 
-const RateBtn = ({ handleRate, productId, orderId }: RateBtnProps) => {
+const RateBtn = ({ openReviewModal, productId }: RateBtnProps) => {
     return (
         <ConfigProvider
             theme={{
@@ -25,7 +24,7 @@ const RateBtn = ({ handleRate, productId, orderId }: RateBtnProps) => {
                 },
             }}
         >
-            <Button type='primary' size='middle' onClick={() => handleRate(productId, orderId)}>
+            <Button type='primary' size='middle' onClick={() => openReviewModal(productId)}>
                 Đánh giá
             </Button>
         </ConfigProvider>

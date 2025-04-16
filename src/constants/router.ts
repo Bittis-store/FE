@@ -62,4 +62,5 @@ export const ADMIN_ROUTES = {
     // SHOP
     SHOP: '/admin/shop',
     SHOP_SETTINGS: '/admin/shop',
+    REVIEW: '/admin/reviews',
 };

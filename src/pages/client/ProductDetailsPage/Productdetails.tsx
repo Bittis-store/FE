@@ -12,6 +12,7 @@ import { useGetDetailProduct } from '~/hooks/Products/Queries/useGetDetailProduc
 import { useTypedSelector } from '~/store/store';
 import { useMutationAddToCart } from '~/hooks/cart/Mutations/useAddCart';
 import { useGetRelatedProduct } from '~/hooks/Products/Queries/useGetRelatedProduct';
+import ProductReviews from './ProductReviews';
 
 interface TransformedVariant {
     size: {
@@ -427,7 +428,9 @@ const ProductDetailsPage = () => {
                             </Flex>
                         </div>
                     </div>
-
+                    <div>
+                        <ProductReviews />
+                    </div>
                     <div className='my-14'>
                         <ShopBenefits />
                     </div>
