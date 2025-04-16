@@ -63,6 +63,8 @@ export const UpdateTag = lazy(() => import('~/pages/Admin/_tag_/UpdateTag'));
 export const ManageOrders = lazy(() => import('~/pages/Admin/_order_/ManageOrder'));
 export const OrdersDetails = lazy(() => import('~/pages/Admin/_order_/OrderDetails'));
 export const ReviewsList = lazy(() => import('~/pages/Admin/_review_/ReviewList'));
+// Manage User 
+export const ListUser = lazy(() => import('~/pages/Admin/_user_/ManageUsers'));
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;

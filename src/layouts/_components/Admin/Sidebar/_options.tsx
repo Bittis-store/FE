@@ -39,11 +39,11 @@ export const menuGroups: IMenuItem[] = [
             { label: 'Tạo mới sản phẩm', route: ADMIN_ROUTES.PRODUCTS_CREATE },
         ],
     },
-    // {
-    //     icon: <UserOutlined />,
-    //     label: 'Quản lý người dùng',
-    //     children: [{ label: 'Tất cả người dùng', route: ADMIN_ROUTES.USERS }],
-    // },
+    {
+        icon: <UserOutlined />,
+        label: 'Quản lý người dùng',
+        children: [{ label: 'Tất cả người dùng', route: ADMIN_ROUTES.USERS }],
+    },
     {
         icon: <FolderOutlined />,
         label: 'Quản lý danh mục',

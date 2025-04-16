@@ -9,6 +9,7 @@ import {
     CreateSize,
     CreateTag,
     DashboardPage,
+    ListUser,
     ManageOrders,
     OrdersDetails,
     ProductList,
@@ -254,6 +255,15 @@ export const PrivateRoutes = [
                 element: (
                     <Suspense>
                         <ReviewsList />
+                    </Suspense>)
+
+            },
+            // @user
+            {
+                path: ADMIN_ROUTES.USERS,
+                element: (
+                    <Suspense>
+                        <ListUser />
                     </Suspense>
                 ),
             },
