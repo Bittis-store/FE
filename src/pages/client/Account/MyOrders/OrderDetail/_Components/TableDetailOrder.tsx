@@ -61,14 +61,14 @@ const TableDetailOrder = ({ orderItems, status, showModal }: Props) => {
             title: 'Màu',
             dataIndex: 'color',
             key: 'color',
-            render: (color) => <p>{color.join(', ')}</p>,
+            render: (color) => <p>{typeof color === 'object' ? color.join(', ') : color}</p>,
             minWidth: 100,
         },
         {
             title: 'Kích cỡ',
             dataIndex: 'size',
             key: 'size',
-            render: (size) => <p>{size.join(', ')}</p>,
+            render: (size) => <p>{typeof size === 'object' ? size.join(', ') : size}</p>,
             minWidth: 100,
         },
         {
