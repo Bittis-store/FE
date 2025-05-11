@@ -40,7 +40,32 @@ const FormVoucher = () => {
                 </Link>
             }
         >
-            
+            <Form form={form} onFinish={handleSubmit} layout='vertical' className='flex flex-col gap-4'>
+               
+                <Form.Item>
+                    <div className='flex gap-2'>
+                        <Button
+                            // loading={isLoading && !isResetCode}
+                            // disabled={isLoading}
+                            type='primary'
+                            htmlType='submit'
+                        >
+                            {id ? 'Cập nhật' : 'Tạo mới'}
+                        </Button>
+                        {id && (
+                            <Button
+                                // loading={isLoading && isResetCode}
+                                // disabled={isLoading}
+                                type='dashed'
+                                htmlType='submit'
+                                onClick={handleUpdateAndResetCode}
+                            >
+                                Cập nhật và reset mã voucher
+                            </Button>
+                        )}
+                    </div>
+                </Form.Item>
+            </Form>
         </WrapperPageAdmin>
     );
 };
