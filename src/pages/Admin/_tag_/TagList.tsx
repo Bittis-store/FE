@@ -7,7 +7,6 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import type { TableProps } from 'antd';
 import { Button, Space, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
-import { useMemo } from 'react';
 import TableDisplay from '../../../components/_common/TableDisplay';
 import WrapperPageAdmin from '../_common/WrapperPageAdmin';
 
@@ -18,8 +17,7 @@ const TagList = () => {
     const totalDocs = tags?.data.totalDocs;
     const currentPage = Number(query.page || 1);
 
-    // Memoize columns to prevent recreation on each render
-    const columns: TableProps<ITag>['columns'] = useMemo(() => [
+    const columns: TableProps<ITag>['columns'] = [
         {
             title: 'Tên thẻ',
             dataIndex: 'name',
@@ -28,12 +26,13 @@ const TagList = () => {
             ...getColumnSearchProps('name'),
             width: '20%',
         },
+
         {
             title: 'Thao tác',
             key: 'action',
             render: (_, record) => (
                 <Space size={'middle'}>
-                    <Tooltip title='Cập nhật thẻ'></Tooltip>
+                    <Tooltip title='Cập nhật thẻ'>
                         <Link to={`${ADMIN_ROUTES.TAGS_EDIT}/${record._id}`} className='text-blue-500'>
                             <EditOutlined className='rounded-full bg-blue-100 p-2' style={{ fontSize: '1rem' }} />
                         </Link>
@@ -41,21 +40,18 @@ const TagList = () => {
                 </Space>
             ),
         },
-    ], [getColumnSearchProps]);
-
-    // Memoize option button
-    const addButton = useMemo(() => (
-        <Link to={ADMIN_ROUTES.TAGS_CREATE}>
-            <Button icon={<PlusOutlined />} type='primary'>
-                Thêm mới thẻ
-            </Button>
-        </Link>
-    ), []);
+    ];
 
     return (
         <WrapperPageAdmin
             title='Quản lý thẻ'
-            option={addButton}
+            option={
+                <Link to={ADMIN_ROUTES.TAGS_CREATE}>
+                    <Button icon={<PlusOutlined />} type='primary'>
+                        Thêm mới thẻ
+                    </Button>
+                </Link>
+            }
         >
             <TableDisplay<ITag>
                 onFilter={onFilter}
