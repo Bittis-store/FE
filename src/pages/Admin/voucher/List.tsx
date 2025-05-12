@@ -178,20 +178,6 @@ const VoucherList = () => {
             render: (value, record) => <div className='text-center'>{formatDate(record.endDate)}</div>,
         },
         {
-            title: 'Chỉ user mới',
-            key: 'isOnlyForNewUser',
-            width: '8%',
-            render: (value, record) => (
-                <div className='text-center'>
-                    {record.isOnlyForNewUser ? (
-                        <Badge status='success' text='Có' />
-                    ) : (
-                        <Badge status='default' text='Không' />
-                    )}
-                </div>
-            ),
-        },
-        {
             title: 'Trạng thái',
             key: 'status',
             width: '8%',
