@@ -8,6 +8,8 @@ import { RootState, useTypedSelector } from '~/store/store';
 import showMessage from '~/utils/ShowMessage';
 import ProductItemsCheckout from './ProductItemsCheckout';
 import { setPaymentMethood } from '~/store/slice/orderSlice';
+import { MoneyCollectOutlined } from '@ant-design/icons';
+import VoucherModal from '~/components/voucherModal/VoucherModal';
 
 const { Title } = Typography;
 
@@ -105,6 +107,21 @@ const PaymentMethod = () => {
                                     </div>
                                 </Radio.Group>
                             </div>
+                        </Space>
+                        <Space direction='vertical' className='w-full'>
+                            <h3 className='mt-4 text-lg font-semibold text-[#333333] uppercase'>
+                                Áp dụng mã khuyến mãi
+                            </h3>
+                            <VoucherModal>
+                                <div className='pr-24'>
+                                    <div className='flex cursor-pointer items-center justify-between rounded-md border border-gray-300 px-6 py-4'>
+                                        <div className='flex items-center gap-2'>
+                                            <MoneyCollectOutlined className='text-xl' />
+                                            <span className='text-sm text-[#737373]'>Chọn mã khuyến mãi</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </VoucherModal>
                         </Space>
                     </Col>
                     <Col xs={24} lg={12}>

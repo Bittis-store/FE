@@ -91,7 +91,7 @@ const ShippingAddress = () => {
                     );
                 }}
             </Form.Item>
-            <Form.Item label='Địa chỉ' name='address' rules={[{ required: true, message: <></> }]}>
+            <Form.Item label='Địa chỉ chi tiết' name='address' rules={[{ required: true, message: <></> }]}>
                 <Input onChange={handleAddressChange} />
             </Form.Item>
         </Space>
