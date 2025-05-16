@@ -12,4 +12,9 @@ export const voucherService = {
         }>(`/voucher/admin/all`, { params });
         return res.data;
     },
+    async getDetails(id: string) {
+        const res = await instance.get<{data:IVoucher}>(`/voucher/details/${id}`);
+        return res.data.data;
+    },
+
 };
