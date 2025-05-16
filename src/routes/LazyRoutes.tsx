@@ -22,7 +22,7 @@ export const CheckoutPage = lazy(() => import('~/pages/client/Checkout/CheckOut'
 export const OrderSuccessPage = lazy(() => import('~/pages/client/Checkout/OrderSuccess'));
 export const OrderErrorPage = lazy(() => import('~/pages/client/Checkout/OrderError'));
 
-// @ Account 
+// @ Account
 export const ProfilePage = lazy(() => import('~/pages/client/Account/Profile'));
 export const MyOrdersPage = lazy(
     () => import('~/pages/client/Account/MyOrders'),
@@ -63,8 +63,12 @@ export const UpdateTag = lazy(() => import('~/pages/Admin/_tag_/UpdateTag'));
 export const ManageOrders = lazy(() => import('~/pages/Admin/_order_/ManageOrder'));
 export const OrdersDetails = lazy(() => import('~/pages/Admin/_order_/OrderDetails'));
 export const ReviewsList = lazy(() => import('~/pages/Admin/_review_/ReviewList'));
-// Manage User 
+// Manage User
 export const ListUser = lazy(() => import('~/pages/Admin/_user_/ManageUsers'));
+
+// Vouvher
+export const VoucherList = lazy(() => import('~/pages/Admin/voucher/List'));
+export const FormVoucher = lazy(() => import('~/pages/Admin/voucher/FormVoucher'));
 
 export const Suspense = ({ children }: { children: React.ReactNode }) => {
     return <React.Suspense fallback={<div>loading...</div>}>{children}</React.Suspense>;

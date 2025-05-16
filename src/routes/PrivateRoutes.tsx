@@ -9,6 +9,7 @@ import {
     CreateSize,
     CreateTag,
     DashboardPage,
+    FormVoucher,
     ListUser,
     ManageOrders,
     OrdersDetails,
@@ -22,6 +23,7 @@ import {
     UpdateProduct,
     UpdateSize,
     UpdateTag,
+    VoucherList,
 } from './LazyRoutes';
 import { Outlet } from 'react-router-dom';
 
@@ -266,6 +268,15 @@ export const PrivateRoutes = [
                         <ListUser />
                     </Suspense>
                 ),
+            },
+             // @Voucher
+            { path: ADMIN_ROUTES.VOUCHER, element: <Suspense><Outlet /> </Suspense>,
+                children: [
+                    { index: true, element:  <Suspense><VoucherList /></Suspense>,},
+                    { path: ADMIN_ROUTES.VOUCHER, element:  <Suspense><VoucherList /></Suspense>,},
+                    { path: ADMIN_ROUTES.VOUCHER_CREATE, element:  <Suspense><FormVoucher /></Suspense>,},
+                    { path: `${ADMIN_ROUTES.VOUCHER_EDIT}/:id`, element:  <Suspense><FormVoucher /></Suspense>,},
+                ],
             },
         ],
     },
