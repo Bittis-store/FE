@@ -17,4 +17,14 @@ export const voucherService = {
         return res.data.data;
     },
 
+    async createVoucher(data: IVoucherDTO) {
+        const res = await instance.post<IVoucherDTO>(`/voucher/create`, data);
+        return res.data;
+    },
+
+    async updateVoucher(id: string, data: IVoucherDTO) {
+        const res = await instance.put<IVoucherDTO>(`/voucher/update/${id}`, data);
+        return res.data;
+    },
+   
 };
