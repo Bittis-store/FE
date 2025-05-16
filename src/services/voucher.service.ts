@@ -5,16 +5,14 @@ import instance from '~/utils/api/axiosIntance';
 export const voucherService = {
     async getAllVoucherForAdmin(params: Params) {
         const res = await instance.get<{
-            data: {
-                vouchers: IVoucher[];
-                totalDocs: number;
-            };
+            vouchers: IVoucher[];
+            totalDocs: number;
         }>(`/voucher/admin/all`, { params });
         return res.data;
     },
     async getDetails(id: string) {
-        const res = await instance.get<{data:IVoucher}>(`/voucher/details/${id}`);
-        return res.data.data;
+        const res = await instance.get<IVoucher>(`/voucher/details/${id}`);
+        return res.data;
     },
 
     async createVoucher(data: IVoucherDTO) {

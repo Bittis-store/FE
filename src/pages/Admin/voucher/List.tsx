@@ -40,7 +40,7 @@ const VoucherList = () => {
         },
     });
 
-    const totalDocs = voucherList?.data?.totalDocs || 0;
+    const totalDocs = voucherList?.totalDocs || 0;
 
     const columns: TableProps<IVoucher>['columns'] = [
         {
@@ -210,7 +210,7 @@ const VoucherList = () => {
                 onFilter={onFilter}
                 columns={columns}
                 currentPage={currentPage}
-                dataSource={voucherList?.data?.vouchers || []}
+                dataSource={voucherList?.vouchers || []}
                 onSelectPaginateChange={onSelectPaginateChange}
                 totalDocs={totalDocs}
             />

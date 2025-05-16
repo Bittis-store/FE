@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { getAccessToken } from './apiHelper';
 const axiosOptions = {
     baseURL: import.meta.env.VITE_REACT_API_URL,
@@ -42,6 +42,11 @@ instance.interceptors.response.use(
 
         return Promise.reject(error);
     }
+);
+
+instance.interceptors.response.use(
+    <T>(response: AxiosResponse<T>): T => response.data,
+    (error) => Promise.reject(error.response.data as any)
 );
 
 export default instance;
