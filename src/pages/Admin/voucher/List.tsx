@@ -6,87 +6,41 @@ import useTable from '~/hooks/_common/useTable';
 import TableDisplay from '~/components/_common/TableDisplay';
 import { TableProps } from 'antd/lib';
 import { Currency } from '~/utils';
-import { DiscountType, IVoucher } from '~/types/Voucher';
+import { IVoucher } from '~/types/Voucher';
 import { formatDate } from '~/utils/formatDate';
+import { QUERY_KEY } from '~/constants/queryKey';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { voucherService } from '~/services/voucher.service';
+import showMessage from '~/utils/ShowMessage';
 import WrapperPageAdmin from '~/pages/Admin/_common/WrapperPageAdmin';
-import { useState } from 'react';
 
 const VoucherList = () => {
-    const { onSelectPaginateChange, query, onFilter, getColumnSearchProps, getSortedInfo } = useTable<IVoucher>();
+    const {
+        onSelectPaginateChange,
+        query: params,
+        onFilter,
+        getColumnSearchProps,
+        getSortedInfo,
+    } = useTable<IVoucher>();
+    const queryClient = useQueryClient();
 
-    const currentPage = Number(query.page || 1);
-    const [voucherList, setVoucherList] = useState<{
-        vouchers: IVoucher[];
-        totalDocs: number;
-    }>({
-        vouchers: [
-            {
-                _id: '1',
-                name: 'Giảm 10% đơn hàng',
-                code: 'WELCOME10',
-                maxUsage: 100,
-                voucherDiscount: 10,
-                status: true,
-                minimumOrderPrice: 100000,
-                remainingQuantity: 80,
-                startDate: '2023-08-01T00:00:00.000Z',
-                endDate: '2023-12-31T23:59:59.000Z',
-                createdAt: '2023-07-25T00:00:00.000Z',
-                updatedAt: '2023-07-25T00:00:00.000Z',
-                usagePerUser: 1,
-                usedCount: 20,
-                discountType: DiscountType.Percentage,
-                maxDiscountAmount: 50000,
-            },
-            {
-                _id: '2',
-                name: 'Giảm 50K',
-                code: 'FIXED50K',
-                maxUsage: 50,
-                voucherDiscount: 50000,
-                status: false,
-                minimumOrderPrice: 200000,
-                remainingQuantity: 40,
-                startDate: '2023-09-01T00:00:00.000Z',
-                endDate: '2023-12-31T23:59:59.000Z',
-                createdAt: '2023-08-15T00:00:00.000Z',
-                updatedAt: '2023-08-15T00:00:00.000Z',
-                usagePerUser: 2,
-                usedCount: 10,
-                discountType: DiscountType.Fixed,
-                maxDiscountAmount: 0,
-            },
-            {
-                _id: '3',
-                name: 'Giảm 15% cho khách hàng mới',
-                code: 'NEWUSER15',
-                maxUsage: 200,
-                voucherDiscount: 15,
-                status: true,
-                minimumOrderPrice: 150000,
-                remainingQuantity: 180,
-                startDate: '2023-10-01T00:00:00.000Z',
-                endDate: '2024-01-31T23:59:59.000Z',
-                createdAt: '2023-09-20T00:00:00.000Z',
-                updatedAt: '2023-09-20T00:00:00.000Z',
-                usagePerUser: 1,
-                usedCount: 20,
-                discountType: DiscountType.Fixed,
-                maxDiscountAmount: 100000,
-            },
-        ],
-        totalDocs: 3,
+    const currentPage = Number(params.page || 1);
+    const { data: voucherList } = useQuery({
+        queryKey: [QUERY_KEY.VOUCHER, ...Object.values(params || {}), ...Object.keys(params || {})],
+        queryFn: () => voucherService.getAllVoucherForAdmin(params),
+    });
+    const { mutate: publicVoucher } = useMutation({
+        mutationFn: async (id: string) => voucherService.updateStatus(id),
+
+        onSuccess: () => {
+            showMessage('Cập nhật trạng thái thành công!', 'success');
+            queryClient.refetchQueries({
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.VOUCHER),
+            });
+        },
     });
 
-    const publicVoucher = (id: string) => {
-        setVoucherList(prev => ({
-            ...prev,
-            vouchers: prev.vouchers.map(voucher =>
-                voucher._id === id ? { ...voucher, status: !voucher.status } : voucher
-            ),
-        }));
-    };
-    const totalDocs = voucherList?.totalDocs || 0;
+    const totalDocs = voucherList?.data?.totalDocs || 0;
 
     const columns: TableProps<IVoucher>['columns'] = [
         {
@@ -117,7 +71,7 @@ const VoucherList = () => {
             ),
         },
         {
-            title: 'Lượt dùng /user',
+            title: 'Lượt/user',
             key: 'usagePerUser',
             dataIndex: 'usagePerUser',
             width: '10%',
@@ -159,7 +113,7 @@ const VoucherList = () => {
             ),
         },
         {
-            title: 'Đơn hàng tối thiểu',
+            title: 'Đơn tối thiểu',
             key: 'minimumOrderPrice',
             dataIndex: 'minimumOrderPrice',
             width: '10%',
@@ -256,7 +210,7 @@ const VoucherList = () => {
                 onFilter={onFilter}
                 columns={columns}
                 currentPage={currentPage}
-                dataSource={voucherList?.vouchers || []}
+                dataSource={voucherList?.data?.vouchers || []}
                 onSelectPaginateChange={onSelectPaginateChange}
                 totalDocs={totalDocs}
             />

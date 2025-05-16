@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Form, Input, InputNumber, DatePicker, Switch, Button, Radio } from 'antd';
-import WrapperPageAdmin from '~/pages/Admin/_common/WrapperPageAdmin';
 import { ADMIN_ROUTES } from '~/constants/router';
-import { IVoucherDTO } from '~/types/Voucher';
-import WrapperCard from '~/pages/Admin/_product_/_component/WrapperCard';
 import moment from 'moment';
+import { IVoucherDTO } from '~/types/Voucher';
+import { QUERY_KEY } from '~/constants/queryKey';
+import { voucherService } from '~/services/voucher.service';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import showMessage from '~/utils/ShowMessage';
+import WrapperPageAdmin from '~/pages/Admin/_common/WrapperPageAdmin';
+import WrapperCard from '~/pages/Admin/_product_/_component/WrapperCard';
 
 // Update enum to match schema
 enum DiscountType {
@@ -14,9 +18,46 @@ enum DiscountType {
 }
 
 const FormVoucher = () => {
+    const queryClient = useQueryClient();
+    const naviagate = useNavigate();
     const [form] = Form.useForm();
     const { id } = useParams<{ id: string }>();
+    const { data: voucherDetails } = useQuery({
+        queryKey: [QUERY_KEY.VOUCHER, id],
+        queryFn: async () => voucherService.getDetails(id as string),
+        enabled: !!id,
+    });
+    const [isLoading, setIsLoading] = useState(false);
+    const { mutateAsync: createVoucher } = useMutation({
+        mutationFn: (newVoucher: IVoucherDTO) => voucherService.createVoucher(newVoucher),
+        onError: (err) => {
+            showMessage(err.message, 'error');
+        },
+        onSuccess: () => {
+            showMessage('Đã cập nhật trạng thái sản phẩm!', 'success');
 
+            queryClient.refetchQueries({
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.VOUCHER),
+            });
+            naviagate(ADMIN_ROUTES.VOUCHER, { replace: true });
+        },
+    });
+    const { mutateAsync: updateVoucher } = useMutation({
+        mutationFn: async (data: { newVOucher: IVoucherDTO; id: string }) =>
+            voucherService.updateVoucher(data.id, data.newVOucher),
+
+        onSuccess: () => {
+            showMessage('Cập nhật voucher thành công!', 'success');
+
+            queryClient.refetchQueries({
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.VOUCHER),
+            });
+            naviagate(ADMIN_ROUTES.VOUCHER, { replace: true });
+        },
+        onError: (err) => {
+            showMessage(err.message, 'error');
+        },
+    });
     const [isResetCode, setIsResetCode] = useState(false);
     const [discountType, setDiscountType] = useState<DiscountType | null>(null);
 
@@ -25,11 +66,53 @@ const FormVoucher = () => {
         form.setFieldsValue({ resetCode: true });
     };
 
-    const handleSubmit = async (values: IVoucherDTO) => {};
+    const handleSubmit = async (values: IVoucherDTO) => {
+        setIsLoading(true);
+        values.status = !!values.status;
+        try {
+            if (id) {
+                await updateVoucher({ id, newVOucher: values });
+            } else {
+                await createVoucher(values);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleDiscountTypeChange = (e: any) => {
         setDiscountType(e.target.value);
     };
+    console.log(voucherDetails,'voucherDetails')
+
+    useEffect(() => {
+        if (voucherDetails && discountType === null) {
+            form.setFieldsValue({
+                name: voucherDetails.name,
+                code: voucherDetails.code,
+                discountType: discountType || voucherDetails.discountType,
+                voucherDiscount: voucherDetails.voucherDiscount,
+                maxDiscountAmount: voucherDetails.maxDiscountAmount,
+                startDate: moment(voucherDetails.startDate),
+                endDate: moment(voucherDetails.endDate),
+                minimumOrderPrice: voucherDetails.minimumOrderPrice,
+                status: voucherDetails.status,
+                maxUsage: voucherDetails.maxUsage,
+                usagePerUser: voucherDetails.usagePerUser,
+            });
+            setDiscountType((voucherDetails.discountType as DiscountType) || DiscountType.Percentage);
+        } else {
+            if (!id && !discountType) {
+                form.setFieldsValue({
+                    discountType: DiscountType.Percentage,
+                    maxDiscountAmount: 0,
+                });
+                setDiscountType(DiscountType.Percentage);
+            }
+        }
+    }, [voucherDetails, discountType, form]);
 
     return (
         <WrapperPageAdmin
@@ -64,102 +147,112 @@ const FormVoucher = () => {
                         </Radio.Group>
                     </Form.Item>
 
-                    {discountType === DiscountType.Percentage ? (
+                    <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+                        {/* Discount value */}
+                        {discountType === DiscountType.Percentage ? (
+                            <Form.Item<IVoucherDTO>
+                                label='Phần trăm giảm giá (%)'
+                                name='voucherDiscount'
+                                rules={[
+                                    { required: true, message: 'Vui lòng nhập giá trị giảm giá!' },
+                                    { type: 'number', min: 1, max: 100, message: 'Phần trăm phải từ 1-100!' },
+                                ]}
+                            >
+                                <InputNumber size='large' style={{ width: '100%' }} placeholder='Nhập % giảm giá' />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item<IVoucherDTO>
+                                label='Giá trị giảm giá'
+                                name='voucherDiscount'
+                                rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm giá!' }]}
+                            >
+                                <InputNumber
+                                    size='large'
+                                    style={{ width: '100%' }}
+                                    placeholder='Nhập giá trị giảm giá'
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                                />
+                            </Form.Item>
+                        )}
+
+                        {/* Maximum discount amount (only for percentage) */}
+                        {discountType === DiscountType.Percentage && (
+                            <Form.Item<IVoucherDTO>
+                                label='Giảm giá tối đa'
+                                name='maxDiscountAmount'
+                                rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm giá tối đa!' }]}
+                            >
+                                <InputNumber
+                                    size='large'
+                                    style={{ width: '100%' }}
+                                    placeholder='Nhập giá trị giảm giá tối đa'
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                                />
+                            </Form.Item>
+                        )}
+
+                        {/* Minimum order price */}
                         <Form.Item<IVoucherDTO>
-                            label={'Phần trăm giảm giá (%)'}
-                            name='voucherDiscount'
+                            label='Giá trị đơn hàng tối thiểu'
+                            name='minimumOrderPrice'
                             rules={[
-                                { required: true, message: 'Vui lòng nhập giá trị giảm giá!' },
-                                { type: 'number', min: 1, max: 100, message: 'Phần trăm phải từ 1-100!' },
+                                { required: true, message: 'Vui lòng nhập giá trị đơn hàng tối thiểu!' },
+                                ({ getFieldValue }) => ({
+                                    validator(_, value) {
+                                        if (
+                                            !value ||
+                                            discountType === DiscountType.Percentage ||
+                                            value > getFieldValue('voucherDiscount')
+                                        ) {
+                                            return Promise.resolve();
+                                        }
+                                        return Promise.reject(
+                                            'Giá trị đơn hàng tối thiểu phải lớn hơn giá trị giảm giá'
+                                        );
+                                    },
+                                }),
                             ]}
                         >
-                            <InputNumber size='large' style={{ width: '100%' }} placeholder={'Nhập % giảm giá'} />
-                        </Form.Item>
-                    ) : (
-                        <Form.Item<IVoucherDTO>
-                            label={'Giá trị giảm giá'}
-                            name='voucherDiscount'
-                            rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm giá!' }]}
-                        >
                             <InputNumber
                                 size='large'
                                 style={{ width: '100%' }}
-                                placeholder={'Nhập giá trị giảm giá'}
+                                placeholder='Nhập giá trị đơn hàng tối thiểu'
                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
                             />
                         </Form.Item>
-                    )}
 
-                    {discountType === DiscountType.Percentage && (
+                        {/* Usage limits */}
                         <Form.Item<IVoucherDTO>
-                            label='Giảm giá tối đa'
-                            name='maxDiscountAmount'
-                            rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm giá tối đa!' }]}
+                            label='Tổng số lượng voucher'
+                            name='maxUsage'
+                            rules={[{ required: true, message: 'Vui lòng nhập tổng số lượng voucher!' }]}
                         >
                             <InputNumber
                                 size='large'
                                 style={{ width: '100%' }}
-                                placeholder='Nhập giá trị giảm giá tối đa'
+                                placeholder='Nhập số lượng voucher'
                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
                             />
                         </Form.Item>
-                    )}
 
-                    <Form.Item<IVoucherDTO>
-                        label='Giá trị đơn hàng tối thiểu'
-                        name='minimumOrderPrice'
-                        rules={[
-                            { required: true, message: 'Vui lòng nhập giá trị đơn hàng tối thiểu!' },
-                            ({ getFieldValue }) => ({
-                                validator(_, value) {
-                                    if (
-                                        !value ||
-                                        discountType === DiscountType.Percentage ||
-                                        value > getFieldValue('voucherDiscount')
-                                    ) {
-                                        return Promise.resolve();
-                                    }
-                                    return Promise.reject('Giá trị đơn hàng tối thiểu phải lớn hơn giá trị giảm giá');
-                                },
-                            }),
-                        ]}
-                    >
-                        <InputNumber
-                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
-                            style={{ width: '100%' }}
-                            size='large'
-                            placeholder='Nhập giá trị đơn hàng tối thiểu'
-                        />
-                    </Form.Item>
-                    <Form.Item<IVoucherDTO>
-                        label='Số lượng'
-                        name='maxUsage'
-                        rules={[{ required: true, message: 'Tổng số lượng voucher!' }]}
-                    >
-                        <InputNumber
-                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
-                            size='large'
-                            style={{ width: '100%' }}
-                            placeholder='Nhập số lượng cho voucher này'
-                        />
-                    </Form.Item>
-                    <Form.Item<IVoucherDTO>
-                        label='Số lượng dùng trên mỗi người'
-                        name='usagePerUser'
-                        rules={[{ required: true, message: 'Só lượng sử dụng trên một người tối thiếu là 1!' }]}
-                    >
-                        <InputNumber
-                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
-                            size='large'
-                            style={{ width: '100%' }}
-                            placeholder='Nhập số lượng cho voucher này'
-                        />
-                    </Form.Item>
+                        <Form.Item<IVoucherDTO>
+                            label='Giới hạn sử dụng/người dùng'
+                            name='usagePerUser'
+                            rules={[{ required: true, message: 'Số lượng sử dụng trên một người tối thiểu là 1!' }]}
+                        >
+                            <InputNumber
+                                size='large'
+                                style={{ width: '100%' }}
+                                placeholder='Nhập số lượng tối đa/người dùng'
+                                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={(value) => value!.replace(/\$\s?|(,*)/g, '')}
+                            />
+                        </Form.Item>
+                    </div>
                 </WrapperCard>
                 <WrapperCard title='Thời gian áp dụng'>
                     <Form.Item<IVoucherDTO>
@@ -215,8 +308,8 @@ const FormVoucher = () => {
                 <Form.Item>
                     <div className='flex gap-2'>
                         <Button
-                            // loading={isLoading && !isResetCode}
-                            // disabled={isLoading}
+                            loading={isLoading && !isResetCode}
+                            disabled={isLoading}
                             type='primary'
                             htmlType='submit'
                         >
@@ -224,8 +317,8 @@ const FormVoucher = () => {
                         </Button>
                         {id && (
                             <Button
-                                // loading={isLoading && isResetCode}
-                                // disabled={isLoading}
+                                loading={isLoading && isResetCode}
+                                disabled={isLoading}
                                 type='dashed'
                                 htmlType='submit'
                                 onClick={handleUpdateAndResetCode}

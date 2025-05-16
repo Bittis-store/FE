@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES, MAIN_ROUTES } from '~/constants/router';
+import { ADMIN_ROUTES } from '~/constants/router';
 import AdminLayout from '~/layouts/AdminLayout';
 import {
     CategoryList,

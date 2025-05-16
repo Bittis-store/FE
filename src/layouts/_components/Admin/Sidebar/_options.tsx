@@ -1,6 +1,7 @@
 import {
     AppstoreOutlined,
     BarChartOutlined,
+    BarcodeOutlined,
     ControlOutlined,
     FolderOutlined,
     ShoppingCartOutlined,
@@ -30,6 +31,14 @@ export const menuGroups: IMenuItem[] = [
         icon: <ShoppingCartOutlined />,
         label: 'Quản lý đơn hàng',
         route: ADMIN_ROUTES.ORDERS,
+    },
+    {
+        icon: <BarcodeOutlined />,
+        label: 'Quản lý voucher',
+        children: [
+            { label: 'Tất cả voucher', route: ADMIN_ROUTES.VOUCHER },
+            { label: 'Tạo mới voucher', route: ADMIN_ROUTES.VOUCHER_CREATE },
+        ],
     },
     {
         icon: <AppstoreOutlined />,
