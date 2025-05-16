@@ -45,7 +45,7 @@ instance.interceptors.response.use(
 );
 
 instance.interceptors.response.use(
-    <T>(response: AxiosResponse<T>): T => response.data,
+    (response) => response,
     (error) => Promise.reject(error.response.data as any)
 );
 

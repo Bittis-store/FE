@@ -19,7 +19,7 @@ export const FilterItem = () => {
                 {
                     key: 'sizes-1',
                     type: 'group',
-                    label: <SizeList sizeData={sizeRes?.data.sizes || []} />,
+                    label: <SizeList sizeData={sizeRes?.sizes || []} />,
                 },
             ],
         },
