@@ -22,7 +22,42 @@ const FormVoucher = () => {
     const naviagate = useNavigate();
     const [form] = Form.useForm();
     const { id } = useParams<{ id: string }>();
-   
+    const { data: voucherDetails } = useQuery({
+        queryKey: [QUERY_KEY.VOUCHER, id],
+        queryFn: async () => voucherService.getDetails(id as string),
+        enabled: !!id,
+    });
+    const [isLoading, setIsLoading] = useState(false);
+    const { mutateAsync: createVoucher } = useMutation({
+        mutationFn: (newVoucher: IVoucherDTO) => voucherService.createVoucher(newVoucher),
+        onError: (err) => {
+            showMessage(err.message, 'error');
+        },
+        onSuccess: () => {
+            showMessage('Đã cập nhật trạng thái sản phẩm!', 'success');
+
+            queryClient.refetchQueries({
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.VOUCHER),
+            });
+            naviagate(ADMIN_ROUTES.VOUCHER, { replace: true });
+        },
+    });
+    const { mutateAsync: updateVoucher } = useMutation({
+        mutationFn: async (data: { newVOucher: IVoucherDTO; id: string }) =>
+            voucherService.updateVoucher(data.id, data.newVOucher),
+
+        onSuccess: () => {
+            showMessage('Cập nhật voucher thành công!', 'success');
+
+            queryClient.refetchQueries({
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.VOUCHER),
+            });
+            naviagate(ADMIN_ROUTES.VOUCHER, { replace: true });
+        },
+        onError: (err) => {
+            showMessage(err.message, 'error');
+        },
+    });
     const [isResetCode, setIsResetCode] = useState(false);
     const [discountType, setDiscountType] = useState<DiscountType | null>(null);
 
