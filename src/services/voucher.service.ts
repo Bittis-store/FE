@@ -35,7 +35,7 @@ export const voucherService = {
         return res.data;
     },
     async getVoucherUser() {
-        const res = await instance.get<IVoucher[]>(`/voucher/all`);
-        return res.data;
+        const {data} = await instance.get<{data: IVoucher[]}>(`/voucher/all`);
+        return data.data;
     },
 };
