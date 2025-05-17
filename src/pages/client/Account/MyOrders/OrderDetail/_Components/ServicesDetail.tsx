@@ -20,7 +20,7 @@ interface Props {
 const translatePaymentMethod = (method: string) => {
     const translations: { [key in string]: string } = {
         [PaymentMethod.card]: 'Thanh toán online',
-        [PaymentMethod.cash]: 'Thanh toán khi nhận hàng (COD)',
+        [PaymentMethod.cash]: 'COD',
         // Add more translations as needed
     };
     return translations[method] || method; // Fallback to original if not found
