@@ -28,6 +28,7 @@ import { debounce } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useToast } from '~/context/ToastProvider';
+import { resetOrderInformation } from '~/store/slice/orderSlice';
 
 export default function CartDetail() {
     useDocumentTitle('BITTIS-STORE - Chi tiết giỏ hàng');
@@ -175,6 +176,7 @@ export default function CartDetail() {
     };
     const handleNavigateCheckout = () => {
         if (cartItem.length !== 0) {
+            dispatch(resetOrderInformation());
             navigate(MAIN_ROUTES.SHIPPING);
         }
     };

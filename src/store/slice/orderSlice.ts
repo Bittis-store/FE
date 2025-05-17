@@ -100,6 +100,15 @@ export const shippingSlice = createSlice({
         setPaymentMethood: (state, action: PayloadAction<'COD' | 'ONLINE'>) => {
             state.paymentMethod = action.payload;
         },
+        resetOrderInformation: (state) => {
+            state.description = '';
+            state.shippingFee = 0;
+            state.description = '';
+            state.paymentMethod = 'COD';
+            state.receiverInfo = { ...initialState.receiverInfo };
+            state.shippingAddress = { ...initialState.shippingAddress };
+            state.voucher = null;
+        },
     },
 });
 
@@ -113,6 +122,7 @@ export const {
     setDescription,
     setShippingFee,
     clearCheckoutInfo,
+    resetOrderInformation,
 } = shippingSlice.actions;
 
 export default shippingSlice.reducer;

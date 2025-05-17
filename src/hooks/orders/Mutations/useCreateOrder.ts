@@ -39,6 +39,7 @@ export type DataType = {
     paymentMethod: string;
     coupon?: string;
     shippingFee: number;
+    voucherCode?: string;
 };
 
 export const useCreateOrder = () => {

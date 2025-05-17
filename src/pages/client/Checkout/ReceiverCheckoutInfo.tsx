@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Descriptions, Divider, Typography, Tag } from 'antd';
 import { useSelector } from 'react-redux';
 import { UserOutlined, EnvironmentOutlined, InfoCircleOutlined, DollarOutlined } from '@ant-design/icons';
-import { RootState } from '~/store/store';
+import { RootState, useTypedSelector } from '~/store/store';
 
 const { Title, Text } = Typography;
 
@@ -10,7 +10,7 @@ const ReceiverCheckoutInfo: React.FC = () => {
     const { receiverInfo, paymentMethod, shippingAddress, shippingFee, tax, description } = useSelector(
         (state: RootState) => state.order
     );
-
+    const voucher = useTypedSelector((state) => state.order.voucher);
     const formatCurrency = (value: number) =>
         new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
 
@@ -89,6 +89,19 @@ const ReceiverCheckoutInfo: React.FC = () => {
                     <Tag color='red'>
                         {paymentMethod === 'COD' && 'Thanh toán khi nhận hàng'}
                         {paymentMethod === 'ONLINE' && 'Thánh toán qua VNPAY'}
+                    </Tag>
+                </Descriptions.Item>
+                <Descriptions.Item label='Mã giảm giá'>
+                    <Tag color='gold'>
+                        <div className='flex items-center gap-2'>
+                            <img src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png' alt='' className='w-4' />{' '}
+                            <span>
+                                {voucher?.name}{' '}
+                                {voucher?.discountType === 'fixed'
+                                    ? `( Giảm ${formatCurrency(voucher.voucherDiscount)})`
+                                    : `( Giảm tối đa ${voucher?.maxDiscountAmount && formatCurrency(voucher?.maxDiscountAmount)})`}
+                            </span>
+                        </div>
                     </Tag>
                 </Descriptions.Item>
                 <Descriptions.Item label='Cước phí vận chuyển'>

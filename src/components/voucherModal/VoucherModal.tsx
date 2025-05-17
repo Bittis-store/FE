@@ -1,20 +1,30 @@
+import { CheckOutlined } from '@ant-design/icons';
 import { Modal, Spin } from 'antd';
 import dayjs from 'dayjs';
 import { ReactNode, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useVoucherUser } from '~/hooks/voucher/useGetVoucherUser';
+import { changeVoucher } from '~/store/slice/orderSlice';
 import { useTypedSelector } from '~/store/store';
+import { IVoucher } from '~/types/Voucher';
 import { Currency } from '~/utils';
 
 export default function VoucherModal({ children }: { children: ReactNode }) {
     const [isOpen, setOpen] = useState(false);
     const { data: voucherData, isPending: voucherPending } = useVoucherUser();
+    const dispatch = useDispatch();
     const totalPrice = useTypedSelector((state) => state.order.totalPrice);
+    const selectedVoucher = useTypedSelector((state) => state.order.voucher);
+    const handleChangeVoucher = (item: IVoucher) => {
+        dispatch(changeVoucher(item));
+        setOpen(false);
+    };
     // const totalPrice = useTypedSelector(state=> state.order)
     return (
         <>
             <div onClick={() => setOpen(true)}>{children}</div>
             <Modal
-                title='Voucher'
+                title='Mã giảm giá'
                 centered
                 open={isOpen}
                 onOk={() => setOpen(false)}
@@ -60,7 +70,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                     totalPrice >= item.minimumOrderPrice ||
                                                     item.usagePerUser === item.usedCount
                                                 ) {
-                                                    // handleChangeVoucher(item);
+                                                    handleChangeVoucher(item); 
                                                 }
                                             }}
                                             key={index}
@@ -71,11 +81,11 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                     : 'cursor-pointer border-black'
                                             } items-center gap-5 rounded-md border bg-gray-50 px-4 py-4`}
                                         >
-                                            {/* {selectedVoucher === item && (
+                                            {selectedVoucher === item && (
                                                 <div className='absolute top-0 right-0 rounded-bl-sm bg-green-500 px-2 py-1'>
                                                     <CheckOutlined />
                                                 </div>
-                                            )} */}
+                                            )}
                                             <div className='flex flex-col items-center select-none'>
                                                 <img
                                                     src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png'

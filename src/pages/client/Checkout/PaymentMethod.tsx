@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Radio, Row, Space, Typography } from 'antd';
+import { Button, Card, Col, Form, Popconfirm, Radio, Row, Space, Typography } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,8 @@ import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
 import { RootState, useTypedSelector } from '~/store/store';
 import showMessage from '~/utils/ShowMessage';
 import ProductItemsCheckout from './ProductItemsCheckout';
-import { setPaymentMethood } from '~/store/slice/orderSlice';
-import { MoneyCollectOutlined } from '@ant-design/icons';
+import { removeVoucher, setPaymentMethood } from '~/store/slice/orderSlice';
+import { CloseOutlined, MoneyCollectOutlined } from '@ant-design/icons';
 import VoucherModal from '~/components/voucherModal/VoucherModal';
 
 const { Title } = Typography;
@@ -44,6 +44,10 @@ const PaymentMethod = () => {
     const handleChangePayment = (e: 'COD' | 'ONLINE') => {
         dispatch(setPaymentMethood(e));
     };
+    const voucher = useTypedSelector((state) => state.order.voucher);
+    const handleRemoveVoucher = () => {
+        dispatch(removeVoucher());
+    };
     return (
         <Card className='max-w-layout mx-auto my-8 min-h-[90vh] w-full shadow-lg'>
             <div className='mx-auto max-w-7xl'>
@@ -65,7 +69,7 @@ const PaymentMethod = () => {
                                         <Radio checked></Radio>
                                         <span className='text-sm text-[#737373]'>Giao hàng tận nơi</span>
                                     </div>
-                                    <span className='text-sm'>{formatCurrency(shippingFee)}</span>
+                                    {/* <span className='text-sm'>{formatCurrency(shippingFee)}</span> */}
                                 </div>
                             </div>
                             <h3 className='mt-4 text-lg font-semibold text-[#333333] uppercase'>
@@ -102,7 +106,7 @@ const PaymentMethod = () => {
                                                 className='w-16'
                                                 alt=''
                                             />
-                                            <span className='text-sm text-[#737373]'>Thanh toán online PAYOS</span>
+                                            <span className='text-sm text-[#737373]'>Thanh toán online VNPAY</span>
                                         </div>
                                     </div>
                                 </Radio.Group>
@@ -112,16 +116,49 @@ const PaymentMethod = () => {
                             <h3 className='mt-4 text-lg font-semibold text-[#333333] uppercase'>
                                 Áp dụng mã khuyến mãi
                             </h3>
-                            <VoucherModal>
-                                <div className='pr-24'>
-                                    <div className='flex cursor-pointer items-center justify-between rounded-md border border-gray-300 px-6 py-4'>
-                                        <div className='flex items-center gap-2'>
-                                            <MoneyCollectOutlined className='text-xl' />
-                                            <span className='text-sm text-[#737373]'>Chọn mã khuyến mãi</span>
+                            <div className='pr-24'>
+                                {voucher ? (
+                                    <>
+                                        <div className='flex cursor-pointer items-center justify-between rounded-md border border-gray-300 px-6 py-4'>
+                                            <VoucherModal>
+                                                <div className='flex items-center gap-5'>
+                                                    <img
+                                                        src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png'
+                                                        alt=''
+                                                        className='w-6'
+                                                    />
+                                                    <span className='text-sm text-black capitalize'>
+                                                        {voucher.name}
+                                                    </span>
+                                                </div>
+                                            </VoucherModal>
+                                            <Popconfirm
+                                                placement='bottom'
+                                                title={'Bạn có chắc không muốn sử dụng Voucher này'}
+                                                description={'Giá trị đơn hàng sẽ bị thay đổi lại'}
+                                                okText='Chắc chắn'
+                                                onConfirm={handleRemoveVoucher}
+                                                cancelText='Không'
+                                            >
+                                                <CloseOutlined />
+                                            </Popconfirm>
                                         </div>
-                                    </div>
-                                </div>
-                            </VoucherModal>
+                                    </>
+                                ) : (
+                                    <VoucherModal>
+                                        <div className='flex cursor-pointer items-center justify-between rounded-md border border-gray-300 px-6 py-4'>
+                                            <div className='flex items-center gap-2'>
+                                                <img
+                                                    src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png'
+                                                    alt=''
+                                                    className='w-6'
+                                                />
+                                                <span className='text-sm text-[#737373]'>Chọn mã khuyến mãi</span>
+                                            </div>
+                                        </div>
+                                    </VoucherModal>
+                                )}
+                            </div>
                         </Space>
                     </Col>
                     <Col xs={24} lg={12}>

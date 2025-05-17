@@ -1,3 +1,4 @@
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import {
     Button,
     Card,
@@ -30,6 +31,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
     const { data: cartUser, refetch } = useGetMyCart();
     const paymentMethod = useTypedSelector((state) => state.order.paymentMethod);
     const cartItems = useTypedSelector((state) => state.cartReducer.items);
+    const voucher = useTypedSelector((state) => state.order.voucher);
     const [policyAgreed, setPolicyAgreed] = useState<boolean>(false);
     const createOrderVnPay = useVnPayOrder();
     const { description, receiverInfo, shippingAddress, tax, shippingFee } = useSelector(
@@ -37,6 +39,15 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
     );
     const userId = useTypedSelector((state) => state.auth.user?._id);
     const subTotal = cartItems?.reduce((acc: any, item: any) => acc + +item.price * item.quantity, 0) || 0;
+    const discount =
+        voucher?.discountType === 'percentage'
+            ? Math.min(
+                  subTotal * ((voucher?.voucherDiscount ?? 0) / 100),
+                  voucher?.maxDiscountAmount ?? Infinity // Giới hạn tối đa
+              )
+            : (voucher?.voucherDiscount ?? 0);
+
+    const calTotalPriceWithVoucher = subTotal - discount;
 
     const totalPrice = subTotal + shippingFee;
     const createOrder = useCreateOrder();
@@ -69,6 +80,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                         districtId: shippingAddress.districtId!,
                         wardCode: shippingAddress.wardCode,
                     },
+                    voucherCode: voucher?.code,
                     totalPrice,
                     tax,
                     shippingFee,
@@ -102,6 +114,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                 totalPrice,
                 tax,
                 shippingFee,
+                voucherCode: voucher?.code,
                 paymentMethod: 'card',
             });
         } else {
@@ -173,15 +186,27 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
 
                 <Space direction='vertical' className='w-full'>
                     {hiddenBtn ? (
-                        <Row justify='space-between' align='middle'>
-                            <h3 className='text-2xl font-semibold'>Tạm tính:</h3>
-                            <h3 className='text-2xl font-semibold text-red-500'>{formatCurrency(subTotal)}</h3>
-                        </Row>
+                        <>
+                            {voucher && (
+                                <div className='flex justify-between'>
+                                    <Text>Giảm giá:</Text>
+                                    <Text>{formatCurrency(discount)}</Text>
+                                </div>
+                            )}
+                            <Row justify='space-between' align='middle'>
+                                <h3 className='text-2xl font-semibold'>Tạm tính:</h3>
+                                <h3 className='text-2xl font-semibold text-red-500'>
+                                    {voucher ? formatCurrency(calTotalPriceWithVoucher) : formatCurrency(subTotal)}
+                                </h3>
+                            </Row>
+                        </>
                     ) : (
-                        <div className='flex justify-between'>
-                            <Text>Tạm tính:</Text>
-                            <Text>{formatCurrency(subTotal)}</Text>
-                        </div>
+                        <>
+                            <div className='flex justify-between'>
+                                <Text>Tạm tính:</Text>
+                                <Text>{formatCurrency(subTotal)}</Text>
+                            </div>
+                        </>
                     )}
                     {!hiddenBtn && (
                         <>
@@ -189,10 +214,27 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                                 <Text>Phí vận chuyển:</Text>
                                 <Text>{formatCurrency(shippingFee)}</Text>
                             </div>
-
+                            {voucher && (
+                                <div className='flex justify-between'>
+                                    <span className='flex items-center gap-3'>
+                                        Giảm giá:
+                                        <Tooltip
+                                            title='Mã giảm giá không tính vào phí vận chuyện'
+                                            className='cursor-pointer'
+                                        >
+                                            <span>
+                                                <QuestionCircleOutlined />
+                                            </span>
+                                        </Tooltip>
+                                    </span>
+                                    <Text>{formatCurrency(discount)}</Text>
+                                </div>
+                            )}
                             <Row justify='space-between' align='middle'>
                                 <h3 className='text-2xl font-semibold'>Tổng cộng:</h3>
-                                <h3 className='text-2xl font-semibold text-red-500'>{formatCurrency(totalPrice)}</h3>
+                                <h3 className='text-2xl font-semibold text-red-500'>
+                                    {voucher ? formatCurrency(totalPrice - discount) : formatCurrency(totalPrice)}
+                                </h3>
                             </Row>
                         </>
                     )}
