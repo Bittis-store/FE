@@ -27,7 +27,7 @@ const OrderDetail = () => {
         voucherDiscount: data?.voucherDiscount || null,
         discountType: data?.discountType || null,
         voucherName: data?.voucherName || null,
-        voucherCode: data?.voucherCode || null,
+        voucherCode: data?.voucherCode || '',
     };
     const description = data?.description || '';
 
