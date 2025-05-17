@@ -13,12 +13,13 @@ import {
     Typography,
 } from 'antd';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PolicyModal from '~/components/PolicyModal';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
 import { useCreateOrder } from '~/hooks/orders/Mutations/useCreateOrder';
 import { useVnPayOrder } from '~/hooks/orders/Mutations/useVnPayOrder';
+import { setCheckOutTotalPrice } from '~/store/slice/orderSlice';
 import { RootState, useTypedSelector } from '~/store/store';
 import showMessage from '~/utils/ShowMessage';
 
@@ -39,7 +40,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
 
     const totalPrice = subTotal + shippingFee;
     const createOrder = useCreateOrder();
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const idProductCart = cartItems.map((item: any) => item.productId) || [];
         const idProductCartCheckout = cartUser?.items.map((item) => item.productId) || [];
@@ -119,6 +120,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
     };
     const { data } = useGetMyCart();
     useEffect(() => {
+        dispatch(setCheckOutTotalPrice(subTotal));
         if (data && cartItems) {
             const isAnyItemRemoved = cartItems.some(
                 (item) => !data.items.some((cartDataItem) => cartDataItem._id === item._id)

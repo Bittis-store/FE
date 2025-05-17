@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IVoucher } from '~/types/Voucher';
 
 type InitialState = {
     receiverInfo: {
@@ -27,6 +28,8 @@ type InitialState = {
     paymentMethod: 'COD' | 'ONLINE';
     tax: number;
     description: string;
+    totalPrice: number;
+    voucher: IVoucher | null;
 };
 
 const initialState: InitialState = {
@@ -56,12 +59,23 @@ const initialState: InitialState = {
     shippingFee: 0,
     tax: 0,
     description: '',
+    totalPrice: 0,
+    voucher: null,
 };
 
 export const shippingSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
+        changeVoucher: (state, action: PayloadAction<IVoucher>) => {
+            state.voucher = action.payload;
+        },
+        removeVoucher: (state) => {
+            state.voucher = null;
+        },
+        setCheckOutTotalPrice: (state, action: PayloadAction<number>) => {
+            state.totalPrice = action.payload;
+        },
         setReceiver: (state, action) => {
             state.receiverInfo.customer = action.payload.customer;
             state.receiverInfo.addReceiver = action.payload.receiver;
@@ -89,7 +103,16 @@ export const shippingSlice = createSlice({
     },
 });
 
-export const { setReceiver, setPaymentMethood, setShippingAddress, setDescription, setShippingFee, clearCheckoutInfo } =
-    shippingSlice.actions;
+export const {
+    setReceiver,
+    setCheckOutTotalPrice,
+    changeVoucher,
+    removeVoucher,
+    setPaymentMethood,
+    setShippingAddress,
+    setDescription,
+    setShippingFee,
+    clearCheckoutInfo,
+} = shippingSlice.actions;
 
 export default shippingSlice.reducer;
