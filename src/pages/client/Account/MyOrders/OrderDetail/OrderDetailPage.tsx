@@ -20,7 +20,6 @@ const OrderDetailPage = () => {
     const [productId, setProductId] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
     const orderStatus = data?.orderStatus;
 
     const receiverInfo = data?.paymentMethod === 'card' ? data?.customerInfo : data?.receiverInfo;
@@ -32,6 +31,10 @@ const OrderDetailPage = () => {
         tax: data?.tax || '',
         totalPrice: data?.totalPrice || '',
         isPaid: data?.isPaid || '',
+        voucherDiscount: data?.voucherDiscount || null,
+        discountType: data?.discountType || null,
+        voucherName: data?.voucherName || null,
+        voucherCode: data?.voucherCode || null,
     };
 
     const orderItems = data?.items || [];

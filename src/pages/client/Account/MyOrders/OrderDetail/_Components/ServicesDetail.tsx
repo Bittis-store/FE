@@ -9,6 +9,10 @@ interface Props {
         tax: number;
         totalPrice: number;
         isPaid: boolean;
+        voucherDiscount: number,
+        discountType: string,
+        voucherName: string,
+        voucherCode: string,
     };
     totalQuantity: number;
 }
@@ -35,9 +39,9 @@ export default function ServicesDetail({ services, totalQuantity }: Props) {
             children: <p>{Currency.format(Number(services.shippingFee))}</p>,
         },
         {
-            key: 'Tax',
-            label: <span className='font-semibold capitalize'>Thuế:</span>,
-            children: <p>{`${Number(services.tax) * 100}% VAT `}</p>,
+            key: 'Voucher',
+            label: <span className='font-semibold capitalize'>Mã giảm giá {services.voucherCode && (`(${services.voucherCode})`)}:</span>,
+            children: <p>{Currency.format(services.voucherDiscount)}</p>,
         },
         {
             key: 'Total Price',

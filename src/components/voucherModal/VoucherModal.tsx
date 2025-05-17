@@ -46,6 +46,10 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                         <div className='flex w-full items-center justify-center py-8'>
                             <Spin />
                         </div>
+                    ) : voucherData?.length === 0 ? (
+                        <div className='flex h-[50vh] items-center justify-center'>
+                            <h3 className='text-lg font-medium'>Không có mã giảm giá nào</h3>
+                        </div>
                     ) : (
                         <div className='mt-4 grid grid-cols-3 justify-center gap-5'>
                             {voucherData &&
@@ -70,7 +74,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                     totalPrice >= item.minimumOrderPrice ||
                                                     item.usagePerUser === item.usedCount
                                                 ) {
-                                                    handleChangeVoucher(item); 
+                                                    handleChangeVoucher(item);
                                                 }
                                             }}
                                             key={index}
@@ -139,6 +143,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                         </>
                                                     ) : (
                                                         <>
+                                                            <p className='text-xs'>Mã Giảm: {item.code} </p>
                                                             <p className='text-xs'>
                                                                 Giảm{' '}
                                                                 {item.discountType === 'percentage'

@@ -24,6 +24,10 @@ const OrderDetail = () => {
         tax: data?.tax || '',
         totalPrice: data?.totalPrice || '',
         isPaid: data?.isPaid || '',
+        voucherDiscount: data?.voucherDiscount || null,
+        discountType: data?.discountType || null,
+        voucherName: data?.voucherName || null,
+        voucherCode: data?.voucherCode || null,
     };
     const description = data?.description || '';
 
@@ -48,7 +52,7 @@ const OrderDetail = () => {
                     </Space>
                 </Space>
             )}
-            <ServiceInfo serviceInfo={serviceInfo} description={description} />
+            <ServiceInfo totalItems={orderItems.length} serviceInfo={serviceInfo} description={description} />
             <CustomerInfo customerInfo={customerInfo} receiverInfo={receiverInfo} shippingAddress={shippingAddress} />
 
             <TableOrderItems serviceInfo={serviceInfo} orderItems={orderItems} />
