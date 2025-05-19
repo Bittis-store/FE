@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PolicyModal from '~/components/PolicyModal';
+import { useToast } from '~/context/ToastProvider';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
 import { useCreateOrder } from '~/hooks/orders/Mutations/useCreateOrder';
 import { useVnPayOrder } from '~/hooks/orders/Mutations/useVnPayOrder';
@@ -62,7 +63,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
             navigate('/cart');
         }
     });
-
+    const toast = useToast();
     const handleCheckout = () => {
         if (paymentMethod === 'COD') {
             createOrder.mutate(
@@ -91,32 +92,39 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                         navigate('/success?vnp_ResponseCode=00');
                     },
                     onError: (error: any) => {
-                        showMessage(error.response.data.message, 'error');
+                        toast('error', `${error.message}`);
                     },
                 }
             );
         } else if (paymentMethod === 'ONLINE') {
-            createOrderVnPay.mutate({
-                userId: userId,
-                items: cartItems as [],
-                customerInfo: receiverInfo.customer,
-                receiverInfo: receiverInfo.addReceiver,
-                description: description ?? '',
-                shippingAddress: {
-                    province: shippingAddress.province,
-                    district: shippingAddress.district,
-                    ward: shippingAddress.ward,
-                    address: shippingAddress.address,
-                    provinceId: shippingAddress.provinceId!,
-                    districtId: shippingAddress.districtId!,
-                    wardCode: shippingAddress.wardCode,
+            createOrderVnPay.mutate(
+                {
+                    userId: userId,
+                    items: cartItems as [],
+                    customerInfo: receiverInfo.customer,
+                    receiverInfo: receiverInfo.addReceiver,
+                    description: description ?? '',
+                    shippingAddress: {
+                        province: shippingAddress.province,
+                        district: shippingAddress.district,
+                        ward: shippingAddress.ward,
+                        address: shippingAddress.address,
+                        provinceId: shippingAddress.provinceId!,
+                        districtId: shippingAddress.districtId!,
+                        wardCode: shippingAddress.wardCode,
+                    },
+                    totalPrice,
+                    tax,
+                    shippingFee,
+                    voucherCode: voucher?.code,
+                    paymentMethod: 'card',
                 },
-                totalPrice,
-                tax,
-                shippingFee,
-                voucherCode: voucher?.code,
-                paymentMethod: 'card',
-            });
+                {
+                    onError: (err: any) => {
+                        toast('error', `${err.message}`);
+                    },
+                }
+            );
         } else {
             showMessage('Vui lòng chọn phương thức thanh toán', 'warning');
         }
@@ -270,7 +278,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                             >
                                 <Button
                                     type='primary'
-                                    loading={createOrder.isPending}
+                                    loading={createOrder.isPending || createOrderVnPay.isPending}
                                     size='large'
                                     block
                                     onClick={handleCheckout}
