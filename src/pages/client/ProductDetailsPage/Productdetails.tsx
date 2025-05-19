@@ -1,4 +1,4 @@
-import { Breadcrumb, Button, Collapse, ConfigProvider, Divider, Flex, Image, InputNumber } from 'antd';
+import { Breadcrumb, Button, Collapse, ConfigProvider, Divider, Flex, Image, InputNumber, Rate } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import ShopBenefits from '~/components/ShopBenefits';
@@ -13,6 +13,9 @@ import { useTypedSelector } from '~/store/store';
 import { useMutationAddToCart } from '~/hooks/cart/Mutations/useAddCart';
 import { useGetRelatedProduct } from '~/hooks/Products/Queries/useGetRelatedProduct';
 import ProductReviews from './ProductReviews';
+import useGetAllReviewStar from '~/hooks/review/queries/useGetAllReviewStar';
+import useGetAllReviewsProduct from '~/hooks/review/queries/useGetAllReviewsProduct';
+import useFilter from '~/hooks/common/useFilter';
 
 interface TransformedVariant {
     size: {
@@ -25,6 +28,8 @@ const ProductDetailsPage = () => {
     const { id } = useParams();
     const { data } = useGetDetailProduct(id ? id : '');
     const [valueQuantity, setValueQuantity] = useState(1);
+    const { query } = useFilter();
+
     const [selectedColor, setSelectedColor] = useState<{
         _id: string;
         color: any;
@@ -40,6 +45,8 @@ const ProductDetailsPage = () => {
     const navigate = useNavigate();
     const isAuth = useTypedSelector((state) => state.auth.authenticate);
     const { data: relatedProduct } = useGetRelatedProduct(id ? id : '');
+    const { data: reviewStarData } = useGetAllReviewStar(id as string);
+    const { data: reviewData, isLoading: loadingAllReview } = useGetAllReviewsProduct(id as string, query);
 
     const handleChooseSize = (item: any) => {
         setValueQuantity(1);
@@ -238,7 +245,18 @@ const ProductDetailsPage = () => {
                                         ></ConfigProvider>
                                     </div>
                                 </div>
-
+                                <div className='flex items-center gap-2'>
+                                    <Rate
+                                        allowHalf
+                                        disabled
+                                        defaultValue={reviewStarData?.data.everage || 0}
+                                        value={reviewStarData?.data.everage}
+                                        style={{
+                                            fontSize: 14,
+                                        }}
+                                    />
+                                    <span className='text-[#8f8f8f] text-sm'>( {reviewStarData?.data.reviewsStar.length} Đánh giá )</span>
+                                </div>
                                 {/* PRICE */}
                                 <div className='text-global my-2 text-xl font-bold'>{Currency(data.price)}</div>
                                 {hasAvailableStock ? (
@@ -362,10 +380,10 @@ const ProductDetailsPage = () => {
                                         </span>
                                     </div>
                                 )}
-
+                                <SizeGuideModal />
                                 {/* ADD TO CART */}
                                 <Flex gap={15}>
-                                    <div className='mt-4 w-3/5'>
+                                    <div className='mt-2 w-3/5'>
                                         <ConfigProvider
                                             theme={{
                                                 components: {
@@ -382,7 +400,7 @@ const ProductDetailsPage = () => {
                                                 disabled={!variantsList || !selectedSize}
                                                 block
                                                 icon={<ShoppingCartOutlined className='text-2xl' />}
-                                                className='text-primary border-[#da291c] bg-orange-600 bg-white py-7 text-lg font-bold'
+                                                className='text-primary border-[#da291c] bg-white py-7 text-lg font-bold'
                                             >
                                                 Thêm vào giỏ hàng
                                             </Button>
@@ -407,33 +425,24 @@ const ProductDetailsPage = () => {
                                 {/* MORE INFORMATIONS */}
                                 <div>
                                     <Divider className='my-4' />
-
-                                    <Collapse
-                                        expandIconPosition='end'
-                                        bordered={false}
-                                        ghost
-                                        items={[
-                                            {
-                                                key: 'Mô tả',
-                                                label: <span className='text-base font-bold'>Mô tả</span>,
-                                                children: <p>{data?.description}</p>,
-                                            },
-                                        ]}
-                                    />
-
-                                    <SizeGuideModal />
-
+                                    <h3 className='font-semibold'>Mô tả</h3>
+                                    <p className='mt-2'>{data?.description}</p>
                                     <Divider className='my-4' />
                                 </div>
                             </Flex>
                         </div>
                     </div>
-                    <div>
-                        <ProductReviews />
-                    </div>
-                    <div className='my-14'>
+                    <div className='mt-8'>
                         <ShopBenefits />
                     </div>
+                    <div>
+                        <ProductReviews
+                            isLoading={loadingAllReview}
+                            reviewData={reviewData}
+                            reviewStarData={reviewStarData}
+                        />
+                    </div>
+                    <div className='my-14'></div>
                     {/* RELATED PRODUCTS */}
                     <div className='text-global mt-5 text-xl font-bold'>Gợi ý mua cùng</div>
                     <CarouselDisplay className='mt-4'>

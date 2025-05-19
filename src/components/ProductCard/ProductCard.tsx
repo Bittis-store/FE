@@ -13,6 +13,7 @@ import { RootState } from '~/store/store';
 import { IProduct } from '~/types/Product';
 import { Currency } from '~/utils/FormatCurreny';
 import showMessage from '~/utils/ShowMessage';
+import DrawerAddCart from '../DrawerAddCart';
 
 function ProductCard({ item }: { item: IProduct }) {
     const navigate = useNavigate();
@@ -49,17 +50,20 @@ function ProductCard({ item }: { item: IProduct }) {
                     <img className='w-full object-cover' src={item.variants?.[0]?.image} alt='' />
                 </Link>
                 <div className='absolute bottom-0 flex w-full items-center justify-between px-2 py-1 opacity-0 duration-300 group-hover:opacity-100'>
-                    <div className='text-primary hover:bg-primary flex h-[32px] w-full items-center justify-center rounded-md bg-white px-2 font-medium shadow-md duration-300 hover:text-white lg:text-sm'>
-                        <span className='py-2 text-xs xl:text-sm'> Thêm vào giỏ hàng</span>
-                    </div>
+                    <DrawerAddCart
+                        item={item}
+                        classNameBtn='text-global hover:bg-hover px-10 duration-300 hover:text-white bg-white shadow-md flex justify-center w-full h-[32px] flex items-center justify-center rounded-md text-sm font-medium'
+                    >
+                        Thêm vào giỏ hàng
+                    </DrawerAddCart>
                     <button
                         onClick={() => handleAddWishlist()}
-                        className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300 hover:text-red-500'
+                        className={`hover:bg-opacity-80 cursor-pointer rounded-lg bg-black px-4 py-1 text-white duration-300 hover:text-red-500`}
                     >
                         {isPending || pendingRemove ? (
                             <Spin />
                         ) : wishListIds?.includes(item._id) ? (
-                            <span className='text-red-500 hover:text-white'>
+                            <span className='text-red-500'>
                                 <HeartFilled />
                             </span>
                         ) : (

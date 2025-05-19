@@ -3,19 +3,23 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import useFilter from '~/hooks/common/useFilter';
-import useGetAllReviewsProduct from '~/hooks/review/queries/useGetAllReviewsProduct';
-import useGetAllReviewStar from '~/hooks/review/queries/useGetAllReviewStar';
 import { setScroll } from '~/store/slice/autoScrollTopSlice';
+import { useTypedSelector } from '~/store/store';
 import { Params } from '~/types/Api';
 import ReviewItem from './ReviewItem';
 import ReviewStars from './ReviewStars';
-import { useTypedSelector } from '~/store/store';
 
-const ProductReviews = () => {
+const ProductReviews = ({
+    reviewStarData,
+    reviewData,
+    isLoading,
+}: {
+    reviewStarData: any;
+    reviewData: any;
+    isLoading: boolean;
+}) => {
     const { id } = useParams();
     const { reset, query, updateQueryParam } = useFilter();
-    const { data: reviewData, isLoading } = useGetAllReviewsProduct(id as string, query);
-    const { data: reviewStarData } = useGetAllReviewStar(id as string);
     const myRef = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
     const autoScroll = useTypedSelector((state) => state.autoScrollSlice);
@@ -68,7 +72,8 @@ const ProductReviews = () => {
                 </div>
                 <div className='relative mt-5' ref={myRef}>
                     <div className='p-4'>
-                        {reviewData && reviewData.data?.data?.map((item) => <ReviewItem key={item._id} item={item} />)}
+                        {reviewData &&
+                            reviewData.data?.data?.map((item: any) => <ReviewItem key={item._id} item={item} />)}
                     </div>
                     {isLoading && (
                         <div className='absolute inset-1/2 -translate-x-1/2 -translate-y-1/2 transform'>

@@ -47,7 +47,11 @@ export default function DefaultCard({ item }: { item: IProduct }) {
         <div className='group mb-2 cursor-pointer'>
             <div className='relative w-full'>
                 <Link to={`/products/${item._id}`}>
-                    <img className='w-full min-h-[320px] object-cover max-h-[320px]' src={item.variants[0]?.image} alt={item.name} />
+                    <img
+                        className='max-h-[320px] min-h-[320px] w-full object-cover'
+                        src={item.variants[0]?.image}
+                        alt={item.name}
+                    />
                 </Link>
 
                 <div className='absolute bottom-0 flex w-full items-center justify-between px-2 py-1 opacity-0 duration-300 group-hover:opacity-100'>
@@ -60,12 +64,12 @@ export default function DefaultCard({ item }: { item: IProduct }) {
 
                     <button
                         onClick={() => handleAddWishlist()}
-                        className='hover:bg-opacity-80 h-10 w-1/6 rounded-lg text-white duration-300 hover:text-red-500'
+                        className={`hover:bg-opacity-80 cursor-pointer rounded-lg bg-black px-4 py-1 text-white duration-300 hover:text-red-500`}
                     >
                         {isPending || pendingRemove ? (
                             <Spin />
                         ) : wishListIds?.includes(item._id) ? (
-                            <span className='text-red-500 hover:text-white'>
+                            <span className='text-red-500'>
                                 <HeartFilled />
                             </span>
                         ) : (

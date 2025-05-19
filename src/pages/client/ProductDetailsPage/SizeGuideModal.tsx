@@ -77,9 +77,9 @@ const SizeGuideModal = () => {
         <>
             <div
                 onClick={() => setIsModalOpen(true)}
-                className='flex cursor-pointer items-center space-x-2 py-4 text-base font-bold'
+                className='flex cursor-pointer items-center py-4 text-base font-medium'
             >
-                <span className='pl-4'>Hướng dẫn chọn size</span>
+                <span className='underline uppercase'>Hướng dẫn chọn size</span>
             </div>
 
             <Modal
