@@ -144,7 +144,10 @@ const TableOrderItems: React.FC<Props> = ({ serviceInfo, orderItems }) => {
                 rowKey='productId'
                 className='modern-table'
             />
-            <div className='grid grid-cols-1 gap-4 px-4 py-3 md:grid-cols-2'>
+            <div className='pb-12'>
+
+            </div>
+            {/* <div className='grid grid-cols-1 gap-4 px-4 py-3 md:grid-cols-2'>
                 {infoCards.map((info, index) => (
                     <div
                         key={index}
@@ -159,7 +162,7 @@ const TableOrderItems: React.FC<Props> = ({ serviceInfo, orderItems }) => {
                         </div>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     );
 };

@@ -1,10 +1,10 @@
 import { Space } from 'antd';
-import CancelOrderModal from './CancelOrderModal';
-import PopConFirmOrder from './PopConfirmOrder';
+import { Link } from 'react-router-dom';
 import { ORDER_STATUS } from '~/constants/order';
-import PopConfirmShipping from './PopConfirmShipping';
+import CancelOrderModal from './CancelOrderModal';
 import PopConfirmDeliveredOrder from './PopConfirmDeliveredOrder';
-import PopConfirmFinishOrder from './PopConfirmFinishOrder';
+import PopConFirmOrder from './PopConfirmOrder';
+import PopConfirmShipping from './PopConfirmShipping';
 
 interface Props {
     orderStatus: string;
@@ -14,7 +14,12 @@ interface Props {
 const OrderDetailNavbar = ({ orderStatus, id }: Props) => {
     return (
         <Space className='flex w-full items-center justify-between rounded-lg bg-[#fff] p-4 font-semibold'>
-            <span>Thông tin đơn hàng #{id}</span>
+            <div className='flex flex-col gap-2'>
+                <Link to={'/admin/orders'} className='text-xs'>
+                   	&lt; Quay về danh sách
+                </Link>
+                <span>Thông tin đơn hàng #{id}</span>
+            </div>
             {orderStatus === ORDER_STATUS.PENDING && (
                 <Space>
                     <PopConFirmOrder orderId={id} />

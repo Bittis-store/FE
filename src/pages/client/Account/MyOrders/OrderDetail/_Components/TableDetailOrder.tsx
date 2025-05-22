@@ -122,9 +122,9 @@ const TableDetailOrder = ({ orderItems, status, showModal }: Props) => {
                         image: curr.image,
                         name: curr.name,
                         color: [...prev.map((pevVariant) => pevVariant.color), curr.color],
-                        size: [...prev.map((pevVariant) => pevVariant.color), curr.color],
+                        size: [...prev.map((pevVariant) => pevVariant.size), curr.size],
                         price: curr.price,
-                        quantity: curr.quantity,
+                        quantity: variant.quantity + curr.quantity,
                         productId: curr.productId,
                         isReviewed: curr.isReviewed,
                     };
@@ -150,7 +150,7 @@ const TableDetailOrder = ({ orderItems, status, showModal }: Props) => {
             },
         ];
     }, []);
-
+    // console.log(data)
     return (
         <>
             <Table className='mt-5 w-full' rowKey='productId' columns={columns} dataSource={data} pagination={false} />

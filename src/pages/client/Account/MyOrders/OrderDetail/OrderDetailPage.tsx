@@ -92,12 +92,18 @@ const OrderDetailPage = () => {
                             <Space></Space>
                         </Space>
                     )}
-                    <ReceiverInfor
-                        receiverInfo={receiverInfo}
-                        shippingAddress={shippingAddress}
-                        description={data.description}
-                    />
-                    <ServicesDetail services={serviceInfo} totalQuantity={getTotalQuantity(orderItems)} />
+                    <Space direction='vertical' size='large' className='w-full'>
+                        <ReceiverInfor
+                            receiverInfo={receiverInfo}
+                            shippingAddress={shippingAddress}
+                            description={data.description}
+                        />
+                        <ServicesDetail
+                            description={data.description}
+                            services={serviceInfo}
+                            totalQuantity={getTotalQuantity(orderItems)}
+                        />
+                    </Space>
                     <TableDetailOrder orderItems={orderItems} status={orderStatus} showModal={showModal} />
                 </WrapperList>
             )}
