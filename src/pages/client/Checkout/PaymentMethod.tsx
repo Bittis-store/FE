@@ -1,15 +1,15 @@
+import { CloseOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Form, Popconfirm, Radio, Row, Space, Typography } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import VoucherModal from '~/components/voucherModal/VoucherModal';
 import useDocumentTitle from '~/hooks/_common/useDocumentTitle';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
+import { removeVoucher, setPaymentMethood } from '~/store/slice/orderSlice';
 import { RootState, useTypedSelector } from '~/store/store';
 import showMessage from '~/utils/ShowMessage';
 import ProductItemsCheckout from './ProductItemsCheckout';
-import { removeVoucher, setPaymentMethood } from '~/store/slice/orderSlice';
-import { CloseOutlined, MoneyCollectOutlined } from '@ant-design/icons';
-import VoucherModal from '~/components/voucherModal/VoucherModal';
 
 const { Title } = Typography;
 

@@ -88,8 +88,9 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                     paymentMethod: 'cash',
                 },
                 {
-                    onSuccess: () => {
-                        navigate('/success?vnp_ResponseCode=00');
+                    onSuccess: (data) => {
+                        console.log(data.data);
+                        navigate(`/success/${data.data.data._id}?vnp_ResponseCode=00`);
                     },
                     onError: (error: any) => {
                         toast('error', `${error.message}`);

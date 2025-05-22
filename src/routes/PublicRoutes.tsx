@@ -160,23 +160,23 @@ const PublicRoutes = [
                     </Suspense>
                 ),
             },
-            {
-                path: MAIN_ROUTES.SUCCESS_ORDER,
-                element: (
-                    <Suspense>
-                        <OrderSuccessPage />
-                    </Suspense>
-                ),
-            },
-            {
-                path: MAIN_ROUTES.ERROR_ORDER,
-                element: (
-                    <Suspense>
-                        <OrderErrorPage />
-                    </Suspense>
-                ),
-            },
         ],
+    },
+    {
+            path: `${MAIN_ROUTES.SUCCESS_ORDER}/:id`,
+            element: (
+                <Suspense>
+                    <OrderSuccessPage />
+                </Suspense>
+            ),
+    },
+    {
+            path: MAIN_ROUTES.ERROR_ORDER,
+            element: (
+                <Suspense>
+                    <OrderErrorPage />
+                </Suspense>
+            ),
     },
     { path: '/404', element: <NotFound /> },
     { path: '*', element: <Navigate to={'/404'} /> },
