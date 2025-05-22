@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PolicyModal from '~/components/PolicyModal';
 import { useToast } from '~/context/ToastProvider';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
@@ -287,24 +287,39 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                             <Tooltip
                                 title={
                                     isValidVoucher()
-                                        ? 'Voucher hiện không khả dụng vui lòng chọn lại voucher'
+                                        ? ''
                                         : policyAgreed
                                           ? ''
                                           : 'Bạn cần đồng ý với điều khoản và chính sách của chúng tôi để tiếp tục đặt hàng'
                                 }
                                 color='blue'
                             >
-                                <Button
-                                    type='primary'
-                                    loading={createOrder.isPending || createOrderVnPay.isPending}
-                                    size='large'
-                                    block
-                                    onClick={handleCheckout}
-                                    className='h-12 text-lg font-semibold'
-                                    disabled={!policyAgreed || createOrderVnPay.isSuccess || isValidVoucher()}
-                                >
-                                    {isValidVoucher() ? 'Voucher hiện tại không khả dụng' : 'Đặt hàng'}
-                                </Button>
+                                {isValidVoucher() ? (
+                                    <div className='flex flex-col items-center justify-center'>
+                                        <p className='mb-2 text-center text-xs text-red-500'>
+                                            Voucher hiện không khả dụng
+                                        </p>
+                                        <button
+                                            onClick={() => navigate('/payment')}
+                                            className='h-12 w-full cursor-pointer rounded-md border border-red-500 text-lg font-semibold text-red-500 duration-300 hover:bg-red-500 hover:text-white'
+                                            // disabled={!policyAgreed || createOrderVnPay.isSuccess}
+                                        >
+                                            Chọn lại voucher
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <Button
+                                        type='primary'
+                                        loading={createOrder.isPending || createOrderVnPay.isPending}
+                                        size='large'
+                                        block
+                                        onClick={handleCheckout}
+                                        className='h-12 text-lg font-semibold'
+                                        disabled={!policyAgreed || createOrderVnPay.isSuccess}
+                                    >
+                                        Đặt hàng
+                                    </Button>
+                                )}
                             </Tooltip>
                         </Card>
                     </>
