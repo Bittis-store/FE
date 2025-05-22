@@ -95,12 +95,14 @@ const ReceiverCheckoutInfo: React.FC = () => {
                     <Tag color='gold'>
                         <div className='flex items-center gap-2'>
                             <img src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png' alt='' className='w-4' />{' '}
-                            <span>
-                                {voucher?.name}{' '}
-                                {voucher?.discountType === 'fixed'
-                                    ? `( Giảm ${formatCurrency(voucher.voucherDiscount)})`
-                                    : `( Giảm tối đa ${voucher?.maxDiscountAmount && formatCurrency(voucher?.maxDiscountAmount)})`}
-                            </span>
+                            {voucher && (
+                                <span>
+                                    {voucher?.name}{' '}
+                                    {voucher?.discountType === 'fixed'
+                                        ? `( Giảm ${formatCurrency(voucher.voucherDiscount)})`
+                                        : `( Giảm tối đa ${voucher?.maxDiscountAmount && formatCurrency(voucher?.maxDiscountAmount)})`}
+                                </span>
+                            )}
                         </div>
                     </Tag>
                 </Descriptions.Item>
