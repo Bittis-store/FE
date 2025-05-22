@@ -21,6 +21,7 @@ import { useToast } from '~/context/ToastProvider';
 import useGetMyCart from '~/hooks/cart/Queries/useGetMyCart';
 import { useCreateOrder } from '~/hooks/orders/Mutations/useCreateOrder';
 import { useVnPayOrder } from '~/hooks/orders/Mutations/useVnPayOrder';
+import { useVoucherUser } from '~/hooks/voucher/useGetVoucherUser';
 import { setCheckOutTotalPrice } from '~/store/slice/orderSlice';
 import { RootState, useTypedSelector } from '~/store/store';
 import showMessage from '~/utils/ShowMessage';
@@ -35,6 +36,7 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
     const voucher = useTypedSelector((state) => state.order.voucher);
     const [policyAgreed, setPolicyAgreed] = useState<boolean>(false);
     const createOrderVnPay = useVnPayOrder();
+    const { data: voucherData } = useVoucherUser();
     const { description, receiverInfo, shippingAddress, tax, shippingFee } = useSelector(
         (state: RootState) => state.order
     );
@@ -154,6 +156,19 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
+    const isValidVoucher = () => {
+        if (!voucherData) return false;
+        const foundVoucher = voucher && voucherData.find((item) => item.code === voucher.code);
+        if (!foundVoucher) return false;
+        const isRemainingQuantityVoucher = foundVoucher.remainingQuantity === 0;
+        if (isRemainingQuantityVoucher) return true;
+        const isAmountValid = subTotal < foundVoucher.minimumOrderPrice;
+        if (isAmountValid) return true;
+        const isUsageValid = foundVoucher.usagePerUser === foundVoucher.usedCount;
+
+        return isUsageValid;
+    };
+
     return (
         <div className='flex h-full flex-col'>
             <Title level={4} className='mb-4'>
@@ -271,9 +286,11 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                         <Card className='mt-4 border-blue-200 bg-blue-50'>
                             <Tooltip
                                 title={
-                                    policyAgreed
-                                        ? ''
-                                        : 'Bạn cần đồng ý với điều khoản và chính sách của chúng tôi để tiếp tục đặt hàng'
+                                    isValidVoucher()
+                                        ? 'Voucher hiện không khả dụng vui lòng chọn lại voucher'
+                                        : policyAgreed
+                                          ? ''
+                                          : 'Bạn cần đồng ý với điều khoản và chính sách của chúng tôi để tiếp tục đặt hàng'
                                 }
                                 color='blue'
                             >
@@ -284,9 +301,9 @@ const ProductItemsCheckout = ({ hiddenBtn = false }: { hiddenBtn?: boolean }) =>
                                     block
                                     onClick={handleCheckout}
                                     className='h-12 text-lg font-semibold'
-                                    disabled={!policyAgreed || createOrderVnPay.isSuccess}
+                                    disabled={!policyAgreed || createOrderVnPay.isSuccess || isValidVoucher()}
                                 >
-                                    Đặt hàng
+                                    {isValidVoucher() ? 'Voucher hiện tại không khả dụng' : 'Đặt hàng'}
                                 </Button>
                             </Tooltip>
                         </Card>

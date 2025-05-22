@@ -71,8 +71,8 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                         <div
                                             onClick={() => {
                                                 if (
-                                                    totalPrice >= item.minimumOrderPrice ||
-                                                    item.usagePerUser === item.usedCount
+                                                    totalPrice >= item.minimumOrderPrice &&
+                                                    item.usagePerUser !== item.usedCount
                                                 ) {
                                                     handleChangeVoucher(item);
                                                 }
