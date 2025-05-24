@@ -1,7 +1,24 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import UserToolBar from './UserToolbar/UserToolBar';
+import { Form, Input } from 'antd';
+import useFilter from '~/hooks/common/useFilter';
+import { PRODUCT_ENDPOINT } from '~/constants/endPoint';
 export default function Header() {
+    const location = useLocation();
+    const [form] = Form.useForm();
+    const navigate = useNavigate();
+    const { updateQueryParam } = useFilter();
+    const onFinish = (values: { search: string }) => {
+        console.log('Search values:', values);
+        if (location.pathname !== PRODUCT_ENDPOINT.PRODUCT) {
+            navigate(`${PRODUCT_ENDPOINT.PRODUCT}?search=${values.search}`);
+
+        } else {
+            updateQueryParam({ search: values.search });
+        }
+    };
+
     return (
         <>
             <div className='mx-auto flex h-[40px] items-center justify-center bg-[#303030]'>
@@ -50,12 +67,21 @@ export default function Header() {
                                 </div>
                             </div>
                             <div className='flex items-center'>
-                                <div className='flex items-center gap-2 rounded-full border-[1px] border-[#7777] px-4 py-2'>
-                                    <button className='flex items-center'>
-                                        <SearchOutlined className='text-xl' />
-                                    </button>
-                                    <input type='text' placeholder='Tìm kiếm...' className='text-sm outline-none' />
-                                </div>
+                                <Form
+                                    form={form}
+                                    onFinish={onFinish}
+                                    layout='inline'
+                                    className='rounded-full border-[1px] border-[#7777] px-4 py-2'
+                                >
+                                    <Form.Item name='search'>
+                                        <Input
+                                            prefix={<SearchOutlined className='text-xl' />}
+                                            placeholder='Tìm kiếm...'
+                                            className='text-sm'
+                                            bordered={false}
+                                        />
+                                    </Form.Item>
+                                </Form>
                                 <UserToolBar />
                             </div>
                         </div>
