@@ -13,7 +13,6 @@ export default function Header() {
         console.log('Search values:', values);
         if (location.pathname !== PRODUCT_ENDPOINT.PRODUCT) {
             navigate(`${PRODUCT_ENDPOINT.PRODUCT}?search=${values.search}`);
-
         } else {
             updateQueryParam({ search: values.search });
         }

@@ -18,8 +18,9 @@ const useCreateProduct = () => {
             showMessage('Thêm mới sản phẩm thành công!', 'success');
             navigate(ADMIN_ROUTES.PRODUCTS);
         },
-        onError: (error: any) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (err) => {
+            console.error('Error creating product:', err);
+            showMessage(err.message, 'error');
         },
     });
 };

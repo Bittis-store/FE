@@ -10,18 +10,17 @@ const useUpdateProduct = () => {
     const navigate = useNavigate();
 
     return useMutation({
-        mutationFn: ({ data, id }: { data: FormData; id: string }) =>
-            ProductServices.updateProduct(data, id),
+        mutationFn: ({ data, id }: { data: FormData; id: string }) => ProductServices.updateProduct(data, id),
         onSuccess: () => {
             queryClient.refetchQueries({
-                predicate: (query) =>
-                    query.queryKey.includes(QUERY_KEY.PRODUCTS),
+                predicate: (query) => query.queryKey.includes(QUERY_KEY.PRODUCTS),
             });
             showMessage('Cập nhật sản phẩm thành công!', 'success');
             navigate(ADMIN_ROUTES.PRODUCTS);
         },
-        onError: (error: any) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (err) => {
+            console.error('Error creating product:', err);
+            showMessage(err.message, 'error');
         },
     });
 };
