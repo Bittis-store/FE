@@ -134,6 +134,7 @@ const UpdateProduct = () => {
                             />
                         </Form.Item>
                         <Form.Item<any>
+                            hidden
                             className='flex font-medium text-[#08090F] capitalize'
                             name='discount'
                             label='Giảm giá (%)'

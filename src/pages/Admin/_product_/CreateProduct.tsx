@@ -140,6 +140,7 @@ const CreateProduct = () => {
                         </Form.Item>
                         <Form.Item<any>
                             className='flex font-medium text-[#08090F] capitalize'
+                            hidden
                             name='discount'
                             label='Giảm giá (%)'
                             rules={[
