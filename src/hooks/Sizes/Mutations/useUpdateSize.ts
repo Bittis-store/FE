@@ -2,10 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { ADMIN_ROUTES } from '~/constants/router';
+import sizeService from '~/services/size.service';
 import { ICategoryFormData } from '~/types/Category';
 import showMessage from '~/utils/ShowMessage';
-import sizeService from '~/services/size.service';
-import { errorResponse } from '~/types/ErrorResponse';
 
 export const useMutationUpdateSize = () => {
     const queryClient = useQueryClient();
@@ -23,8 +22,8 @@ export const useMutationUpdateSize = () => {
             showMessage('Đã cập nhật thông tin kích cỡ!', 'success');
             navigate(ADMIN_ROUTES.SIZES, { replace: true });
         },
-        onError: (error: errorResponse) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (error: any) => {
+            showMessage(error.message, 'error');
         },
     });
 };

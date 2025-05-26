@@ -1,11 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { ADMIN_ROUTES } from '~/constants/router';
 import tagService from '~/services/tag.service';
 import { ICategoryFormData } from '~/types/Category';
-import { errorResponse } from '~/types/ErrorResponse';
 import showMessage from '~/utils/ShowMessage';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
 export const useMutationUpdateTag = () => {
     const queryClient = useQueryClient();
@@ -22,8 +21,8 @@ export const useMutationUpdateTag = () => {
             showMessage('Đã cập nhật thông tin thẻ!', 'success');
             navigate(ADMIN_ROUTES.TAGS, { replace: true });
         },
-        onError: (error: errorResponse) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (error: any) => {
+            showMessage(error.message, 'error');
         },
     });
 };
