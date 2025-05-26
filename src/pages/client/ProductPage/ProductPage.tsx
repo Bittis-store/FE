@@ -56,7 +56,6 @@ const ProductPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [windowWidth]);
 
-    console.log(grid);
 
     return (
         <div className='2xl:max-w-screen-default mx-4 w-full default:mx-auto'>
