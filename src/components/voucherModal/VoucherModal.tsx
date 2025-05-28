@@ -71,8 +71,8 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                         <div
                                             onClick={() => {
                                                 if (
-                                                    totalPrice >= item.minimumOrderPrice &&
-                                                    item.usagePerUser !== item.usedCount
+                                                    totalPrice >= item.minimumOrderPrice && 
+                                                    item.usagePerUser !== item.usedCount && item.remainingQuantity !== 0
                                                 ) {
                                                     handleChangeVoucher(item);
                                                 }
@@ -80,7 +80,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                             key={index}
                                             className={`relative flex w-full overflow-hidden ${
                                                 totalPrice < item.minimumOrderPrice ||
-                                                item.usagePerUser === item.usedCount
+                                                item.usagePerUser === item.usedCount || !item.remainingQuantity
                                                     ? 'cursor-not-allowed border-[#737373]'
                                                     : 'cursor-pointer border-black'
                                             } items-center gap-5 rounded-md border bg-gray-50 px-4 py-4`}
@@ -95,7 +95,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                     src='https://cdn-icons-png.flaticon.com/512/4649/4649082.png'
                                                     className={`${
                                                         (totalPrice < item.minimumOrderPrice ||
-                                                            item.usagePerUser === item.usedCount) &&
+                                                            item.usagePerUser === item.usedCount) || !item.remainingQuantity &&
                                                         'opacity-50'
                                                     } w-8`}
                                                     alt=''
@@ -103,7 +103,7 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                                 <span
                                                     className={`${
                                                         totalPrice < item.minimumOrderPrice ||
-                                                        item.usagePerUser === item.usedCount
+                                                        item.usagePerUser === item.usedCount || !item.remainingQuantity
                                                             ? 'rounded-md bg-black/45 px-1.5 text-white'
                                                             : 'rounded-md bg-red-500 px-1.5 text-white'
                                                     }`}
@@ -114,14 +114,14 @@ export default function VoucherModal({ children }: { children: ReactNode }) {
                                             <div
                                                 className={`${
                                                     (totalPrice < item.minimumOrderPrice ||
-                                                        item.usagePerUser === item.usedCount) &&
+                                                        item.usagePerUser === item.usedCount) || !item.remainingQuantity &&
                                                     'text-[#737373]'
                                                 }`}
                                             >
                                                 <h3 className='text-lg font-semibold'>{item.name.toUpperCase()}</h3>
                                                 <div className='select-none'>
                                                     {totalPrice < item.minimumOrderPrice ||
-                                                    item.usagePerUser === item.usedCount ? (
+                                                    item.usagePerUser === item.usedCount  ? (
                                                         <>
                                                             {item.usagePerUser === item.usedCount ? (
                                                                 <>
