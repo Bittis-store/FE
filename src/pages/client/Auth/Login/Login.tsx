@@ -18,7 +18,7 @@ const Login = () => {
         <div className='md:max-w-standard mx-auto mt-12 w-full xl:max-w-7xl'>
             <div className='flex justify-between'>
                 <div className='flex basis-[50%] justify-center'>
-                    <img src={SignImg} alt='Sign Image' className='w-full object-cover' />
+                    <img src={'https://res.cloudinary.com/dpplfiyki/image/upload/v1748442788/dcf5e2ea-c7b9-4e8e-bf52-f54f9f088eee_wfm2eq.jpg'} alt='Sign Image' className='w-full object-cover' />
                 </div>
                 <div className='flex basis-[40%] flex-col items-center justify-center gap-10'>
                     <h1 className='font-inter text-4xl font-medium'>Đăng nhập</h1>

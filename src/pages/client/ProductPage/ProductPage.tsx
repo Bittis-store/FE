@@ -78,8 +78,8 @@ const ProductPage = () => {
                             ]}
                         />
                     </div>
-                    <div className='my-4 h-[300px]'>
-                        <img src={banner} alt='products banner' className='h-full w-full object-cover' />
+                    <div className='my-4 h-[400px]'>
+                        <img src={'https://theme.hstatic.net/200000580329/1000937158/14/collection_banner.jpg?v=96'} alt='products banner' className='h-full w-full object-cover' />
                     </div>
                     <div className='border-opacity-5 my-5 flex justify-between border-b border-black/10 pb-4'>
                         <div className='flex items-center gap-1'>
