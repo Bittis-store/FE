@@ -18,7 +18,7 @@ const ProductPage = () => {
     const { windowWidth } = useWindowSize();
     const queryKeys = Object.keys(query);
     let isResetFilter = false;
-    const { data: productResponse, isLoading: isProductLoading } = useGetProducts(query);
+    const { data: productResponse, isLoading: isProductLoading } = useGetProducts({ ...query, isActive: true });
     const products = productResponse?.data.products;
     const totalProducts = products?.length;
     const totalDocs = productResponse?.data.totalDocs;

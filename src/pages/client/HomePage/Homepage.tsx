@@ -14,7 +14,7 @@ import useGetProducts from '~/hooks/Products/Queries/useGetProducts';
 export default function Homepage() {
     const { data: productBest } = useGetProductBest();
     const { data: productDiscount } = useGetProductDiscount();
-    const { data: allProducts, isLoading: allProductLoading } = useGetProducts({});
+    const { data: allProducts, isLoading: allProductLoading } = useGetProducts({ isActive: true });
 
     const { windowWidth } = useWindowSize();
 
