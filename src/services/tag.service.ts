@@ -11,9 +11,7 @@ const tagService = {
         return res.data;
     },
     async getAllTagsNoParams() {
-        const res = await instance.get<IAxiosResponse<ITagResponse>>(`${TAG_ENDPOINT.ALL}`, {
-            params: { limit: 10000, page: 1 },
-        });
+        const res = await instance.get<IAxiosResponse<ITagResponse>>(`${TAG_ENDPOINT.ALL}`);
         return res.data;
     },
     async createTag(payload: ICategoryFormData) {
