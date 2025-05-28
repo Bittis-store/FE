@@ -138,6 +138,14 @@ export const ProductsListColumns = ({
             key: 'action',
             render: (_, record) => (
                 <Space key={record._id} className='flex flex-col items-start justify-start'>
+                    <Tooltip title='Xem đánh giá của sản phẩm này'>
+                        <Link
+                            to={`/admin/reviews/products/${record._id}`}
+                            className='text-blue-500 transition-colors duration-500 hover:text-blue-400'
+                        >
+                            Xem đánh giá
+                        </Link>
+                    </Tooltip>
                     <Tooltip title='Cập nhật'>
                         <Link
                             to={`/admin/products/${record._id}/edit`}
