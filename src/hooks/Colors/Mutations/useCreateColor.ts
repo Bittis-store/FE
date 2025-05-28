@@ -1,11 +1,10 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { ADMIN_ROUTES } from '~/constants/router';
 import colorService from '~/services/color.service';
 import { IColorFormData } from '~/types/Color';
-import { errorResponse } from '~/types/ErrorResponse';
 import showMessage from '~/utils/ShowMessage';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
 export const useMutationCreateColor = () => {
     const queryClient = useQueryClient();
@@ -25,8 +24,8 @@ export const useMutationCreateColor = () => {
             showMessage('Tạo mới màu sắc thành công!', 'success');
             navigate(ADMIN_ROUTES.COLORS, { replace: true });
         },
-        onError: (error: errorResponse) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (error: any) => {
+            showMessage(error.message, 'error');
         },
     });
 };

@@ -22,16 +22,20 @@ export default function Banner() {
         <div className='relative'>
             <div className='group'>
                 <Carousel className='w-full' ref={ref} draggable infinite autoplay>
-                    <Link to={'/'}>
-                        <img className='object-cover' src='https://ananas.vn/wp-content/uploads/1920x960.jpg' alt='' />
-                    </Link>
-                    <Link to={'/'}>
+                    <div className='h-[20vh]'>
                         <img
-                            className='object-cover'
-                            src='https://ananas.vn/wp-content/uploads/Desktop_Homepage_Banner01.jpg'
+                            className='h-[80vh] w-full object-cover'
+                            src='https://res.cloudinary.com/dpplfiyki/image/upload/v1748442592/3c8b3282-a10f-4df8-8539-cf69d7e4b747_qjyhsp.jpg'
                             alt=''
                         />
-                    </Link>
+                    </div>
+                    <div>
+                        <img
+                            className='h-[80vh] w-full object-cover'
+                            src='https://res.cloudinary.com/dpplfiyki/image/upload/v1748442556/b215030d-0727-4647-a2db-048127f55847_rxjzax.jpg'
+                            alt=''
+                        />
+                    </div>
                 </Carousel>
                 <SliderControls isButtonHandle={false} handlePrev={handlePrev} handleNext={handleNext} />
             </div>

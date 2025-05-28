@@ -27,6 +27,7 @@ export interface IReviewItemTable {
     userId: string;
     userName: string;
     isHided: boolean;
+    createdAt?: string;
 }
 
 export interface IReviewStarResponse {

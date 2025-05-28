@@ -34,7 +34,7 @@ const FilterSidebar = () => {
                 <Menu
                     className={`custom-menu w-full bg-white p-3 text-base font-medium text-black`}
                     mode='inline'
-                    defaultOpenKeys={['cost', 'sizes', 'colors']}
+                    defaultOpenKeys={['cost', 'sizes','tags', 'colors']}
                     items={items}
                     expandIcon={<DownOutlined />}
                 />

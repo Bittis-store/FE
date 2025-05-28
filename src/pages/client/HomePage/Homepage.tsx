@@ -26,8 +26,8 @@ export default function Homepage() {
                     <div className=''>
                         <div className='flex justify-between gap-10'>
                             <div className='w-[50%]'>
-                                <Link to='/' className='block h-[320px]'>
-                                    <img src={bannerOne} alt='' className='block h-full w-full object-cover' />
+                                <Link to='/' className='block h-[450px]'>
+                                    <img src={'https://res.cloudinary.com/dpplfiyki/image/upload/v1748442864/aca3af18-08eb-4508-9a40-531f68720d2a_w4psak.jpg'} alt='' className='block h-full w-full object-cover' />
                                 </Link>
                                 <Link
                                     to='/'
@@ -41,8 +41,8 @@ export default function Homepage() {
                                 </p>
                             </div>
                             <div className='w-[50%]'>
-                                <Link to='/' className='block h-[320px]'>
-                                    <img src={bannerTwo} alt='' className='block h-full w-full object-cover' />
+                                <Link to='/' className='block  h-[450px]'>
+                                    <img src={'https://res.cloudinary.com/dpplfiyki/image/upload/v1748442788/dcf5e2ea-c7b9-4e8e-bf52-f54f9f088eee_wfm2eq.jpg'} alt='' className='block h-full w-full object-cover' />
                                 </Link>
                                 <Link
                                     to='/'

@@ -25,7 +25,8 @@ export const useAuthLogin = () => {
             navigate('/');
         },
         onError(error: any) {
-            toast('error', `${error.response.data.message}`);
+            console.log(error)
+            toast('error', `${error.message}`);
         },
     });
 };

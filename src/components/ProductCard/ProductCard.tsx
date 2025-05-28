@@ -46,8 +46,12 @@ function ProductCard({ item }: { item: IProduct }) {
     return (
         <div className='group w-full cursor-pointer'>
             <div className='relative'>
-                <Link to={`/products/${item?._id}`}>
-                    <img className='w-full object-cover' src={item.variants?.[0]?.image} alt='' />
+                <Link to={`/products/${item._id}`}>
+                    <img
+                        className='max-h-[320px] min-h-[320px] w-full object-cover'
+                        src={item.variants[0]?.image}
+                        alt={item.name}
+                    />
                 </Link>
                 <div className='absolute bottom-0 flex w-full items-center justify-between px-2 py-1 opacity-0 duration-300 group-hover:opacity-100'>
                     <DrawerAddCart

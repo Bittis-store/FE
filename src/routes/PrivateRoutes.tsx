@@ -14,6 +14,7 @@ import {
     ManageOrders,
     OrdersDetails,
     ProductList,
+    ReviewDetailProduct,
     ReviewsList,
     SizeList,
     Suspense,
@@ -257,6 +258,14 @@ export const PrivateRoutes = [
                 element: (
                     <Suspense>
                         <ReviewsList />
+                    </Suspense>)
+
+            },
+             {
+                path: `${ADMIN_ROUTES.REVIEW}/products/:id`,
+                element: (
+                    <Suspense>
+                        <ReviewDetailProduct />
                     </Suspense>)
 
             },

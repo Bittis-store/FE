@@ -1,6 +1,11 @@
-import { CheckCircleFilled, CloseCircleFilled, CreditCardFilled, PercentageOutlined } from '@ant-design/icons';
-import { Card, DescriptionsProps, Input, Space } from 'antd';
-import { PaymentMethod } from '~/constants/enum';
+import {
+    CheckCircleFilled,
+    CloseCircleFilled,
+    CreditCardFilled,
+    DollarCircleFilled,
+    PercentageOutlined,
+} from '@ant-design/icons';
+import { Card, Input, Space } from 'antd';
 import { Currency } from '~/utils';
 
 interface Props {
@@ -18,15 +23,6 @@ interface Props {
     totalQuantity: number;
     description: string;
 }
-
-const translatePaymentMethod = (method: string) => {
-    const translations: { [key in string]: string } = {
-        [PaymentMethod.card]: 'Thanh toán online',
-        [PaymentMethod.cash]: 'COD',
-        // Add more translations as needed
-    };
-    return translations[method] || method; // Fallback to original if not found
-};
 
 export default function ServicesDetail({ services, totalQuantity, description }: Props) {
     const getPaymentMethodLabel = (method: string) => {
@@ -58,6 +54,24 @@ export default function ServicesDetail({ services, totalQuantity, description }:
             label: `Mã giảm giá ${services.voucherCode && `${services.voucherCode}`}`,
             value: `${services.voucherCode ? `${services.voucherDiscount.toLocaleString()} VNĐ` : '0 VNĐ'}`,
             className: 'from-red-50 to-red-50',
+        },
+        {
+            icon: <PercentageOutlined className='text-2xl text-yellow-500' />,
+            label: 'Thuế',
+            value: `0% VAT`,
+            className: 'from-yellow-100 to-amber-50',
+        },
+        {
+            icon: <DollarCircleFilled className='text-2xl text-purple-500' />,
+            label: 'Số lượng sản phẩm',
+            value: totalQuantity,
+            className: 'from-purple-100 to-fuchsia-50',
+        },
+        {
+            icon: <DollarCircleFilled className='text-2xl text-purple-500' />,
+            label: 'Tổng tiền',
+            value: Currency.format(services.totalPrice),
+            className: 'from-red-100 to-fuchsia-50',
         },
     ];
 

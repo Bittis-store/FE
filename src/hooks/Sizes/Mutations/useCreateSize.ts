@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { QUERY_KEY } from '~/constants/queryKey';
 import { ADMIN_ROUTES } from '~/constants/router';
 import sizeService from '~/services/size.service';
-import showMessage from '~/utils/ShowMessage';
 import { ISizeFormData } from '~/types/Size';
-import { errorResponse } from '~/types/ErrorResponse';
+import showMessage from '~/utils/ShowMessage';
 
 export const useMutationCreateSize = () => {
     const queryClient = useQueryClient();
@@ -23,8 +22,8 @@ export const useMutationCreateSize = () => {
             showMessage('Tạo mới kích cỡ thành công!', 'success');
             navigate(ADMIN_ROUTES.SIZES, { replace: true });
         },
-        onError: (error: errorResponse) => {
-            showMessage(error.response.data.message, 'error');
+        onError: (error: any) => {
+            showMessage(error.message, 'error');
         },
     });
 };

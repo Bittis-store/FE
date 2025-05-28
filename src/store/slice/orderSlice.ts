@@ -56,7 +56,7 @@ const initialState: InitialState = {
         address: '',
     },
     paymentMethod: 'COD',
-    shippingFee: 0,
+    shippingFee: 30000,
     tax: 0,
     description: '',
     totalPrice: 0,
@@ -102,7 +102,7 @@ export const shippingSlice = createSlice({
         },
         resetOrderInformation: (state) => {
             state.description = '';
-            state.shippingFee = 0;
+            state.shippingFee = 30000;
             state.description = '';
             state.paymentMethod = 'COD';
             state.receiverInfo = { ...initialState.receiverInfo };
