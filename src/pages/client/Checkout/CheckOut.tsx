@@ -28,18 +28,18 @@ const Checkout: React.FC = () => {
     console.log(cartUser);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (shippingFee) {
-            dispatch(setShippingFee(shippingFee.total));
-        } else {
-            if (province.includes('Hà Nội')) {
-                dispatch(setShippingFee(0));
-            } else {
-                dispatch(setShippingFee(35000));
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shippingFee]);
+    // useEffect(() => {
+    //     if (shippingFee) {
+    //         dispatch(setShippingFee(shippingFee.total));
+    //     } else {
+    //         if (province.includes('Hà Nội')) {
+    //             dispatch(setShippingFee(0));
+    //         } else {
+    //             dispatch(setShippingFee(35000));
+    //         }
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [shippingFee]);
 
     return (
         <Layout className='min-h-screen bg-gray-100'>
